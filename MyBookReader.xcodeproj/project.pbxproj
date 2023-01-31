@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		179E81DCA61182BE5EE7B17C /* Pods_MyBookReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4044DA90AA96A037C2A21BC9 /* Pods_MyBookReader.framework */; };
 		34DFE95229893AA6003EF567 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE95129893AA6003EF567 /* AppDelegate.swift */; };
 		34DFE95429893AA6003EF567 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE95329893AA6003EF567 /* SceneDelegate.swift */; };
 		34DFE95629893AA6003EF567 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE95529893AA6003EF567 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		000CBC2DC85C2D05E09875B0 /* Pods-MyBookReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBookReader.release.xcconfig"; path = "Target Support Files/Pods-MyBookReader/Pods-MyBookReader.release.xcconfig"; sourceTree = "<group>"; };
 		34DFE94E29893AA6003EF567 /* MyBookReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBookReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34DFE95129893AA6003EF567 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34DFE95329893AA6003EF567 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +26,8 @@
 		34DFE95A29893AA8003EF567 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		34DFE95D29893AA8003EF567 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34DFE95F29893AA8003EF567 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4044DA90AA96A037C2A21BC9 /* Pods_MyBookReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyBookReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F1E8217E1B999D1306323D8 /* Pods-MyBookReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBookReader.debug.xcconfig"; path = "Target Support Files/Pods-MyBookReader/Pods-MyBookReader.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				179E81DCA61182BE5EE7B17C /* Pods_MyBookReader.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				34DFE95029893AA6003EF567 /* MyBookReader */,
 				34DFE94F29893AA6003EF567 /* Products */,
+				6C80ECB644261D100C45AA57 /* Pods */,
+				9EC614FF9BFB70928DD6B684 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,24 @@
 			path = MyBookReader;
 			sourceTree = "<group>";
 		};
+		6C80ECB644261D100C45AA57 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F1E8217E1B999D1306323D8 /* Pods-MyBookReader.debug.xcconfig */,
+				000CBC2DC85C2D05E09875B0 /* Pods-MyBookReader.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		9EC614FF9BFB70928DD6B684 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4044DA90AA96A037C2A21BC9 /* Pods_MyBookReader.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 34DFE96229893AA8003EF567 /* Build configuration list for PBXNativeTarget "MyBookReader" */;
 			buildPhases = (
+				01A1973BC041B1A555093720 /* [CP] Check Pods Manifest.lock */,
 				34DFE94A29893AA6003EF567 /* Sources */,
 				34DFE94B29893AA6003EF567 /* Frameworks */,
 				34DFE94C29893AA6003EF567 /* Resources */,
+				3C9C5E9E4B5F4ECC12B5EA0E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01A1973BC041B1A555093720 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MyBookReader-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C9C5E9E4B5F4ECC12B5EA0E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBookReader/Pods-MyBookReader-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MyBookReader/Pods-MyBookReader-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyBookReader/Pods-MyBookReader-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		34DFE94A29893AA6003EF567 /* Sources */ = {
@@ -282,6 +351,7 @@
 		};
 		34DFE96329893AA8003EF567 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F1E8217E1B999D1306323D8 /* Pods-MyBookReader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -295,7 +365,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,6 +381,7 @@
 		};
 		34DFE96429893AA8003EF567 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 000CBC2DC85C2D05E09875B0 /* Pods-MyBookReader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -324,7 +395,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

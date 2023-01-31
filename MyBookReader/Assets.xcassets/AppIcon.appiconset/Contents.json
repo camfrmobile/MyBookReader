@@ -1,9 +1,10 @@
 {
   "images" : [
     {
+      "filename" : "icon320.png",
       "idiom" : "universal",
       "platform" : "ios",
-      "size" : "1024x1024"
+      "size" : "320x320"
     }
   ],
   "info" : {
