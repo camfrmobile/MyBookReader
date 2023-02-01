@@ -30,4 +30,26 @@ extension UITextField {
         self.leftViewMode = UITextField.ViewMode.always
         self.rightViewMode = UITextField.ViewMode.always
     }
+    
+    func addPaddingLeftIcon(_ image: UIImage, padding: CGFloat) {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: padding))
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = #colorLiteral(red: 0.5098040104, green: 0.5098040104, blue: 0.5098040104, alpha: 1)
+        view.addSubview(imageView)
+        imageView.center.x = view.center.x
+        imageView.center.y = view.center.y
+        self.leftView = view
+        self.leftViewMode = .always
+    }
+    
+    func addPaddingRightIcon(_ image: UIImage, padding: CGFloat) {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: padding, height: padding))
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = #colorLiteral(red: 0.5098040104, green: 0.5098040104, blue: 0.5098040104, alpha: 1)
+        view.addSubview(imageView)
+        imageView.center.x = view.center.x
+        imageView.center.y = view.center.y
+        self.rightView = view
+        self.rightViewMode = .always
+    }
 }
