@@ -8,22 +8,29 @@
 import UIKit
 
 class AccountViewController: UIViewController {
-
+    
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var photoChoseButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupUI()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupUI() {
+        avatarImageView.clipsToBounds = true
+        avatarImageView.layer.cornerRadius = avatarImageView.bounds.width / 2
+        
     }
-    */
 
+    @IBAction func myAccountAction(_ sender: Any) {
+    }
+    
+    @IBAction func appInfoAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func logOutAction(_ sender: UIButton) {
+    }
 }

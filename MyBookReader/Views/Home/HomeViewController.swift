@@ -17,9 +17,13 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupUI()
     }
     
+    func setupUI() {
+        accountButton.clipsToBounds = true
+        accountButton.layer.cornerRadius = accountButton.bounds.width / 2
+    }
 
     @IBAction func accountButtonAction(_ sender: UIButton) {
         tabBarController?.selectedIndex = 3
