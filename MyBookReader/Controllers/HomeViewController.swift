@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     }
     
     func setupNew() {
-        if readingBooks.count == 0 {
+        if readingBooks.count == 0 && doneBooks.count == 0 && scheduleBooks.count == 0 {
             let item = BookItem(title: "", url: "", desc: "", imageUrl: "")
             readingBooks.append(item)
         }
@@ -52,9 +52,23 @@ class HomeViewController: UIViewController {
 
     // MARK: IBAction
     @IBAction func accountButtonAction(_ sender: UIButton) {
-        tabBarController?.selectedIndex = 3
+        SwitchToTabAccount()
     }
     
+    
+    // MARK: Switch
+    func SwitchToTabHome() {
+        tabBarController?.selectedIndex = 0
+    }
+    func SwitchToTabLibrary() {
+        tabBarController?.selectedIndex = 1
+    }
+    func SwitchToTabSearch() {
+        tabBarController?.selectedIndex = 2
+    }
+    func SwitchToTabAccount() {
+        tabBarController?.selectedIndex = 3
+    }
     
     
     // MARK: Route
@@ -97,6 +111,11 @@ extension HomeViewController: UITableViewDelegate {
         
         bookCell.handleBook = {[weak self] bookItem in
             guard let self = self else { return }
+            
+            if bookItem.title.isEmpty && bookItem.url.isEmpty && bookItem.desc.isEmpty && bookItem.desc.isEmpty {
+                self.SwitchToTabLibrary()
+                return
+            }
             
             self.routeToBookNavigation(bookurl: "")
         }
