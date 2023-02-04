@@ -21,7 +21,7 @@ class BookTableViewCell: UITableViewCell {
         didSet {
             if let bookItem = bookItem {
                 titleLabel.text = bookItem.title
-                descLabel.text = "Lượt xem: \(bookItem.desc)"
+                descLabel.text = bookItem.desc
                 starCosmosView.rating = Double.random(in: 3...5)
                 bookImageView.setBookImage(urlImage: bookItem.imageUrl)
                 

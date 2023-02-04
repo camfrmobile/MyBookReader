@@ -19,14 +19,36 @@ class LibraryViewController: UIViewController {
     var newBooks = [BookItem]()
     var topBooks = [BookItem]()
     
+    // for loading
+    // View which contains the loading text and the spinner
+    let loadingView = UIView()
+    // Spinner shown during load the TableView
+    let spinner = UIActivityIndicatorView()
+    // Text shown during load the TableView
+    let loadingLabel = UILabel()
+    
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupTableView()
         
+        setLoadingScreen()
         
-        AF.request(ApiNameManager.shared.getUrlHome()).responseString {[weak self] response in
+        loadDataLibrary()
+    }
+    
+    func setupTableView() {
+        libraryTableView.delegate = self
+        libraryTableView.dataSource = self
+        libraryTableView.separatorStyle = .none
+        libraryTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "BookTableViewCell")
+        libraryTableView.register(UINib(nibName: "BookCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "BookCollectionTableViewCell")
+    }
+    
+    func loadDataLibrary() {
+        
+        AF.request(ApiNameManager.shared.getUrlLibrary()).responseString {[weak self] response in
             //debugPrint("Response: \(response)")
             
             guard let self = self else { return }
@@ -60,8 +82,9 @@ class LibraryViewController: UIViewController {
                 for item in listTopBooksItems {
                     let title = try item.attr("title")
                     let url = try item.attr("href")
-                    let view = try item.select("div.slide-caption").text()
+                    var view = try item.select("div.slide-caption").text()
                     let imageUrl = try item.select("img").attr("data-src")
+                    view = "Lượt xem: \(view)"
                     
                     let itemBook: BookItem = BookItem(title: title, url: url, desc: view, imageUrl: imageUrl)
                     
@@ -70,25 +93,55 @@ class LibraryViewController: UIViewController {
                 
                 // reload table view
                 self.libraryTableView.reloadData()
-        
+                
             } catch Exception.Error(let type, let message) {
                 print(type)
                 print(message)
             } catch {
                 print("error")
             }
+            
+            // remove loading
+            self.removeLoadingScreen()
         }
+        // end
+    }
+    
+    // Set the activity indicator into the main view
+    private func setLoadingScreen() {
+        // Sets the view which contains the loading text and the spinner
+        let width: CGFloat = 120
+        let height: CGFloat = 30
+        let x = (libraryTableView.bounds.width / 2) - (width / 2)
+        let y = (libraryTableView.bounds.height / 2) - (height / 2)
+        loadingView.frame = CGRect(x: x, y: y, width: width, height: height)
 
+        // Sets loading text
+        loadingLabel.textColor = .gray
+        loadingLabel.textAlignment = .center
+        loadingLabel.text = "Đang tải..."
+        loadingLabel.frame = CGRect(x: 0, y: 0, width: 140, height: 30)
+
+        // Sets spinner
+        spinner.style = .large
+        spinner.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        spinner.startAnimating()
+
+        // Adds text and spinner to the view
+        loadingView.addSubview(spinner)
+        loadingView.addSubview(loadingLabel)
+
+        view.addSubview(loadingView)
+        loadingView.center = libraryTableView.center
     }
-    
-    func setupTableView() {
-        libraryTableView.delegate = self
-        libraryTableView.dataSource = self
-        libraryTableView.separatorStyle = .none
-        libraryTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "BookTableViewCell")
-        libraryTableView.register(UINib(nibName: "BookCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "BookCollectionTableViewCell")
+
+   // Remove the activity indicator from the main view
+    private func removeLoadingScreen() {
+        // Hides and stops the text and the spinner
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        loadingLabel.isHidden = true
     }
-    
 }
 
 // MARK: Extension Table View
@@ -111,6 +164,14 @@ extension LibraryViewController: UITableViewDelegate {
         case 0: // new book
             
             let bookCell = libraryTableView.dequeueReusableCell(withIdentifier: "BookCollectionTableViewCell", for: indexPath) as! BookCollectionTableViewCell
+            
+            bookCell.handleBook = {[weak self] bookItem in
+                guard let self = self else { return }
+                
+                let bookVC = BookViewController()
+                bookVC.modalPresentationStyle = .overFullScreen
+                self.present(bookVC, animated: true)
+            }
             
             bookCell.bookItems = newBooks
             
@@ -143,6 +204,9 @@ extension LibraryViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
+        let bookVC = BookViewController()
+        bookVC.modalPresentationStyle = .overFullScreen
+        present(bookVC, animated: true)
     }
 }
 
@@ -150,7 +214,7 @@ extension LibraryViewController: UITableViewDelegate {
 extension LibraryViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return headers.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

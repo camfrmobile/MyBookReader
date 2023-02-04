@@ -18,6 +18,7 @@ class BookCollectionTableViewCell: UITableViewCell {
             bookCollectionView.reloadData()
         }
     }
+    var handleBook: ((_ bookItem: BookItem) -> Void)?
     
     // MARK: Setup
     override func awakeFromNib() {
@@ -49,7 +50,6 @@ class BookCollectionTableViewCell: UITableViewCell {
 extension BookCollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(bookItems.count)
         return bookItems.count
     }
     
@@ -77,7 +77,8 @@ extension BookCollectionTableViewCell: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        
+        handleBook?(bookItems[indexPath.row])
     }
 
 }

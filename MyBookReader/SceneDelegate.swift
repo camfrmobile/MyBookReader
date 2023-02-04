@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         /// Check login
-        routeToMain()
+        //routeToMain()
     }
     
     private func routeToAuthNavigation() {

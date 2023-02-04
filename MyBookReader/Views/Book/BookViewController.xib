@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BookViewController" customModule="MyBookReader" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ljz-fh-UeZ">
+                    <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vmV-Jf-wHm">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="50"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AjQ-Cu-xS7">
+                                    <rect key="frame" x="20" y="17" width="12.666666666666664" height="16.66666666666665"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" backgroundImage="chevron.left" catalog="system"/>
+                                    <connections>
+                                        <action selector="actionBack:" destination="-1" eventType="touchUpInside" id="LUY-lm-jSI"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="AjQ-Cu-xS7" firstAttribute="centerY" secondItem="vmV-Jf-wHm" secondAttribute="centerY" id="73x-f8-vw6"/>
+                                <constraint firstAttribute="height" constant="50" id="l9C-Bg-JTA"/>
+                                <constraint firstItem="AjQ-Cu-xS7" firstAttribute="leading" secondItem="vmV-Jf-wHm" secondAttribute="leading" constant="20" id="maV-AT-XNb"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="vmV-Jf-wHm" firstAttribute="leading" secondItem="ljz-fh-UeZ" secondAttribute="leading" id="1I3-M4-p0S"/>
+                        <constraint firstAttribute="trailing" secondItem="vmV-Jf-wHm" secondAttribute="trailing" id="R7i-37-wdI"/>
+                        <constraint firstItem="vmV-Jf-wHm" firstAttribute="top" secondItem="ljz-fh-UeZ" secondAttribute="top" id="f8h-0t-DGj"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="ljz-fh-UeZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0CB-QH-XuH"/>
+                <constraint firstItem="ljz-fh-UeZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="3Gg-DN-DXC"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ljz-fh-UeZ" secondAttribute="bottom" id="5zn-uQ-MwM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ljz-fh-UeZ" secondAttribute="trailing" id="lV2-xq-5df"/>
+            </constraints>
+            <point key="canvasLocation" x="74" y="-12"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
