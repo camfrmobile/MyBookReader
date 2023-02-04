@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="155" id="KGk-i7-Jjw" customClass="BookTableViewCell" customModule="MyBookReader" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="155"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="155"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AB7-tF-zim">
+                        <rect key="frame" x="0.0" y="5" width="436" height="145"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="book.closed" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mj6-XK-QQf">
+                                <rect key="frame" x="0.0" y="0.0" width="108.5" height="145"/>
+                                <color key="tintColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Mj6-XK-QQf" secondAttribute="height" multiplier="168:225" id="Xpg-Wl-bx6"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tên sách" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcr-T1-ECz">
+                                <rect key="frame" x="136.5" y="10" width="289.5" height="18"/>
+                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yni-Vz-qLK">
+                                <rect key="frame" x="136.5" y="35" width="294.5" height="13.5"/>
+                                <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o4v-Df-iVo" customClass="CosmosView" customModule="Cosmos">
+                                <rect key="frame" x="136.5" y="68.5" width="279.5" height="30"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="tW9-1a-kjh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yni-Vz-qLK" firstAttribute="leading" secondItem="Mj6-XK-QQf" secondAttribute="trailing" constant="28" id="8H6-cz-0ix"/>
+                            <constraint firstAttribute="trailing" secondItem="o4v-Df-iVo" secondAttribute="trailing" constant="20" id="9pS-0D-KRS"/>
+                            <constraint firstAttribute="trailing" secondItem="xcr-T1-ECz" secondAttribute="trailing" constant="10" id="BGV-Tv-JHW"/>
+                            <constraint firstItem="Mj6-XK-QQf" firstAttribute="top" secondItem="AB7-tF-zim" secondAttribute="top" id="DIi-rR-AqQ"/>
+                            <constraint firstAttribute="trailing" secondItem="yni-Vz-qLK" secondAttribute="trailing" constant="5" id="Hxi-b5-b8a"/>
+                            <constraint firstItem="o4v-Df-iVo" firstAttribute="leading" secondItem="Mj6-XK-QQf" secondAttribute="trailing" constant="28" id="P5G-3n-ZNd"/>
+                            <constraint firstAttribute="bottom" secondItem="Mj6-XK-QQf" secondAttribute="bottom" id="SLV-XM-ZFQ"/>
+                            <constraint firstItem="yni-Vz-qLK" firstAttribute="top" secondItem="xcr-T1-ECz" secondAttribute="bottom" constant="7" id="bfQ-LM-Q1U"/>
+                            <constraint firstItem="xcr-T1-ECz" firstAttribute="leading" secondItem="Mj6-XK-QQf" secondAttribute="trailing" constant="28" id="ljs-9D-jjf"/>
+                            <constraint firstItem="xcr-T1-ECz" firstAttribute="top" secondItem="AB7-tF-zim" secondAttribute="top" constant="10" id="vqC-kZ-UN6"/>
+                            <constraint firstItem="Mj6-XK-QQf" firstAttribute="leading" secondItem="AB7-tF-zim" secondAttribute="leading" id="w90-t0-PUw"/>
+                            <constraint firstItem="o4v-Df-iVo" firstAttribute="top" secondItem="yni-Vz-qLK" secondAttribute="bottom" constant="20" id="xwZ-G7-Pk6"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="AB7-tF-zim" secondAttribute="trailing" id="FHt-Pn-P13"/>
+                    <constraint firstAttribute="bottom" secondItem="AB7-tF-zim" secondAttribute="bottom" constant="5" id="aJ8-aL-i1V"/>
+                    <constraint firstItem="AB7-tF-zim" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="raL-LX-l3x"/>
+                    <constraint firstItem="AB7-tF-zim" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="rrk-O0-myn"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="bookImageView" destination="Mj6-XK-QQf" id="O0H-1B-eL0"/>
+                <outlet property="descLabel" destination="yni-Vz-qLK" id="1AD-Fk-0k7"/>
+                <outlet property="starCosmosView" destination="o4v-Df-iVo" id="F4Y-Bt-29g"/>
+                <outlet property="titleLabel" destination="xcr-T1-ECz" id="k7t-95-9zn"/>
+            </connections>
+            <point key="canvasLocation" x="155.38461538461539" y="28.080568720379144"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="book.closed" catalog="system" width="115" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

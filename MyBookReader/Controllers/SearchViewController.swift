@@ -9,9 +9,11 @@ import UIKit
 
 class SearchViewController: UIViewController {
 
+    // MARK: IBOutlet
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTableView: UITableView!
     
+    // MARK: Variables
     let searchTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -21,12 +23,11 @@ class SearchViewController: UIViewController {
         return textField
     } ()
     
+    // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchTableView.delegate = self
-        searchTableView.dataSource = self
-        
+        setupTabelView()
         setupUI()
     }
     
@@ -46,10 +47,17 @@ class SearchViewController: UIViewController {
         // radius
         searchTextField.layer.cornerRadius = 10
     }
+    
+    func setupTabelView() {
+        searchTableView.delegate = self
+        searchTableView.dataSource = self
+        searchTableView.separatorStyle = .none
+    }
 
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK: Extension
+extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
@@ -60,5 +68,43 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return sCell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //return 105
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
+    }
+}
+
+// MARK: Extension
+extension SearchViewController: UITableViewDataSource {
+    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 2
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return headers[section]
+//    }
+//
+//    // dat height cho header cua section
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 50
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let viewHeader = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
+//        viewHeader.backgroundColor = .white
+//
+//        let label = UILabel(frame: CGRect(x: 0, y: 0, width: viewHeader.bounds.width, height: viewHeader.bounds.height))
+//        label.text = headers[section]
+//        label.textColor = .black
+//        label.font = UIFont.boldSystemFont(ofSize: 32)
+//
+//        viewHeader.addSubview(label)
+//        return viewHeader
+//    }
     
 }

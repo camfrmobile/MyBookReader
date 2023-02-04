@@ -9,6 +9,7 @@ class ApiNameManager {
     
     let domain = "https://docsach24.co/" // Ex: https://abc.com
     
+    let home = ""
     let login = "login"
     let register = "register"
     let getProfile = "profile"
@@ -21,5 +22,9 @@ class ApiNameManager {
     
     func returnUrl(_ nameRequest: String) -> String{
         return domain + nameRequest
+    }
+    
+    func getUrlHome() -> String{
+        return domain + home
     }
 }

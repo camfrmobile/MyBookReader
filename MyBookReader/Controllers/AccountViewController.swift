@@ -9,10 +9,14 @@ import UIKit
 
 class AccountViewController: UIViewController {
     
+    // MARK: IBOutlet
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var photoChoseButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
     
+    // MARK: Variables
+    
+    // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,6 +29,7 @@ class AccountViewController: UIViewController {
         
     }
 
+    // MARK: IBAction
     @IBAction func myAccountAction(_ sender: Any) {
     }
     
@@ -34,3 +39,5 @@ class AccountViewController: UIViewController {
     @IBAction func logOutAction(_ sender: UIButton) {
     }
 }
+
+// MARK: Extension
