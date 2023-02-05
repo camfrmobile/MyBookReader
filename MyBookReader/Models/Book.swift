@@ -20,6 +20,8 @@ class Book {
     var listChapter: [Chapter]  // Muc luc sach
     var chapterIndex = 0
     var rating: Double = 0      // danh gia
+    var status: String = ""
+    var isFavorite: Bool = false
     
     init() {
         self.id = ""
@@ -64,3 +66,39 @@ class Chapter {
     }
 }
 
+func formatBookToDoc(_ book: Book) -> [String: Any] {
+    
+    var listChapter: [String: Any] = [:]
+    let updatedAt = Date().timeIntervalSince1970
+    
+    for (index, value) in book.listChapter.enumerated() {
+        listChapter["\(index)"] = [
+            "name": value.name,
+            "url": value.url
+        ]
+    }
+    
+    let data: [String : Any] = [
+        "id": book.id,
+        "title": book.title,
+        "author": [
+            "name": book.author.name,
+            "url": book.author.url
+        ],
+        "category": [
+            "name": book.category.name,
+            "url": book.category.url
+        ],
+        "totalChapter": book.totalChapter,
+        "view": book.view,
+        "desc": "",//book.desc,
+        "imageUrl": book.imageUrl,
+        "url": book.url,
+        "listChapter": listChapter,
+        "status": book.status,
+        "isFavorite": book.isFavorite,
+        "updatedAt": updatedAt
+    ]
+    
+    return data
+}

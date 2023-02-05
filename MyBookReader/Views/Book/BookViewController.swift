@@ -24,9 +24,7 @@ class BookViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     
     // MARK: Variables
-    var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
-    
-    var readBook: Book = Book()
+    var iBook: Book = Book()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -61,27 +59,24 @@ class BookViewController: UIViewController {
     }
     
     func setupBook() {
-        readBook.title = bookItem.title
-        readBook.url = bookItem.url
-        readBook.imageUrl = bookItem.imageUrl
-        readBook.desc = bookItem.desc
-        readBook.rating = bookItem.rating
         
-        readBook.id = bookItem.url.components(separatedBy: "-").last?.components(separatedBy: ".").first ?? ""
+        if !iBook.url.isEmpty {
+            iBook.id = iBook.url.components(separatedBy: "-").last?.components(separatedBy: ".").first ?? ""
+        }
 
-        titleLabel.text = readBook.title
-        infoLabel.text = readBook.desc
+        titleLabel.text = iBook.title
+        infoLabel.text = iBook.desc
         descTextView.text = "Đang tải..."
         
-        starCosmosView.rating = readBook.rating
-        starLabel.text = "\(readBook.rating) / 5.0"
-        imageView.setBookImage(urlImage: readBook.imageUrl)
+        starCosmosView.rating = iBook.rating
+        starLabel.text = "\(iBook.rating) / 5.0"
+        imageView.setBookImage(urlImage: iBook.imageUrl)
         
     }
     
     func loadAllInfoBook() {
         
-        AF.request(bookItem.url).responseString {[weak self] response in
+        AF.request(iBook.url).responseString {[weak self] response in
             //debugPrint("Response: \(response)")
             
             guard let self = self else { return }
@@ -93,28 +88,28 @@ class BookViewController: UIViewController {
                 
                 // get full info book
                 // title
-                self.readBook.title = try doc.select("div.introduce h1").text()
+                self.iBook.title = try doc.select("div.introduce h1").text()
                 
                 // image
-                self.readBook.imageUrl = try doc.select("div.introduce div.book img").attr("src")
+                self.iBook.imageUrl = try doc.select("div.introduce div.book img").attr("src")
 
                 // author
-                self.readBook.author.name = try doc.select("div.introduce div.author a").text()
-                self.readBook.author.url = try doc.select("div.introduce div.author a").attr("href")
+                self.iBook.author.name = try doc.select("div.introduce div.author a").text()
+                self.iBook.author.url = try doc.select("div.introduce div.author a").attr("href")
                 
                 // category
-                self.readBook.category.name = try doc.select("div.introduce div.cat a").text()
-                self.readBook.category.url = try doc.select("div.introduce div.cat a").attr("href")
+                self.iBook.category.name = try doc.select("div.introduce div.cat a").text()
+                self.iBook.category.url = try doc.select("div.introduce div.cat a").attr("href")
                 
                 // total-chapter
                 let totalChaper = try doc.select("div.introduce div.total-chapter").text().replacingOccurrences(of: "Số chương:", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
-                self.readBook.totalChapter = Int(totalChaper) ?? 0
+                self.iBook.totalChapter = Int(totalChaper) ?? 0
                 
                 // view
                 let view = try doc.select("div.introduce div.view").text().replacingOccurrences(of: "Lượt xem:", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
-                self.readBook.view = Int(view) ?? 0
+                self.iBook.view = Int(view) ?? 0
                 
-                self.readBook.desc = try doc.select("div.description").text()
+                self.iBook.desc = try doc.select("div.description").text()
                 
                 // muc luc
                 let listChapter: Elements = try doc.select("#viewchapter ul.list li a")
@@ -126,7 +121,7 @@ class BookViewController: UIViewController {
                     
                     let chapter: Chapter = Chapter(name: chapName, url: chapUrl)
                     
-                    self.readBook.listChapter.append(chapter)
+                    self.iBook.listChapter.append(chapter)
                 }
                 // muc luc page 2
                 
@@ -143,8 +138,8 @@ class BookViewController: UIViewController {
     }
     
     func reFillDataBook() {
-        infoLabel.text = readBook.author.name
-        descTextView.text = "Thể loại: \(readBook.category.name)\nSố chương: \(readBook.totalChapter)\n\(readBook.desc)\n"
+        infoLabel.text = iBook.author.name
+        descTextView.text = "Thể loại: \(iBook.category.name)\nSố chương: \(iBook.totalChapter)\n\(iBook.desc)\n"
     }
     
     // MARK: IBAction
@@ -161,7 +156,7 @@ class BookViewController: UIViewController {
     
     @IBAction func actionNowRead(_ sender: UIButton) {
 
-        routeToReaderNavigation(readBook)
+        routeToReaderNavigation(iBook)
 
     }
     
@@ -182,9 +177,9 @@ extension BookViewController: RouteApp {
         //keyWindow?.makeKeyAndVisible()
     }
     
-    func routeToReaderNavigation(_ readBook: Book) {
+    func routeToReaderNavigation(_ iBook: Book) {
         let readerVC = ReaderViewController()
-        readerVC.readBook = readBook
+        readerVC.iBook = iBook
         let navigation = UINavigationController(rootViewController: readerVC)
 
         let keyWindow = UIApplication.shared.connectedScenes

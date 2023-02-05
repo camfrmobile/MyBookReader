@@ -17,13 +17,13 @@ class BookTableViewCell: UITableViewCell {
     @IBOutlet weak var starCosmosView: CosmosView!
     
     // MARK: Variables
-    var bookItem: BookItem? {
+    var iBook: Book? {
         didSet {
-            if let bookItem = bookItem {
-                titleLabel.text = bookItem.title
-                descLabel.text = bookItem.desc
-                starCosmosView.rating = bookItem.rating
-                bookImageView.setBookImage(urlImage: bookItem.imageUrl)
+            if let iBook = iBook {
+                titleLabel.text = iBook.title
+                descLabel.text = iBook.desc
+                starCosmosView.rating = iBook.rating
+                bookImageView.setBookImage(urlImage: iBook.imageUrl)
                 
             }
         }

@@ -13,12 +13,12 @@ class BookCollectionTableViewCell: UITableViewCell {
     @IBOutlet weak var bookCollectionView: UICollectionView!
     
     // MARK: Variables
-    var bookItems: [BookItem] = [] {
+    var iBooks: [Book] = [] {
         didSet {
             bookCollectionView.reloadData()
         }
     }
-    var handleBook: ((_ bookItem: BookItem) -> Void)?
+    var handleBook: ((_ iBook: Book) -> Void)?
     
     // MARK: Setup
     override func awakeFromNib() {
@@ -50,13 +50,13 @@ class BookCollectionTableViewCell: UITableViewCell {
 extension BookCollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return bookItems.count
+        return iBooks.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let bookCell = bookCollectionView.dequeueReusableCell(withReuseIdentifier: "BookCollectionViewCell", for: indexPath) as! BookCollectionViewCell
         
-        bookCell.bookItem = bookItems[indexPath.row]
+        bookCell.iBook = iBooks[indexPath.row]
         
         return bookCell
     }
@@ -78,7 +78,7 @@ extension BookCollectionTableViewCell: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        handleBook?(bookItems[indexPath.row])
+        handleBook?(iBooks[indexPath.row])
     }
 
 }

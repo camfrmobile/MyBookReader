@@ -8,6 +8,8 @@
 import UIKit
 import Alamofire
 import SwiftSoup
+import FirebaseAuth
+import FirebaseFirestore
 
 class SearchViewController: UIViewController {
 
@@ -26,9 +28,8 @@ class SearchViewController: UIViewController {
         return textField
     } ()
     
-    var searchBooks = [BookItem]()
+    var searchBooks = [Book]()
     var histories: [String] = ["sách", "truyện"]
-    
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -58,9 +59,6 @@ class SearchViewController: UIViewController {
         
         self.loadingView.isHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            
-        }
     }
     
     func setupTabelView() {
@@ -103,9 +101,13 @@ class SearchViewController: UIViewController {
                     var rating = Double.random(in: 3...5)
                     rating = Double(String(format: "%.1f", rating)) ?? 3
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl, rating: rating)
+                    let iBook: Book = Book()
+                    iBook.title = title
+                    iBook.url = url
+                    iBook.imageUrl = imageUrl
+                    iBook.rating = rating
                     
-                    self.searchBooks.append(itemBook)
+                    self.searchBooks.append(iBook)
                 }
                 
                 // reload table view
@@ -200,7 +202,7 @@ extension SearchViewController: UITableViewDelegate {
         case 1: // search result
             
             let bookCell = searchTableView.dequeueReusableCell(withIdentifier: "BookTableViewCell", for: indexPath) as! BookTableViewCell
-            bookCell.bookItem = searchBooks[indexPath.row]
+            bookCell.iBook = searchBooks[indexPath.row]
             return bookCell
             
         default:
@@ -225,8 +227,8 @@ extension SearchViewController: UITableViewDelegate {
             searchTextField.text = histories[indexPath.row]
             searchBookAction()
         case 1: // search result
-            let bookItem = searchBooks[indexPath.row]
-            routeToBookInfo(bookItem)
+            let iBook = searchBooks[indexPath.row]
+            routeToBookInfo(iBook)
         default:
             print(indexPath)
         }
@@ -267,17 +269,17 @@ extension SearchViewController: UITableViewDataSource {
 // MARK: Route
 extension SearchViewController: RouteApp {
     
-    func routeToBookInfo(_ bookItem: BookItem) {
+    func routeToBookInfo(_ iBook: Book) {
         let bookVC = BookViewController()
-        bookVC.bookItem = bookItem
+        bookVC.iBook = iBook
         bookVC.modalPresentationStyle = .overFullScreen
         
         present(bookVC, animated: false)
     }
     
-//    func routeToBookNavigation(_ bookItem: BookItem) {
+//    func routeToBookNavigation(_ iBook: iBook) {
 //        let bookVC = BookViewController()
-//        bookVC.bookItem = bookItem
+//        bookVC.iBook = iBook
 //        let navigation = UINavigationController(rootViewController: bookVC)
 //        
 //        let keyWindow = UIApplication.shared.connectedScenes

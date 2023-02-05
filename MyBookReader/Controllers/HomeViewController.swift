@@ -8,6 +8,8 @@
 import UIKit
 import Alamofire
 import SwiftSoup
+import FirebaseAuth
+import FirebaseFirestore
 
 class HomeViewController: UIViewController {
 
@@ -18,16 +20,21 @@ class HomeViewController: UIViewController {
     
     // MARK: Variables
     var headers = ["Đang đọc", "Đọc xong", "Đọc sau"]
-    var readingBooks = [BookItem]()
-    var doneBooks = [BookItem]()
-    var scheduleBooks = [BookItem]()
+    var readingBooks = [Book]()
+    var doneBooks = [Book]()
+    var scheduleBooks = [Book]()
     
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUser()
+        
         setupUI()
+        
         setupTableView()
-        setupNew()
+        
+        loadBookFromDatabase()
     }
     
     func setupUI() {
@@ -45,10 +52,126 @@ class HomeViewController: UIViewController {
     
     func setupNew() {
         if readingBooks.count == 0 && doneBooks.count == 0 && scheduleBooks.count == 0 {
-            let item = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
-            readingBooks.append(item)
+            let iBook = Book()
+            readingBooks.insert(iBook, at: 0)
+            
+            homeTableView.reloadData()
         }
     }
+    
+    func loadBookFromDatabase() {
+        
+        loadReadingBooks(identification)
+        loadDoneBooks(identification)
+        loadScheduleBooks(identification)
+        
+    }
+    
+    func loadReadingBooks(_ identification: String) {
+        
+        fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            if let document = document, document.exists {
+                // start
+                document.reference.collection("books").whereField("status", isEqualTo: "").order(by: "updatedAt", descending: true)
+                    .getDocuments() {[weak self] (querySnapshot, err) in
+                        
+                        guard let self = self else { return }
+                        
+                        if let err = err {
+                            print("ERROR1: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                //let docID = document.documentID
+                                let docData = document.data()
+                                
+                                let iBook = docToBook(docData)
+                                
+                                self.readingBooks.append(iBook)
+                            }
+                            self.homeTableView.reloadData()
+                        }
+                }
+                // end
+            } else {
+                print("ERROR1 Document does not exist")
+            }
+        }
+        //end
+    }
+
+    
+    func loadDoneBooks(_ identification: String) {
+        
+        fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            if let document = document, document.exists {
+                // start
+                document.reference.collection("books").whereField("status", isEqualTo: "READ_DONE").order(by: "updatedAt", descending: true)
+                    .getDocuments() {[weak self] (querySnapshot, err) in
+                        
+                        guard let self = self else { return }
+                        
+                        if let err = err {
+                            print("ERROR2: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                //let docID = document.documentID
+                                let docData = document.data()
+                                
+                                let iBook = docToBook(docData)
+                                
+                                self.doneBooks.append(iBook)
+                            }
+                            self.homeTableView.reloadData()
+                        }
+                }
+                // end
+            } else {
+                print("ERROR2 Document does not exist")
+            }
+        }
+        //end
+    }
+    
+    
+    func loadScheduleBooks(_ identification: String) {
+        
+        fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            if let document = document, document.exists {
+                // start
+                document.reference.collection("books").whereField("status", isEqualTo: "READ_AFTER").order(by: "updatedAt", descending: true)
+                    .getDocuments() {[weak self] (querySnapshot, err) in
+                        
+                        guard let self = self else { return }
+                        
+                        if let err = err {
+                            print("ERROR3: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                //let docID = document.documentID
+                                let docData = document.data()
+                                
+                                let iBook = docToBook(docData)
+                                
+                                self.scheduleBooks.append(iBook)
+                            }
+                            // new user
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                self.setupNew()
+                            }
+                            
+                            self.homeTableView.reloadData()
+                        }
+                }
+                // end
+            } else {
+                print("ERROR3 Document does not exist")
+            }
+        }
+        //end
+    }
+
+
+
 
     // MARK: IBAction
     @IBAction func accountButtonAction(_ sender: UIButton) {
@@ -78,11 +201,11 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return readingBooks.count // reading book
+            return 1 // reading book
         case 1:
-            return doneBooks.count // done book
+            return 1 // done book
         case 2:
-            return scheduleBooks.count // schedule book
+            return 1 // schedule book
         default:
             return 0
         }
@@ -92,34 +215,34 @@ extension HomeViewController: UITableViewDelegate {
         
         let bookCell = homeTableView.dequeueReusableCell(withIdentifier: "BookCollectionTableViewCell", for: indexPath) as! BookCollectionTableViewCell
         
-        bookCell.handleBook = {[weak self] bookItem in
+        bookCell.handleBook = {[weak self] iBook in
             guard let self = self else { return }
             
-            if bookItem.title.isEmpty && bookItem.url.isEmpty && bookItem.desc.isEmpty && bookItem.desc.isEmpty {
+            if iBook.title.isEmpty && iBook.url.isEmpty && iBook.desc.isEmpty && iBook.desc.isEmpty {
                 self.switchToTabLibrary()
                 return
             }
             
             // go to book
-            self.routeToBookInfo(bookItem)
+            self.routeToBookInfo(iBook)
         }
         
         switch indexPath.section {
         case 0: // reading book
             
-            bookCell.bookItems = readingBooks
+            bookCell.iBooks = readingBooks
             
             return bookCell
             
         case 1: // done book
             
-            bookCell.bookItems = doneBooks
+            bookCell.iBooks = doneBooks
             
             return bookCell
             
         case 2: // schedule book
             
-            bookCell.bookItems = scheduleBooks
+            bookCell.iBooks = scheduleBooks
             
             return bookCell
             
@@ -139,18 +262,18 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
-        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
+        var iBook: Book = Book()
         switch indexPath.section {
         case 0: // reading book
-            bookItem = readingBooks[indexPath.row]
+            iBook = readingBooks[indexPath.row]
         case 1: // done book
-            bookItem = doneBooks[indexPath.row]
+            iBook = doneBooks[indexPath.row]
         case 2: // schedule book
-            bookItem = scheduleBooks[indexPath.row]
+            iBook = scheduleBooks[indexPath.row]
         default:
             print(indexPath)
         }
-        routeToBookInfo(bookItem)
+        routeToBookInfo(iBook)
     }
 }
 
@@ -188,17 +311,17 @@ extension HomeViewController: UITableViewDataSource {
 // MARK: Route
 extension HomeViewController: RouteApp {
     
-    func routeToBookInfo(_ bookItem: BookItem) {
+    func routeToBookInfo(_ iBook: Book) {
         let bookVC = BookViewController()
-        bookVC.bookItem = bookItem
+        bookVC.iBook = iBook
         bookVC.modalPresentationStyle = .overFullScreen
         
         present(bookVC, animated: false)
     }
     
-//    func routeToBookNavigation(_ bookItem: BookItem) {
+//    func routeToBookNavigation(_ iBook: iBook) {
 //        let bookVC = BookViewController()
-//        bookVC.bookItem = bookItem
+//        bookVC.iBook = iBook
 //        let navigation = UINavigationController(rootViewController: bookVC)
 //        
 //        let keyWindow = UIApplication.shared.connectedScenes

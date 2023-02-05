@@ -8,6 +8,8 @@
 import UIKit
 import Alamofire
 import SwiftSoup
+import FirebaseAuth
+import FirebaseFirestore
 
 class ReaderViewController: UIViewController {
     
@@ -22,7 +24,7 @@ class ReaderViewController: UIViewController {
     
     // MARK: Variables
     
-    var readBook: Book = Book()
+    var iBook: Book = Book()
     var content: String = ""
     var fontSize: CGFloat = 20
     var fontName: String = "Arial"
@@ -33,7 +35,9 @@ class ReaderViewController: UIViewController {
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setupUser()
+        
         setupUI()
         
         setupText()
@@ -41,7 +45,16 @@ class ReaderViewController: UIViewController {
         setupChapter()
         
         loadContentChapter()
+        
+        saveBookToDatabase()
     }
+    
+    func setupUser() {
+        guard let authUser = authUser else { return }
+        
+        identification = authUser.uid
+    }
+    
 
     func setupUI() {
         contentTextView.delegate = self
@@ -74,10 +87,10 @@ class ReaderViewController: UIViewController {
     }
     
     func setupChapter() {
-        if readBook.chapterIndex >= readBook.listChapter.count {
+        if iBook.chapterIndex >= iBook.listChapter.count {
             return // khong ton tai chapter index
         }
-        lastChapter = readBook.listChapter[readBook.chapterIndex]
+        lastChapter = iBook.listChapter[iBook.chapterIndex]
     }
     
     func loadContentChapter() {
@@ -119,14 +132,14 @@ class ReaderViewController: UIViewController {
     func nextChapter() {
         updateProgress()
         // get next chap
-        if readBook.chapterIndex >= (readBook.listChapter.count - 1) {
+        if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
             nextChapterButton.setTitle("- THE END -", for: .normal)
             return
         }
         
-        readBook.chapterIndex += 1
+        iBook.chapterIndex += 1
         
-        lastChapter = readBook.listChapter[readBook.chapterIndex]
+        lastChapter = iBook.listChapter[iBook.chapterIndex]
 
         loadContentChapter()
         hiddenNextButton()
@@ -142,9 +155,31 @@ class ReaderViewController: UIViewController {
     }
     
     func updateProgress() {
-        let progress = Float(readBook.chapterIndex) / Float(readBook.listChapter.count)
+        let progress = Float(iBook.chapterIndex) / Float(iBook.listChapter.count)
         progressView.progress = progress // Tiến độ công việc chạy từ 0 - 1
         print(progress)
+    }
+    
+    func saveBookToDatabase() {
+
+        let book = formatBookToDoc(iBook)
+        
+        fsdb.collection("users").document(identification).getDocument { (document, error) in
+            if let document = document, document.exists {
+                // start
+                document.reference.collection("books").document(self.iBook.id).setData(book) { err in
+                    if let err = err {
+                        print("ERROR writing document: \(err)")
+                    } else {
+                        print("OK Document successfully written!")
+                    }
+                }
+                // end
+            } else {
+                print("ERROR Document does not exist")
+            }
+        }
+        //end
     }
     
     // MARK: IBAction

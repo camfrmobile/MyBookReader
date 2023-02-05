@@ -16,12 +16,12 @@ class BookCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descLabel: UILabel!
     
     // MARK: Variables
-    var bookItem: BookItem? {
+    var iBook: Book? {
         didSet {
-            if let bookItem = bookItem {
-                titleLabel.text = bookItem.title
-                descLabel.text = bookItem.desc
-                imageView.setBookImage(urlImage: bookItem.imageUrl)
+            if let iBook = iBook {
+                titleLabel.text = iBook.title
+                descLabel.text = iBook.desc
+                imageView.setBookImage(urlImage: iBook.imageUrl)
             }
         }
     }

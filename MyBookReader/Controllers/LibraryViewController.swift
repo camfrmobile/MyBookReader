@@ -17,8 +17,8 @@ class LibraryViewController: UIViewController {
     
     // MARK: Variables
     var headers = ["Sách mới cập nhật", "Sách xem nhiều"]
-    var newBooks = [BookItem]()
-    var topBooks = [BookItem]()
+    var newBooks = [Book]()
+    var topBooks = [Book]()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -61,9 +61,9 @@ class LibraryViewController: UIViewController {
                     return
                 }
                 // list new book
-                let listNewBookItems: Elements = try doc.select("div.list-post-show").first()!.select("div.item-box a")
+                let listNewiBooks: Elements = try doc.select("div.list-post-show").first()!.select("div.item-box a")
                 
-                for item in listNewBookItems {
+                for item in listNewiBooks {
                     let title = try item.attr("title")
                     let url = try item.attr("href")
                     let imageUrl = try item.select("img").attr("data-src")
@@ -72,9 +72,13 @@ class LibraryViewController: UIViewController {
                     var rating = Double.random(in: 3...5)
                     rating = Double(String(format: "%.1f", rating)) ?? 3
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl, rating: rating)
+                    let iBook: Book = Book()
+                    iBook.title = title
+                    iBook.url = url
+                    iBook.imageUrl = imageUrl
+                    iBook.rating = rating
                     
-                    self.newBooks.append(itemBook)
+                    self.newBooks.append(iBook)
                 }
                 
                 // list top book
@@ -91,9 +95,14 @@ class LibraryViewController: UIViewController {
                     var rating = Double.random(in: 3...5)
                     rating = Double(String(format: "%.1f", rating)) ?? 3
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: view, imageUrl: imageUrl, rating: rating)
+                    let iBook: Book = Book()
+                    iBook.title = title
+                    iBook.url = url
+                    iBook.imageUrl = imageUrl
+                    iBook.rating = rating
+                    iBook.desc = view
                     
-                    self.topBooks.append(itemBook)
+                    self.topBooks.append(iBook)
                 }
                 
                 // reload table view
@@ -134,13 +143,13 @@ extension LibraryViewController: UITableViewDelegate {
             
             let bookCell = libraryTableView.dequeueReusableCell(withIdentifier: "BookCollectionTableViewCell", for: indexPath) as! BookCollectionTableViewCell
             
-            bookCell.handleBook = {[weak self] bookItem in
+            bookCell.handleBook = {[weak self] iBook in
                 guard let self = self else { return }
                 
-                self.routeToBookInfo(bookItem)
+                self.routeToBookInfo(iBook)
             }
             
-            bookCell.bookItems = newBooks
+            bookCell.iBooks = newBooks
             
             return bookCell
             
@@ -148,7 +157,7 @@ extension LibraryViewController: UITableViewDelegate {
             
             let bookCell = libraryTableView.dequeueReusableCell(withIdentifier: "BookTableViewCell", for: indexPath) as! BookTableViewCell
             
-            bookCell.bookItem = topBooks[indexPath.row]
+            bookCell.iBook = topBooks[indexPath.row]
             
             return bookCell
             
@@ -170,16 +179,16 @@ extension LibraryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
+        var iBook: Book = Book()
         switch indexPath.section {
         case 0: // new book
-            bookItem = newBooks[indexPath.row]
+            iBook = newBooks[indexPath.row]
         case 1: // top book
-            bookItem = topBooks[indexPath.row]
+            iBook = topBooks[indexPath.row]
         default:
             print(indexPath)
         }
-        routeToBookInfo(bookItem)
+        routeToBookInfo(iBook)
     }
 }
 
@@ -216,17 +225,17 @@ extension LibraryViewController: UITableViewDataSource {
 // MARK: Route
 extension LibraryViewController: RouteApp {
     
-    func routeToBookInfo(_ bookItem: BookItem) {
+    func routeToBookInfo(_ iBook: Book) {
         let bookVC = BookViewController()
-        bookVC.bookItem = bookItem
+        bookVC.iBook = iBook
         bookVC.modalPresentationStyle = .overFullScreen
         
         present(bookVC, animated: false)
     }
     
-//    func routeToBookNavigation(_ bookItem: BookItem) {
+//    func routeToBookNavigation(_ iBook: iBook) {
 //        let bookVC = BookViewController()
-//        bookVC.bookItem = bookItem
+//        bookVC.iBook = iBook
 //        let navigation = UINavigationController(rootViewController: bookVC)
 //        
 //        let keyWindow = UIApplication.shared.connectedScenes

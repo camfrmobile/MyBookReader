@@ -12,11 +12,11 @@ protocol RouteApp {
     
     func routeToMain()
     
-    func routeToBookInfo(_ bookItem: BookItem)
+    func routeToBookInfo(_ iBook: Book)
     
-    func routeToBookNavigation(_ bookItem: BookItem)
+    func routeToBookNavigation(_ iBook: Book)
     
-    func routeToReaderNavigation(_ readBook: Book)
+    func routeToReaderNavigation(_ iBook: Book)
 }
 
 extension RouteApp {
@@ -24,15 +24,15 @@ extension RouteApp {
         
     }
     
-    func routeToBookInfo(_ bookItem: BookItem) {
+    func routeToBookInfo(_ iBook: Book) {
         
     }
     
-    func routeToBookNavigation(_ bookItem: BookItem) {
+    func routeToBookNavigation(_ iBook: Book) {
         
     }
     
-    func routeToReaderNavigation(_ readBook: Book) {
+    func routeToReaderNavigation(_ iBook: Book) {
         
     }
 }
