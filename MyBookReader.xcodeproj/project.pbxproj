@@ -21,6 +21,8 @@
 		348E5810298EBFA900EE0858 /* RouteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348E580F298EBFA900EE0858 /* RouteApp.swift */; };
 		348E5813298ECCF400EE0858 /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348E5811298ECCF400EE0858 /* BookViewController.swift */; };
 		348E5814298ECCF400EE0858 /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 348E5812298ECCF400EE0858 /* BookViewController.xib */; };
+		34B3974D298F5B500089CDCF /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3974B298F5B500089CDCF /* ReaderViewController.swift */; };
+		34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34B3974C298F5B500089CDCF /* ReaderViewController.xib */; };
 		34DFE95229893AA6003EF567 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE95129893AA6003EF567 /* AppDelegate.swift */; };
 		34DFE95429893AA6003EF567 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE95329893AA6003EF567 /* SceneDelegate.swift */; };
 		34DFE95929893AA6003EF567 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34DFE95729893AA6003EF567 /* Main.storyboard */; };
@@ -65,6 +67,8 @@
 		348E580F298EBFA900EE0858 /* RouteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteApp.swift; sourceTree = "<group>"; };
 		348E5811298ECCF400EE0858 /* BookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewController.swift; sourceTree = "<group>"; };
 		348E5812298ECCF400EE0858 /* BookViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		34B3974B298F5B500089CDCF /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
+		34B3974C298F5B500089CDCF /* ReaderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
 		34DFE94E29893AA6003EF567 /* MyBookReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBookReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34DFE95129893AA6003EF567 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		34DFE95329893AA6003EF567 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,10 +141,20 @@
 		348E580A298E641C00EE0858 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				348E5805298E60CD00EE0858 /* Book */,
 				348E57F0298C806B00EE0858 /* Cells */,
+				348E5805298E60CD00EE0858 /* Book */,
+				34B3974A298F5B320089CDCF /* Reader */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		34B3974A298F5B320089CDCF /* Reader */ = {
+			isa = PBXGroup;
+			children = (
+				34B3974B298F5B500089CDCF /* ReaderViewController.swift */,
+				34B3974C298F5B500089CDCF /* ReaderViewController.xib */,
+			);
+			path = Reader;
 			sourceTree = "<group>";
 		};
 		34DFE94529893AA6003EF567 = {
@@ -330,6 +344,7 @@
 				348E57F4298C80BE00EE0858 /* BookCollectionViewCell.xib in Resources */,
 				34DFE95B29893AA8003EF567 /* Assets.xcassets in Resources */,
 				348E5814298ECCF400EE0858 /* BookViewController.xib in Resources */,
+				34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */,
 				34DFE95929893AA6003EF567 /* Main.storyboard in Resources */,
 				348E5800298E19F300EE0858 /* BookCollectionTableViewCell.xib in Resources */,
 				348E57F8298C80DD00EE0858 /* BookTableViewCell.xib in Resources */,
@@ -387,6 +402,7 @@
 			files = (
 				34F8F445298AA0BD008F38D2 /* LibraryViewController.swift in Sources */,
 				34DFE99B298979FB003EF567 /* Menu.swift in Sources */,
+				34B3974D298F5B500089CDCF /* ReaderViewController.swift in Sources */,
 				348E57F7298C80DD00EE0858 /* BookTableViewCell.swift in Sources */,
 				348E5813298ECCF400EE0858 /* BookViewController.swift in Sources */,
 				34DFE988298979FB003EF567 /* UITextField+Extension.swift in Sources */,

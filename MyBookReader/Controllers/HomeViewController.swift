@@ -101,7 +101,7 @@ extension HomeViewController: UITableViewDelegate {
             }
             
             // go to book
-            self.routeToBookNavigation(bookItem)
+            self.routeToBookInfo(bookItem)
         }
         
         switch indexPath.section {
@@ -150,7 +150,7 @@ extension HomeViewController: UITableViewDelegate {
         default:
             print(indexPath)
         }
-        routeToBookNavigation(bookItem)
+        routeToBookInfo(bookItem)
     }
 }
 
@@ -188,18 +188,26 @@ extension HomeViewController: UITableViewDataSource {
 // MARK: Route
 extension HomeViewController: RouteApp {
     
-    func routeToBookNavigation(_ bookItem: BookItem) {
+    func routeToBookInfo(_ bookItem: BookItem) {
         let bookVC = BookViewController()
         bookVC.bookItem = bookItem
-        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        bookVC.modalPresentationStyle = .overFullScreen
         
-        let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first
-        
-        keyWindow?.rootViewController = bookNavigation
+        present(bookVC, animated: false)
     }
+    
+//    func routeToBookNavigation(_ bookItem: BookItem) {
+//        let bookVC = BookViewController()
+//        bookVC.bookItem = bookItem
+//        let navigation = UINavigationController(rootViewController: bookVC)
+//        
+//        let keyWindow = UIApplication.shared.connectedScenes
+//            .filter({$0.activationState == .foregroundActive})
+//            .compactMap({$0 as? UIWindowScene})
+//            .first?.windows
+//            .filter({$0.isKeyWindow}).first
+//        
+//        keyWindow?.rootViewController = navigation
+//    }
     
 }

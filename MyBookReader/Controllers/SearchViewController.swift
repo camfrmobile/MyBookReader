@@ -77,7 +77,7 @@ class SearchViewController: UIViewController {
     }
     
     func setupStart() {
-        searchTextField.becomeFirstResponder()
+        //searchTextField.becomeFirstResponder()
     }
 
     // MARK: Search Book
@@ -270,7 +270,7 @@ extension SearchViewController: UITableViewDelegate {
             searchBookAction()
         case 1: // search result
             let bookItem = searchBooks[indexPath.row]
-            routeToBookNavigation(bookItem)
+            routeToBookInfo(bookItem)
         default:
             print(indexPath)
         }
@@ -311,18 +311,26 @@ extension SearchViewController: UITableViewDataSource {
 // MARK: Route
 extension SearchViewController: RouteApp {
     
-    func routeToBookNavigation(_ bookItem: BookItem) {
+    func routeToBookInfo(_ bookItem: BookItem) {
         let bookVC = BookViewController()
         bookVC.bookItem = bookItem
-        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        bookVC.modalPresentationStyle = .overFullScreen
         
-        let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first
-        
-        keyWindow?.rootViewController = bookNavigation
+        present(bookVC, animated: false)
     }
+    
+//    func routeToBookNavigation(_ bookItem: BookItem) {
+//        let bookVC = BookViewController()
+//        bookVC.bookItem = bookItem
+//        let navigation = UINavigationController(rootViewController: bookVC)
+//        
+//        let keyWindow = UIApplication.shared.connectedScenes
+//            .filter({$0.activationState == .foregroundActive})
+//            .compactMap({$0 as? UIWindowScene})
+//            .first?.windows
+//            .filter({$0.isKeyWindow}).first
+//        
+//        keyWindow?.rootViewController = navigation
+//    }
     
 }

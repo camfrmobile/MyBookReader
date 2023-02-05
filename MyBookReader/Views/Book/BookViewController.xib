@@ -162,12 +162,38 @@
                         <constraint firstAttribute="height" constant="50" id="Ris-kk-q5c"/>
                     </constraints>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5V-60-nD9">
+                    <rect key="frame" x="0.0" y="47" width="390" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQz-Mz-cpj">
+                            <rect key="frame" x="5" y="5" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="esH-2I-wId"/>
+                                <constraint firstAttribute="height" constant="50" id="wwt-cS-Q3r"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="chevron.left" catalog="system"/>
+                            <connections>
+                                <action selector="actionBack:" destination="-1" eventType="touchUpInside" id="UPo-b4-xwN"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="dQz-Mz-cpj" firstAttribute="top" secondItem="U5V-60-nD9" secondAttribute="top" constant="5" id="Mez-IJ-q9J"/>
+                        <constraint firstAttribute="height" constant="50" id="P1e-RA-leD"/>
+                        <constraint firstItem="dQz-Mz-cpj" firstAttribute="leading" secondItem="U5V-60-nD9" secondAttribute="leading" constant="5" id="Yny-ZC-CnI"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
+                <constraint firstItem="U5V-60-nD9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1iw-IZ-qVK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fIc-Tj-rXD" secondAttribute="trailing" constant="30" id="7Cm-7J-8Pj"/>
                 <constraint firstItem="fIc-Tj-rXD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="G9D-MR-mjG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="U5V-60-nD9" secondAttribute="trailing" id="GyO-YV-leK"/>
+                <constraint firstItem="U5V-60-nD9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Mab-yR-CFR"/>
                 <constraint firstItem="o31-Ex-nrZ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="ejd-mo-lWN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fIc-Tj-rXD" secondAttribute="bottom" constant="20" id="kRp-yJ-u0z"/>
                 <constraint firstItem="o31-Ex-nrZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nu2-eW-4Vx"/>
@@ -183,6 +209,7 @@
         </designable>
     </designables>
     <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="ic_read_after" width="24" height="30"/>
         <image name="ic_read_now" width="24.666666030883789" height="22"/>
     </resources>

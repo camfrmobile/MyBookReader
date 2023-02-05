@@ -176,7 +176,7 @@ extension LibraryViewController: UITableViewDelegate {
             bookCell.handleBook = {[weak self] bookItem in
                 guard let self = self else { return }
                 
-                self.routeToBookNavigation(bookItem)
+                self.routeToBookInfo(bookItem)
             }
             
             bookCell.bookItems = newBooks
@@ -218,7 +218,7 @@ extension LibraryViewController: UITableViewDelegate {
         default:
             print(indexPath)
         }
-        routeToBookNavigation(bookItem)
+        routeToBookInfo(bookItem)
     }
 }
 
@@ -255,18 +255,26 @@ extension LibraryViewController: UITableViewDataSource {
 // MARK: Route
 extension LibraryViewController: RouteApp {
     
-    func routeToBookNavigation(_ bookItem: BookItem) {
+    func routeToBookInfo(_ bookItem: BookItem) {
         let bookVC = BookViewController()
         bookVC.bookItem = bookItem
-        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        bookVC.modalPresentationStyle = .overFullScreen
         
-        let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first
-        
-        keyWindow?.rootViewController = bookNavigation
+        present(bookVC, animated: false)
     }
+    
+//    func routeToBookNavigation(_ bookItem: BookItem) {
+//        let bookVC = BookViewController()
+//        bookVC.bookItem = bookItem
+//        let navigation = UINavigationController(rootViewController: bookVC)
+//        
+//        let keyWindow = UIApplication.shared.connectedScenes
+//            .filter({$0.activationState == .foregroundActive})
+//            .compactMap({$0 as? UIWindowScene})
+//            .first?.windows
+//            .filter({$0.isKeyWindow}).first
+//        
+//        keyWindow?.rootViewController = navigation
+//    }
     
 }

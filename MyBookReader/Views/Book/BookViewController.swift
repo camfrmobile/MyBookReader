@@ -25,7 +25,7 @@ class BookViewController: UIViewController {
     // MARK: Variables
     var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
     
-    var thisBook: Book = Book()
+    var readBook: Book = Book()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -45,6 +45,12 @@ class BookViewController: UIViewController {
         nowReadButton.layer.borderColor = UIColor.black.cgColor
         
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(onTapBack))
+        
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "imageName"), for: .normal)
+        button.addTarget(self, action: #selector(onTapBack), for: .touchUpInside)
+        let leftButtonBar = UIBarButtonItem(customView: button)
+        tabBarController?.navigationItem.rightBarButtonItems = [leftButtonBar]
         
         titleLabel.text = bookItem.title
         infoLabel.text = bookItem.desc
@@ -69,24 +75,24 @@ class BookViewController: UIViewController {
                 
                 // get full info book
                 // title
-                self.thisBook.title = try doc.select("div.introduce h1").text()
+                self.readBook.title = try doc.select("div.introduce h1").text()
                 // image
-                self.thisBook.imageUrl = try doc.select("div.introduce div.book img").attr("src")
+                self.readBook.imageUrl = try doc.select("div.introduce div.book img").attr("src")
 
                 // author
-                self.thisBook.author.name = try doc.select("div.introduce div.author a").text()
-                self.thisBook.author.url = try doc.select("div.introduce div.author a").attr("href")
+                self.readBook.author.name = try doc.select("div.introduce div.author a").text()
+                self.readBook.author.url = try doc.select("div.introduce div.author a").attr("href")
                 // cat
-                self.thisBook.category.name = try doc.select("div.introduce div.cat a").text()
-                self.thisBook.category.url = try doc.select("div.introduce div.cat a").attr("href")
+                self.readBook.category.name = try doc.select("div.introduce div.cat a").text()
+                self.readBook.category.url = try doc.select("div.introduce div.cat a").attr("href")
                 // total-chapter
                 let totalChaper = try doc.select("div.introduce div.total-chapter").text().replacingOccurrences(of: "Số chương:", with: "")
-                self.thisBook.totalChapter = Int(totalChaper) ?? 0
+                self.readBook.totalChapter = Int(totalChaper) ?? 0
                 
                 let view = try doc.select("div.introduce div.view").text().replacingOccurrences(of: "Lượt xem:", with: "")
-                self.thisBook.view = Int(view) ?? 0
+                self.readBook.view = Int(view) ?? 0
                 
-                self.thisBook.desc = try doc.select("div.description").text()
+                self.readBook.desc = try doc.select("div.description").text()
                 
                 // muc luc
                 let listChapter: Elements = try doc.select("#viewchapter ul.list li a")
@@ -98,7 +104,7 @@ class BookViewController: UIViewController {
                     
                     let chapter: Chapter = Chapter(name: chapName, url: chapUrl)
                     
-                    self.thisBook.listChapter.append(chapter)
+                    self.readBook.listChapter.append(chapter)
                 }
                 // muc luc page 2
                 
@@ -116,8 +122,8 @@ class BookViewController: UIViewController {
     }
     
     func reFillDataBook() {
-        infoLabel.text = thisBook.author.name
-        descLabel.text = thisBook.desc
+        infoLabel.text = readBook.author.name
+        descLabel.text = readBook.desc
     }
     
     // MARK: IBAction
@@ -125,10 +131,21 @@ class BookViewController: UIViewController {
         routeToMain()
     }
     
+    @IBAction func actionBack(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func actionAfterRead(_ sender: UIButton) {
     }
     
     @IBAction func actionNowRead(_ sender: UIButton) {
+        
+        
+        routeToReaderNavigation(readBook)
+        
+        
+        
+        
     }
     
 }
@@ -146,5 +163,19 @@ extension BookViewController: RouteApp {
         
         keyWindow?.rootViewController = homePageVC
         //keyWindow?.makeKeyAndVisible()
+    }
+    
+    func routeToReaderNavigation(_ readBook: Book) {
+        let readerVC = ReaderViewController()
+        readerVC.readBook = readBook
+        let navigation = UINavigationController(rootViewController: readerVC)
+
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+
+        keyWindow?.rootViewController = navigation
     }
 }
