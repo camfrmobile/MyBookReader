@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="contentTextView" destination="T7N-vY-jqf" id="Myh-wx-dNg"/>
                 <outlet property="formatView" destination="SSZ-yw-5Cq" id="cef-92-juU"/>
+                <outlet property="nextChapterButton" destination="QO2-6u-GI8" id="3tq-5c-dDc"/>
                 <outlet property="textLagerButton" destination="lYd-yx-8mD" id="0E6-Mc-3ff"/>
                 <outlet property="textSmallerButton" destination="AZG-qp-BQ4" id="0Cr-4M-36N"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -25,10 +26,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6g-zE-j2n" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="47" width="390" height="713"/>
+                    <rect key="frame" x="0.0" y="47" width="390" height="723"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T7N-vY-jqf">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="713"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="723"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
@@ -70,7 +71,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" red="0.97844529147540693" green="0.9886411778705636" blue="0.76363756251114367" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <color key="backgroundColor" red="0.86642266345998753" green="0.88448335951375578" blue="0.9886411778705636" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="SSZ-yw-5Cq" secondAttribute="height" multiplier="2:1" id="W1W-YF-3eD"/>
                                 <constraint firstAttribute="trailing" secondItem="Gxs-mM-aeG" secondAttribute="trailing" constant="10" id="WMK-HA-Inl"/>
@@ -92,21 +93,36 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPK-Xl-txy">
-                    <rect key="frame" x="0.0" y="760" width="390" height="50"/>
+                    <rect key="frame" x="0.0" y="770" width="390" height="40"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QO2-6u-GI8">
+                            <rect key="frame" x="20" y="0.0" width="350" height="36"/>
+                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Đọc tiếp">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="actionNextChapter:" destination="-1" eventType="touchUpInside" id="8hM-xH-29j"/>
+                            </connections>
+                        </button>
                         <progressView opaque="NO" contentMode="scaleAspectFill" verticalHuggingPriority="750" progress="0.5" trackImage="circle.lefthalf.filled" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="A8y-Ml-iRj">
-                            <rect key="frame" x="20" y="23" width="350" height="4"/>
+                            <rect key="frame" x="20" y="36" width="350" height="4"/>
                             <color key="progressTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="trackTintColor" red="0.92156863209999995" green="0.92156863209999995" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <imageReference key="progressImage" image="circle.righthalf.filled" catalog="system" symbolScale="medium" variableValue="0.60000000000000009"/>
                         </progressView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="A8y-Ml-iRj" firstAttribute="centerY" secondItem="jPK-Xl-txy" secondAttribute="centerY" id="M7X-Ko-JJR"/>
+                        <constraint firstItem="QO2-6u-GI8" firstAttribute="top" secondItem="jPK-Xl-txy" secondAttribute="top" id="BBI-bC-ELu"/>
+                        <constraint firstItem="QO2-6u-GI8" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" constant="20" id="DaR-gZ-TAw"/>
+                        <constraint firstAttribute="trailing" secondItem="QO2-6u-GI8" secondAttribute="trailing" constant="20" id="KKN-c2-GSe"/>
+                        <constraint firstAttribute="bottom" secondItem="A8y-Ml-iRj" secondAttribute="bottom" id="LDV-xt-A2t"/>
                         <constraint firstAttribute="trailing" secondItem="A8y-Ml-iRj" secondAttribute="trailing" constant="20" id="Mw4-Nk-puW"/>
+                        <constraint firstItem="A8y-Ml-iRj" firstAttribute="top" secondItem="QO2-6u-GI8" secondAttribute="bottom" id="hp1-5K-rie"/>
                         <constraint firstItem="A8y-Ml-iRj" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" constant="20" id="tLp-mx-yFs"/>
-                        <constraint firstAttribute="height" constant="50" id="yz9-R8-gsp"/>
+                        <constraint firstAttribute="height" constant="40" id="yz9-R8-gsp"/>
                     </constraints>
                 </view>
             </subviews>
@@ -132,6 +148,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -17,16 +17,17 @@ class ReaderViewController: UIViewController {
     @IBOutlet weak var formatView: UIView!
     @IBOutlet weak var textLagerButton: UIButton!
     @IBOutlet weak var textSmallerButton: UIButton!
+    @IBOutlet weak var nextChapterButton: UIButton!
     
     // MARK: Variables
     
     var readBook: Book = Book()
     var content: String = ""
-    var message: String = ""
     var fontSize: CGFloat = 20
     var fontName: String = "Arial"
     var lastChapter: Chapter?
-    var lastPosition: CGFloat = 10
+    var lastPosition: CGFloat = 0
+    var rightButton = UIBarButtonItem()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -60,6 +61,8 @@ class ReaderViewController: UIViewController {
         textSmallerButton.layer.cornerRadius = 10
         formatView.isHidden = true
         formatView.layer.cornerRadius = 5
+        
+        hiddenNextButton()
     }
     
     func setupText() {
@@ -96,7 +99,6 @@ class ReaderViewController: UIViewController {
 
                 // refill data
                 self.fillContentBook(text)
-                self.showContentBook()
                 
             } catch Exception.Error(let type, let message) {
                 print("ERROR: ", type, message)
@@ -110,18 +112,13 @@ class ReaderViewController: UIViewController {
     func fillContentBook(_ text: String) {
         content.append(text)
         content.append("\n\n")
-    }
-    
-    func showContentBook() {
         contentTextView.text = content
-        contentTextView.text.append(message)
     }
     
     func nextChapter() {
         // get next chap
         if readBook.chapterIndex >= (readBook.listChapter.count - 1) {
-            message = "- THE END -"
-            self.showContentBook()
+            nextChapterButton.setTitle("- THE END -", for: .normal)
             return
         }
         
@@ -130,6 +127,15 @@ class ReaderViewController: UIViewController {
         lastChapter = readBook.listChapter[readBook.chapterIndex]
 
         loadContentChapter()
+        hiddenNextButton()
+    }
+    
+    func showNextButton() {
+        nextChapterButton.isHidden = false
+    }
+    
+    func hiddenNextButton() {
+        nextChapterButton.isHidden = true
     }
     
     // MARK: IBAction
@@ -139,6 +145,12 @@ class ReaderViewController: UIViewController {
     
     @objc func onTapFormatText() {
         formatView.isHidden = !formatView.isHidden
+        
+        if formatView.isHidden {
+            navigationItem.rightBarButtonItem?.tintColor = .black
+        } else {
+            navigationItem.rightBarButtonItem?.tintColor = .blue
+        }
     }
     
     @IBAction func actonFormatTextLager(_ sender: UIButton) {
@@ -157,6 +169,9 @@ class ReaderViewController: UIViewController {
         contentTextView.font = UIFont(name: fontName, size: fontSize)
     }
     
+    @IBAction func actionNextChapter(_ sender: UIButton) {
+        nextChapter()
+    }
 }
 
 extension ReaderViewController: RouteApp {
@@ -179,15 +194,22 @@ extension ReaderViewController: RouteApp {
 extension ReaderViewController: UITextViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > lastPosition {
+        
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 100) {
+            showNextButton()
+        } else {
+            hiddenNextButton()
+        }
+        if scrollView.contentOffset.y >= lastPosition {
             
         } else {
+            print("R: \(scrollView.contentOffset.y)")
             return
         }
-        if (scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height)
+
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)
             {
-                lastPosition = scrollView.contentOffset.y + 20
-            
+                lastPosition = scrollView.contentOffset.y
                 nextChapter()
             }
     }

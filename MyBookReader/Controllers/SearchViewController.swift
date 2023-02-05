@@ -14,6 +14,7 @@ class SearchViewController: UIViewController {
     // MARK: IBOutlet
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTableView: UITableView!
+    @IBOutlet weak var loadingView: UIView!
     
     // MARK: Variables
     let searchTextField: UITextField = {
@@ -28,13 +29,6 @@ class SearchViewController: UIViewController {
     var searchBooks = [BookItem]()
     var histories: [String] = ["sách", "truyện"]
     
-    // for loading
-    // View which contains the loading text and the spinner
-    let loadingView = UIView()
-    // Spinner shown during load the TableView
-    let spinner = UIActivityIndicatorView()
-    // Text shown during load the TableView
-    let loadingLabel = UILabel()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -43,7 +37,6 @@ class SearchViewController: UIViewController {
         setupUI()
         setupTextField()
         setupTabelView()
-        setupLoadingScreen()
         setupStart()
     }
     
@@ -62,6 +55,12 @@ class SearchViewController: UIViewController {
         searchTextField.addPaddingRightIcon(suffix!, padding: 40)
         // radius
         searchTextField.layer.cornerRadius = 10
+        
+        self.loadingView.isHidden = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            
+        }
     }
     
     func setupTabelView() {
@@ -127,14 +126,15 @@ class SearchViewController: UIViewController {
         // empty data
         searchBooks.removeAll()
         
+        
         let keyword = searchTextField.text
 
         guard let keyword = keyword else { return }
         
         // empty
         if keyword.isEmpty { return }
-            
-        startLoadingScreen() // start loading
+        
+        loadingView.isHidden = false // start loading
         
         searchBook(keyword)
         
@@ -144,52 +144,9 @@ class SearchViewController: UIViewController {
             histories.remove(at: 0)
         }
         
-        removeLoadingScreen() // end loading
+        loadingView.isHidden = true // end loading
     }
-    
-    // Set the activity indicator into the main view
-    private func setupLoadingScreen() {
-        // Sets the view which contains the loading text and the spinner
-        let width: CGFloat = 120
-        let height: CGFloat = 30
-        let x = (searchTableView.bounds.width / 2) - (width / 2)
-        let y = (searchTableView.bounds.height / 2) - (height / 2)
-        loadingView.frame = CGRect(x: x, y: y, width: width, height: height)
 
-        // Sets loading text
-        loadingLabel.textColor = .gray
-        loadingLabel.textAlignment = .center
-        loadingLabel.text = "Đang tìm..."
-        loadingLabel.frame = CGRect(x: 0, y: 0, width: 140, height: 30)
-
-        // Sets spinner
-        spinner.style = .large
-        spinner.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        spinner.startAnimating()
-
-        // Adds text and spinner to the view
-        loadingView.addSubview(spinner)
-        loadingView.addSubview(loadingLabel)
-
-        view.addSubview(loadingView)
-        removeLoadingScreen()
-    }
-    
-    // Remove the activity indicator from the main view
-     private func startLoadingScreen() {
-         // Hides and stops the text and the spinner
-         spinner.startAnimating()
-         spinner.isHidden = false
-         loadingLabel.isHidden = false
-     }
-    
-    // Remove the activity indicator from the main view
-     private func removeLoadingScreen() {
-         // Hides and stops the text and the spinner
-         spinner.stopAnimating()
-         spinner.isHidden = true
-         loadingLabel.isHidden = true
-     }
 }
 
 // MARK: Extension Textfield
