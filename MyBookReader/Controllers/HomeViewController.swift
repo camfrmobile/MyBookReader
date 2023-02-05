@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
     
     func setupNew() {
         if readingBooks.count == 0 && doneBooks.count == 0 && scheduleBooks.count == 0 {
-            let item = BookItem(title: "", url: "", desc: "", imageUrl: "")
+            let item = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
             readingBooks.append(item)
         }
     }
@@ -139,7 +139,7 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
-        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "")
+        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
         switch indexPath.section {
         case 0: // reading book
             bookItem = readingBooks[indexPath.row]

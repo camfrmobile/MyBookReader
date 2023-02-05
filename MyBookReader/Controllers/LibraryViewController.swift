@@ -71,7 +71,11 @@ class LibraryViewController: UIViewController {
                     let url = try item.attr("href")
                     let imageUrl = try item.select("img").attr("data-src")
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl)
+                    // get rating
+                    var rating = Double.random(in: 3...5)
+                    rating = Double(String(format: "%.1f", rating)) ?? 3
+                    
+                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl, rating: rating)
                     
                     self.newBooks.append(itemBook)
                 }
@@ -86,7 +90,11 @@ class LibraryViewController: UIViewController {
                     let imageUrl = try item.select("img").attr("data-src")
                     view = "Lượt xem: \(view)"
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: view, imageUrl: imageUrl)
+                    // get rating
+                    var rating = Double.random(in: 3...5)
+                    rating = Double(String(format: "%.1f", rating)) ?? 3
+                    
+                    let itemBook: BookItem = BookItem(title: title, url: url, desc: view, imageUrl: imageUrl, rating: rating)
                     
                     self.topBooks.append(itemBook)
                 }
@@ -168,9 +176,7 @@ extension LibraryViewController: UITableViewDelegate {
             bookCell.handleBook = {[weak self] bookItem in
                 guard let self = self else { return }
                 
-                let bookVC = BookViewController()
-                bookVC.modalPresentationStyle = .overFullScreen
-                self.present(bookVC, animated: true)
+                self.routeToBookNavigation(bookItem)
             }
             
             bookCell.bookItems = newBooks
@@ -203,7 +209,7 @@ extension LibraryViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "")
+        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
         switch indexPath.section {
         case 0: // new book
             bookItem = newBooks[indexPath.row]

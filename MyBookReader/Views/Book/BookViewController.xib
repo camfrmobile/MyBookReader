@@ -95,7 +95,7 @@
                                     <color key="textColor" red="0.50980395079999996" green="0.50980395079999996" blue="0.50980395079999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Ky-Zw-0EZ">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Ky-Zw-0EZ">
                                     <rect key="frame" x="92.666666666666686" y="0.0" width="205" height="310"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="205" id="9uG-Ms-YXq"/>
@@ -111,9 +111,9 @@
                                 <constraint firstItem="mAs-hi-M3d" firstAttribute="top" secondItem="2Ky-Zw-0EZ" secondAttribute="bottom" constant="20" id="HVc-65-L6V"/>
                                 <constraint firstAttribute="trailing" secondItem="06D-PU-KKn" secondAttribute="trailing" constant="30" id="ILt-LR-O7Q"/>
                                 <constraint firstItem="06D-PU-KKn" firstAttribute="top" secondItem="mAs-hi-M3d" secondAttribute="bottom" constant="10" id="QVh-CW-YDk"/>
+                                <constraint firstAttribute="height" constant="1500" id="dzF-6A-hga"/>
                                 <constraint firstItem="06D-PU-KKn" firstAttribute="leading" secondItem="knl-9u-bEh" secondAttribute="leading" constant="30" id="gI2-9f-u9g"/>
                                 <constraint firstItem="2Ky-Zw-0EZ" firstAttribute="centerX" secondItem="knl-9u-bEh" secondAttribute="centerX" id="jbf-kd-hMe"/>
-                                <constraint firstAttribute="height" constant="1500" id="pNT-jz-zih"/>
                             </constraints>
                         </view>
                     </subviews>

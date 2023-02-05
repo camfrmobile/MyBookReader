@@ -7,6 +7,8 @@
 
 import UIKit
 import Cosmos
+import Alamofire
+import SwiftSoup
 
 class BookViewController: UIViewController {
     
@@ -21,7 +23,9 @@ class BookViewController: UIViewController {
     @IBOutlet weak var nowReadButton: UIButton!
     
     // MARK: Variables
-    var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "")
+    var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "", rating: 0)
+    
+    var thisBook: Book = Book()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -43,17 +47,77 @@ class BookViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(onTapBack))
         
         titleLabel.text = bookItem.title
-        descLabel.text = "Adam Khoo là tác giả luôn được biết đến với các tác phẩm nổi tiếng như Tôi Tài Giỏi, Bạn Cũng Thế, Bí Quyết Tay Trắng Thành Triệu Phú, Chiến Thắng Trò Chơi Cuộc Sống…Và một cuốn sách không thể không kể đến trong đó là cuốn “Làm Chủ Tư Duy, Thay Đổi Vận Mệnh”. Với nhiều độc giả, Adam Khoo đã là một tác giả không quá xa lạ.\nÔng là một doanh nhân thành đạt, là một triệu phú trẻ tuổi nhất ở Singapore. Hiện tại, ông đang làm chủ tịch, chuyên gia đào tạo của tập đoàn giáo dục Adam Khoo Learning Technologies. Nhiều tác phẩm của ông viết đã trở thành cuốn sách best- seller nổi tiếng trên khắp thế giới.\nLàm Chủ Tư Duy, Thay Đổi Vận Mệnh” là những bài học được đúc kết, những tư duy gợi mở cùng những điều khiến chúng ta giật mình vì đến giờ mới nhận ra chân lý như vậy.\nHầu hết những dẫn chứng trong sách của tác giả là của những con người thành công tiêu biểu trên thế giới. Nhưng bên cạnh đó, cuốn sách còn có cả những kĩ năng, hiểu biết của chính tác giả, một con người cũng vô cùng thành công. Cảm hứng trong cuốn sách truyền tải cho người đọc rất rõ ràng và có khả năng khiến con người ta thay đổi để phát triển bản thân ngày càng mạnh mẽ.\nKhi đọc hết cuốn sách, với mỗi tư tưởng của tác giả, ta đã có thể thấm nhuần và khám phá được nhiều điều mới lạ, bổ ích hơn nữa từ con người tác giả. Sau cùng, hành động thực tế sẽ giúp bạn chạm tới và nắm giữ thành công đúng cách."
-        var rating = Double.random(in: 3...5)
-        rating = Double(String(format: "%.1f", rating)) ?? 3
+        infoLabel.text = bookItem.desc
+        descLabel.text = ""
         
-        starCosmosView.rating = rating
-        starLabel.text = "\(rating) / 5.0"
+        starCosmosView.rating = bookItem.rating
+        starLabel.text = "\(bookItem.rating) / 5.0"
         imageView.setBookImage(urlImage: bookItem.imageUrl)
     }
     
     func LoadAllInfoBook() {
         
+        AF.request(bookItem.url).responseString {[weak self] response in
+            //debugPrint("Response: \(response)")
+            
+            guard let self = self else { return }
+        
+            guard let html = response.value else { return }
+        
+            do {
+                let doc: Document = try SwiftSoup.parse(html)
+                
+                // get full info book
+                // title
+                self.thisBook.title = try doc.select("div.introduce h1").text()
+                // image
+                self.thisBook.imageUrl = try doc.select("div.introduce div.book img").attr("src")
+
+                // author
+                self.thisBook.author.name = try doc.select("div.introduce div.author a").text()
+                self.thisBook.author.url = try doc.select("div.introduce div.author a").attr("href")
+                // cat
+                self.thisBook.category.name = try doc.select("div.introduce div.cat a").text()
+                self.thisBook.category.url = try doc.select("div.introduce div.cat a").attr("href")
+                // total-chapter
+                let totalChaper = try doc.select("div.introduce div.total-chapter").text().replacingOccurrences(of: "Số chương:", with: "")
+                self.thisBook.totalChapter = Int(totalChaper) ?? 0
+                
+                let view = try doc.select("div.introduce div.view").text().replacingOccurrences(of: "Lượt xem:", with: "")
+                self.thisBook.view = Int(view) ?? 0
+                
+                self.thisBook.desc = try doc.select("div.description").text()
+                
+                // muc luc
+                let listChapter: Elements = try doc.select("#viewchapter ul.list li a")
+                
+                for item in listChapter {
+                    
+                    let chapName = try item.select("div.introduce div.author a").text()
+                    let chapUrl = try item.select("div.introduce div.author a").attr("href")
+                    
+                    let chapter: Chapter = Chapter(name: chapName, url: chapUrl)
+                    
+                    self.thisBook.listChapter.append(chapter)
+                }
+                // muc luc page 2
+                
+                // refill data
+                self.reFillDataBook()
+                
+            } catch Exception.Error(let type, let message) {
+                print(type)
+                print(message)
+            } catch {
+                print("error")
+            }
+        }
+        //end
+    }
+    
+    func reFillDataBook() {
+        infoLabel.text = thisBook.author.name
+        descLabel.text = thisBook.desc
     }
     
     // MARK: IBAction

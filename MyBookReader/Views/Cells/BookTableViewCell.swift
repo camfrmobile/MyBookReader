@@ -22,7 +22,7 @@ class BookTableViewCell: UITableViewCell {
             if let bookItem = bookItem {
                 titleLabel.text = bookItem.title
                 descLabel.text = bookItem.desc
-                starCosmosView.rating = Double.random(in: 3...5)
+                starCosmosView.rating = bookItem.rating
                 bookImageView.setBookImage(urlImage: bookItem.imageUrl)
                 
             }

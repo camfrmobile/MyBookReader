@@ -10,9 +10,8 @@ import Foundation
 class Book {
     var id: String
     var title: String           // ten sach
-    var authorName: String      // ten tac gia
-    var authorUrl: String       // url tac gia
-    var category: String        // the loai
+    var author: Chapter         // tac gia
+    var category: Chapter        // the loai
     var totalChapter: Int       // so chuong
     var view: Int               // luot xem
     var desc: String            // description
@@ -20,11 +19,23 @@ class Book {
     var url: String             // url book detail
     var listChapter: [Chapter]   // Muc luc sach
     
-    init(id: String, title: String, authorName: String, authorUrl: String, category: String, totalChapter: Int, view: Int, desc: String, imageUrl: String, url: String, listChapter: [Chapter]) {
+    init() {
+        self.id = ""
+        self.title = ""
+        self.author = Chapter()
+        self.category = Chapter()
+        self.totalChapter = 0
+        self.view = 0
+        self.desc = ""
+        self.imageUrl = ""
+        self.url = ""
+        self.listChapter = []
+    }
+    
+    init(id: String, title: String, author: Chapter, category: Chapter, totalChapter: Int, view: Int, desc: String, imageUrl: String, url: String, listChapter: [Chapter]) {
         self.id = id
         self.title = title
-        self.authorName = authorName
-        self.authorUrl = authorUrl
+        self.author = author
         self.category = category
         self.totalChapter = totalChapter
         self.view = view
@@ -33,14 +44,21 @@ class Book {
         self.url = url
         self.listChapter = listChapter
     }
+    
 }
 
 class Chapter {
-    var title: String           // ten chuong
+    var name: String           // ten chuong
     var url: String             // url chuong
     
-    init(title: String, url: String) {
-        self.title = title
+    init() {
+        self.name = ""
+        self.url = ""
+    }
+    
+    init(name: String, url: String) {
+        self.name = name
         self.url = url
     }
 }
+

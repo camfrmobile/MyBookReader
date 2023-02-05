@@ -101,7 +101,10 @@ class SearchViewController: UIViewController {
                     let url = try item.select("a").attr("href")
                     let imageUrl = try item.select("img").attr("data-src")
                     
-                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl)
+                    var rating = Double.random(in: 3...5)
+                    rating = Double(String(format: "%.1f", rating)) ?? 3
+                    
+                    let itemBook: BookItem = BookItem(title: title, url: url, desc: "", imageUrl: imageUrl, rating: rating)
                     
                     self.searchBooks.append(itemBook)
                 }
