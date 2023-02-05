@@ -11,13 +11,15 @@ class Book {
     var id: String
     var title: String           // ten sach
     var author: Chapter         // tac gia
-    var category: Chapter        // the loai
+    var category: Chapter       // the loai
     var totalChapter: Int       // so chuong
     var view: Int               // luot xem
     var desc: String            // description
     var imageUrl : String       // url image
     var url: String             // url book detail
-    var listChapter: [Chapter]   // Muc luc sach
+    var listChapter: [Chapter]  // Muc luc sach
+    var chapterIndex = 0
+    var rating: Double = 0      // danh gia
     
     init() {
         self.id = ""

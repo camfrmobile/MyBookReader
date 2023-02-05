@@ -71,7 +71,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="YhL-Uc-7TY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="3Nr-XC-icc"/>
                             <constraint firstItem="YhL-Uc-7TY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DQj-8h-UwO"/>
@@ -116,7 +116,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KMR-b2-BpE"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="KfR-fL-CVf" firstAttribute="leading" secondItem="KMR-b2-BpE" secondAttribute="leading" id="5ac-pv-NRf"/>
                             <constraint firstItem="KfR-fL-CVf" firstAttribute="top" secondItem="KMR-b2-BpE" secondAttribute="top" id="93i-kh-Xjt"/>
@@ -169,7 +169,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2Lk-Nu-rOk"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2Lk-Nu-rOk" firstAttribute="bottom" secondItem="GaA-o0-Nzw" secondAttribute="bottom" id="3wM-Gp-jtS"/>
                             <constraint firstItem="GaA-o0-Nzw" firstAttribute="top" secondItem="2Lk-Nu-rOk" secondAttribute="top" id="88Y-fF-sOm"/>
@@ -268,7 +268,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbW-e7-jWC">
                                                 <rect key="frame" x="0.0" y="136.33333333333337" width="353" height="48"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Button" backgroundImage="log_out"/>
+                                                <state key="normal" backgroundImage="log_out"/>
                                                 <connections>
                                                     <action selector="logOutAction:" destination="grd-9C-H3V" eventType="touchUpInside" id="Y2p-bE-arZ"/>
                                                 </connections>
@@ -291,7 +291,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VLI-xM-T3t"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="o3Z-Cl-Idz" firstAttribute="leading" secondItem="VLI-xM-T3t" secondAttribute="leading" id="3h9-RL-h0v"/>
                             <constraint firstItem="o3Z-Cl-Idz" firstAttribute="top" secondItem="VLI-xM-T3t" secondAttribute="top" id="Ntk-Dz-OmG"/>

@@ -113,8 +113,7 @@ class SearchViewController: UIViewController {
                 self.searchTableView.reloadData()
         
             } catch Exception.Error(let type, let message) {
-                print(type)
-                print(message)
+                print("ERROR: ", type, message)
             } catch {
                 print("error")
             }
