@@ -18,6 +18,7 @@ class ReaderViewController: UIViewController {
     @IBOutlet weak var textLagerButton: UIButton!
     @IBOutlet weak var textSmallerButton: UIButton!
     @IBOutlet weak var nextChapterButton: UIButton!
+    @IBOutlet weak var progressView: UIProgressView!
     
     // MARK: Variables
     
@@ -116,6 +117,7 @@ class ReaderViewController: UIViewController {
     }
     
     func nextChapter() {
+        updateProgress()
         // get next chap
         if readBook.chapterIndex >= (readBook.listChapter.count - 1) {
             nextChapterButton.setTitle("- THE END -", for: .normal)
@@ -128,6 +130,7 @@ class ReaderViewController: UIViewController {
 
         loadContentChapter()
         hiddenNextButton()
+        updateProgress()
     }
     
     func showNextButton() {
@@ -136,6 +139,12 @@ class ReaderViewController: UIViewController {
     
     func hiddenNextButton() {
         nextChapterButton.isHidden = true
+    }
+    
+    func updateProgress() {
+        let progress = Float(readBook.chapterIndex) / Float(readBook.listChapter.count)
+        progressView.progress = progress // Tiến độ công việc chạy từ 0 - 1
+        print(progress)
     }
     
     // MARK: IBAction
@@ -200,10 +209,7 @@ extension ReaderViewController: UITextViewDelegate {
         } else {
             hiddenNextButton()
         }
-        if scrollView.contentOffset.y >= lastPosition {
-            
-        } else {
-            print("R: \(scrollView.contentOffset.y)")
+        if scrollView.contentOffset.y < lastPosition {
             return
         }
 
