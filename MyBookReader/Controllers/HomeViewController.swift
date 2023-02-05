@@ -52,41 +52,24 @@ class HomeViewController: UIViewController {
 
     // MARK: IBAction
     @IBAction func accountButtonAction(_ sender: UIButton) {
-        SwitchToTabAccount()
+        switchToTabAccount()
     }
     
     
     // MARK: Switch
-    func SwitchToTabHome() {
+    func switchToTabHome() {
         tabBarController?.selectedIndex = 0
     }
-    func SwitchToTabLibrary() {
+    func switchToTabLibrary() {
         tabBarController?.selectedIndex = 1
     }
-    func SwitchToTabSearch() {
+    func switchToTabSearch() {
         tabBarController?.selectedIndex = 2
     }
-    func SwitchToTabAccount() {
+    func switchToTabAccount() {
         tabBarController?.selectedIndex = 3
     }
     
-    
-    // MARK: Route
-    private func routeToBookNavigation(bookurl: String) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let bookNavigation = storyboard.instantiateViewController(withIdentifier: "BookNavigation")
-        
-        let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first
-        
-        keyWindow?.rootViewController = bookNavigation
-    }
-    
-    
-
 }
 
 // MARK: Extension Table View
@@ -113,11 +96,12 @@ extension HomeViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             if bookItem.title.isEmpty && bookItem.url.isEmpty && bookItem.desc.isEmpty && bookItem.desc.isEmpty {
-                self.SwitchToTabLibrary()
+                self.switchToTabLibrary()
                 return
             }
             
-            self.routeToBookNavigation(bookurl: "")
+            // go to book
+            self.routeToBookNavigation(bookItem)
         }
         
         switch indexPath.section {
@@ -155,12 +139,18 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
-        let bookVC = BookViewController()
-        //bookVC.modalPresentationStyle = .overFullScreen
-
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let registerVC = storyboard.instantiateViewController(withIdentifier: "RegisterViewController")
-        navigationController?.pushViewController(bookVC, animated: true)
+        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "")
+        switch indexPath.section {
+        case 0: // reading book
+            bookItem = readingBooks[indexPath.row]
+        case 1: // done book
+            bookItem = doneBooks[indexPath.row]
+        case 2: // schedule book
+            bookItem = scheduleBooks[indexPath.row]
+        default:
+            print(indexPath)
+        }
+        routeToBookNavigation(bookItem)
     }
 }
 
@@ -191,6 +181,25 @@ extension HomeViewController: UITableViewDataSource {
         
         viewHeader.addSubview(label)
         return viewHeader
+    }
+    
+}
+
+// MARK: Route
+extension HomeViewController: RouteApp {
+    
+    func routeToBookNavigation(_ bookItem: BookItem) {
+        let bookVC = BookViewController()
+        bookVC.bookItem = bookItem
+        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        
+        keyWindow?.rootViewController = bookNavigation
     }
     
 }

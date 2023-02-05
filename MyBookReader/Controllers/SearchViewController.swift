@@ -81,7 +81,7 @@ class SearchViewController: UIViewController {
     }
 
     // MARK: Search Book
-    func SearchBook(_ keyword: String) {
+    func searchBook(_ keyword: String) {
         
         AF.request(ApiNameManager.shared.getUrlSearch(keyword)).responseString {[weak self] response in
             //debugPrint("Response: \(response)")
@@ -119,7 +119,7 @@ class SearchViewController: UIViewController {
         //end
     }
     
-    func SearchBookAction() {
+    func searchBookAction() {
         // khi nhấn return
         searchTextField.resignFirstResponder() // Dừng nhập liệu, hạ bàn phím
         // empty data
@@ -134,7 +134,7 @@ class SearchViewController: UIViewController {
             
         startLoadingScreen() // start loading
         
-        SearchBook(keyword)
+        searchBook(keyword)
         
         // save history
         histories.append(keyword)
@@ -206,7 +206,7 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        self.SearchBookAction()
+        self.searchBookAction()
         
         //view.endEditing(true) // dùng khi k xác định được đối tưong đang được nhập
         return true
@@ -264,9 +264,10 @@ extension SearchViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0: // search history
             searchTextField.text = histories[indexPath.row]
-            SearchBookAction()
+            searchBookAction()
         case 1: // search result
-            print(indexPath)
+            let bookItem = searchBooks[indexPath.row]
+            routeToBookNavigation(bookItem)
         default:
             print(indexPath)
         }
@@ -301,5 +302,24 @@ extension SearchViewController: UITableViewDataSource {
 //        viewHeader.addSubview(label)
 //        return viewHeader
 //    }
+    
+}
+
+// MARK: Route
+extension SearchViewController: RouteApp {
+    
+    func routeToBookNavigation(_ bookItem: BookItem) {
+        let bookVC = BookViewController()
+        bookVC.bookItem = bookItem
+        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        
+        keyWindow?.rootViewController = bookNavigation
+    }
     
 }

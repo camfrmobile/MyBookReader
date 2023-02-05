@@ -196,17 +196,23 @@ extension LibraryViewController: UITableViewDelegate {
         case 0:
             return 300 // new book
         case 1:
-            return 105 // too book
+            return 105 // top book
         default:
             return UITableView.automaticDimension
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
-        let bookVC = BookViewController()
-        bookVC.modalPresentationStyle = .overFullScreen
-        present(bookVC, animated: true)
+        var bookItem: BookItem = BookItem(title: "", url: "", desc: "", imageUrl: "")
+        switch indexPath.section {
+        case 0: // new book
+            bookItem = newBooks[indexPath.row]
+        case 1: // top book
+            bookItem = topBooks[indexPath.row]
+        default:
+            print(indexPath)
+        }
+        routeToBookNavigation(bookItem)
     }
 }
 
@@ -237,6 +243,24 @@ extension LibraryViewController: UITableViewDataSource {
         
         viewHeader.addSubview(label)
         return viewHeader
+    }
+}
+
+// MARK: Route
+extension LibraryViewController: RouteApp {
+    
+    func routeToBookNavigation(_ bookItem: BookItem) {
+        let bookVC = BookViewController()
+        bookVC.bookItem = bookItem
+        let bookNavigation = UINavigationController(rootViewController: bookVC)
+        
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+        
+        keyWindow?.rootViewController = bookNavigation
     }
     
 }

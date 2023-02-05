@@ -90,31 +90,6 @@
             </objects>
             <point key="canvasLocation" x="1040" y="-34.123222748815166"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="dLl-TO-Wuc">
-            <objects>
-                <viewController id="q5Y-LH-5El" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pqw-mL-jQP">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0y-Fb-0aq">
-                                <rect key="frame" x="121" y="210" width="233" height="326"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="DwI-1h-tfX"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="c2Q-ad-amp"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7fO-6p-aOs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1965.6488549618321" y="748.59154929577471"/>
-        </scene>
         <!--Thư viện-->
         <scene sceneID="nQk-to-rnv">
             <objects>
@@ -355,24 +330,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B92-K3-lQL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="64.615384615384613" y="-34.123222748815166"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="mnU-j3-9Tn">
-            <objects>
-                <navigationController storyboardIdentifier="BookNavigation" automaticallyAdjustsScrollViewInsets="NO" id="kpG-T7-J8c" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tRi-8G-eeX">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="q5Y-LH-5El" kind="relationship" relationship="rootViewController" id="Kbk-N2-cbG"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JOq-TJ-e8u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1038.9312977099237" y="748.59154929577471"/>
         </scene>
     </scenes>
     <resources>
