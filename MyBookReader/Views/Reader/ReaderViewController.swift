@@ -24,7 +24,6 @@ class ReaderViewController: UIViewController {
     
     var iBook: Book = Book()
     var content: String = ""
-    var fontSize: CGFloat = 20
     var fontName: String = "Arial"
     var lastChapter: Chapter?
     var lastPosition: CGFloat = 0
@@ -33,7 +32,7 @@ class ReaderViewController: UIViewController {
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("ooooo", iBook.fontSize)
         setupUser()
         
         setupUI()
@@ -44,7 +43,8 @@ class ReaderViewController: UIViewController {
         
         loadContentChapter()
         
-        saveBookToDatabase(iBook)
+        saveBookToFirebase(iBook)
+        
     }
     
     func setupUser() {
@@ -53,7 +53,6 @@ class ReaderViewController: UIViewController {
         identification = authUser.uid
     }
     
-
     func setupUI() {
         contentTextView.delegate = self
         contentTextView.isEditable = false
@@ -83,10 +82,11 @@ class ReaderViewController: UIViewController {
     }
     
     func setupText() {
-        // book content text
-        contentTextView.font = UIFont(name: fontName, size: fontSize)
-        
-        navigationItem.title = "Đang mở..."
+        contentTextView.font = UIFont(name: fontName, size: iBook.fontSize)
+    }
+    
+    func saveFontSize() {
+        saveBookToFirebase(docId: iBook.id, data: ["fontSize": iBook.fontSize])
     }
     
     func setupChapter() {
@@ -143,7 +143,7 @@ class ReaderViewController: UIViewController {
         
         if iBook.chapterIndex >= (iBook.totalChapter - 1) {
             iBook.status = "READ_DONE"
-            saveBookToDatabase(docId: iBook.id, data: ["status": iBook.status])
+            saveBookToFirebase(docId: iBook.id, data: ["status": iBook.status])
         }
         // get next chap
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
@@ -195,19 +195,23 @@ class ReaderViewController: UIViewController {
     }
     
     @IBAction func actonFormatTextLager(_ sender: UIButton) {
-        if fontSize > 40 {
+        if iBook.fontSize > 40 {
             return
         }
-        fontSize += 2
-        contentTextView.font = UIFont(name: fontName, size: fontSize)
+        iBook.fontSize += 2
+        
+        setupText()
+        saveFontSize()
     }
     
     @IBAction func actionFormatTextSmaller(_ sender: UIButton) {
-        if fontSize < 15 {
+        if iBook.fontSize < 15 {
             return
         }
-        fontSize -= 2
-        contentTextView.font = UIFont(name: fontName, size: fontSize)
+        iBook.fontSize -= 2
+        
+        setupText()
+        saveFontSize()
     }
     
     @IBAction func actionNextChapter(_ sender: UIButton) {

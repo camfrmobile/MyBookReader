@@ -32,7 +32,7 @@ class HomeViewController: UIViewController {
         
         setupTableView()
         
-        loadBookFromDatabase()
+        loadBookFromFirebase()
     }
     
     func setupUI() {
@@ -43,6 +43,9 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onDeleteBook(notification:)), name: Notification.Name("DeleteBook"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(onReadAfterBook(notification:)), name: Notification.Name("ReadAfter"), object: nil)
+
+//        NotificationCenter.default.addObserver(self, selector: #selector(onReadBook(notification:)), name: Notification.Name("ReadBook"), object: nil)
+
     }
     
     func setupTableView() {
@@ -62,7 +65,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func loadBookFromDatabase() {
+    func loadBookFromFirebase() {
         readingBooks.removeAll()
         doneBooks.removeAll()
         scheduleBooks.removeAll()
@@ -94,7 +97,7 @@ class HomeViewController: UIViewController {
                                 //let docID = document.documentID
                                 let docData = document.data()
                                 
-                                let iBook = docToBook(docData)
+                                let iBook = convertDocToBook(docData)
                                 
                                 self.readingBooks.append(iBook)
                             }
@@ -127,7 +130,7 @@ class HomeViewController: UIViewController {
                                 //let docID = document.documentID
                                 let docData = document.data()
                                 
-                                let iBook = docToBook(docData)
+                                let iBook = convertDocToBook(docData)
                                 
                                 self.doneBooks.append(iBook)
                             }
@@ -160,7 +163,7 @@ class HomeViewController: UIViewController {
                                 //let docID = document.documentID
                                 let docData = document.data()
                                 
-                                let iBook = docToBook(docData)
+                                let iBook = convertDocToBook(docData)
                                 
                                 self.scheduleBooks.append(iBook)
                             }
@@ -210,7 +213,7 @@ class HomeViewController: UIViewController {
         let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
         
         iBook.status = "READ_AFTER"
-        saveBookToDatabase(iBook)
+        saveBookToFirebase(iBook)
         
         reloadTableAfterRemove(iBook)
         
@@ -218,6 +221,13 @@ class HomeViewController: UIViewController {
         
         homeTableView.reloadData()
     }
+
+//    @objc func onReadBook(notification: Foundation.Notification) {
+//
+//        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
+//
+//        routeToReaderNavigation(iBook)
+//    }
     
     func deleteBook(_ iBook: Book) {
 
@@ -297,7 +307,7 @@ extension HomeViewController: UITableViewDelegate {
                 return
             }
             
-            // go to book
+            // go to read book
             self.routeToReaderNavigation(iBook)
         }
         
@@ -359,6 +369,7 @@ extension HomeViewController: UITableViewDelegate {
         default:
             print("indexPath", indexPath)
         }
+        print("33", iBook.title)
         routeToReaderNavigation(iBook)
     }
 }

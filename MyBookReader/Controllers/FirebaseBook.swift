@@ -8,9 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
-
-let deleteBook = Notification.Name("DeleteBook")
-
+import SwiftyJSON
 
 let authUser = Auth.auth().currentUser
 
@@ -39,7 +37,46 @@ func setupUser() {
 }
 
 
-func docToBook(_ docData: [String: Any]) -> Book {
+func convertBookToDoc(_ iBook: Book) -> [String: Any] {
+    
+    var listChapter: [String: Any] = [:]
+    let updatedAt = Date().timeIntervalSince1970
+    
+    for (index, value) in iBook.listChapter.enumerated() {
+        listChapter["\(index)"] = [
+            "name": value.name,
+            "url": value.url
+        ]
+    }
+    
+    let data: [String : Any] = [
+        "id": iBook.id,
+        "title": iBook.title,
+        "author": [
+            "name": iBook.author.name,
+            "url": iBook.author.url
+        ],
+        "category": [
+            "name": iBook.category.name,
+            "url": iBook.category.url
+        ],
+        "totalChapter": iBook.totalChapter,
+        "view": iBook.view,
+        "desc": "",//book.desc,
+        "imageUrl": iBook.imageUrl,
+        "url": iBook.url,
+        "listChapter": listChapter,
+        "status": iBook.status,
+        "isFavorite": iBook.isFavorite,
+        "updatedAt": updatedAt,
+        "fontSize": iBook.fontSize
+    ]
+    
+    return data
+}
+
+
+func convertDocToBook(_ docData: [String: Any]) -> Book {
     
     let iBook = Book()
     iBook.id = docData["id"] as? String ?? ""
@@ -53,29 +90,33 @@ func docToBook(_ docData: [String: Any]) -> Book {
     iBook.chapterIndex = docData["chapterIndex"]  as? Int ?? 0
     iBook.rating = docData["rating"] as? Double ?? 0
     iBook.status = docData["status"]  as? String ?? ""
-    iBook.isFavorite = docData["isFavorite"]  as? Bool ?? false
+    iBook.isFavorite = docData["isFavorite"] as? Bool ?? false
+    iBook.fontSize = docData["fontSize"] as? CGFloat ?? 20
     
-    if let author = docData["author"] as? Chapter {
-        iBook.author = Chapter(name: author.name, url: author.url)
-    }
-    if let category = docData["category"] as? Chapter {
-        iBook.category = Chapter(name: category.name, url: category.url)
-    }
+    let author = JSON(docData["author"] ?? "")
+    iBook.author = Chapter(name: author["name"].stringValue, url: author["url"].stringValue)
     
-    if let listChapter = docData["listChapter"] as? [Chapter] {
-        for chapter in listChapter {
-            let chapter = Chapter(name: chapter.name, url: chapter.url)
-            iBook.listChapter.append(chapter)
-        }
+    let category = JSON(docData["category"] ?? "")
+    iBook.category = Chapter(name: category["name"].stringValue, url: category["url"].stringValue)
+    
+    let data = JSON(docData["listChapter"] ?? "")
+    for (_, value) in data {
+        let name: String = value["name"].stringValue
+        let url: String = value["url"].stringValue
+        //print(key, name, url)
+        
+        let chapter = Chapter(name: name, url: url)
+
+        iBook.listChapter.append(chapter)
     }
     
     return iBook
 }
 
 
-func saveBookToDatabase(_ iBook: Book) {
+func saveBookToFirebase(_ iBook: Book) {
     
-    let book = formatBookToDoc(iBook)
+    let book = convertBookToDoc(iBook)
     
     fsdb.collection("users").document(identification).getDocument { (document, error) in
         if let document = document, document.exists {
@@ -96,7 +137,7 @@ func saveBookToDatabase(_ iBook: Book) {
 }
 
 
-func saveBookToDatabase(docId: String, data: [String: Any]) {
+func saveBookToFirebase(docId: String, data: [String: Any]) {
     
     fsdb.collection("users").document(identification).getDocument { (document, error) in
         if let document = document, document.exists {
@@ -114,4 +155,16 @@ func saveBookToDatabase(docId: String, data: [String: Any]) {
         }
     }
     //end
+}
+
+
+func saveUserToFirebase(data: [String: Any]) {
+    
+    fsdb.collection("users").document(identification).updateData(data) { err in
+        if let err = err {
+            print("ERROR update \(err)")
+        } else {
+            print("UPDATE value successfully")
+        }
+    }
 }

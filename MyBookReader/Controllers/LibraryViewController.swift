@@ -119,7 +119,6 @@ class LibraryViewController: UIViewController {
         }
         // end
     }
-    
 }
 
 // MARK: Extension Table View

@@ -78,7 +78,14 @@ extension BookCollectionTableViewCell: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        handleBook?(iBooks[indexPath.row])
+        let iBook = iBooks[indexPath.row]
+//        
+//        print("66", iBook.listChapter.count)
+//        
+//        // Gửi thông báo
+//        NotificationCenter.default.post(name: Notification.Name("ReadBook"), object: nil, userInfo:["iBook": iBook])
+//        
+        handleBook?(iBook)
     }
 
 }

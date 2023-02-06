@@ -51,7 +51,7 @@ class BookCollectionViewCell: UICollectionViewCell {
         
         iBook.isFavorite = !iBook.isFavorite
         
-        saveBookToDatabase(docId: iBook.id, data: ["isFavorite": iBook.isFavorite])
+        saveBookToFirebase(docId: iBook.id, data: ["isFavorite": iBook.isFavorite])
 
         switchFavorite(iBook)
     }
