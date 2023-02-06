@@ -24,6 +24,7 @@ class Book {
     var status: String = ""
     var isFavorite: Bool = false
     var fontSize: CGFloat = 20
+    var chapterOffSet: CGFloat = 0
     
     init() {
     }

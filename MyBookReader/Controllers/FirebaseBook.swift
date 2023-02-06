@@ -69,7 +69,8 @@ func convertBookToDoc(_ iBook: Book) -> [String: Any] {
         "status": iBook.status,
         "isFavorite": iBook.isFavorite,
         "updatedAt": updatedAt,
-        "fontSize": iBook.fontSize
+        "fontSize": iBook.fontSize,
+        "chapterOffSet": iBook.chapterOffSet
     ]
     
     return data
@@ -92,6 +93,7 @@ func convertDocToBook(_ docData: [String: Any]) -> Book {
     iBook.status = docData["status"]  as? String ?? ""
     iBook.isFavorite = docData["isFavorite"] as? Bool ?? false
     iBook.fontSize = docData["fontSize"] as? CGFloat ?? 20
+    iBook.chapterOffSet = docData["chapterOffSet"] as? CGFloat ?? 0
     
     let author = JSON(docData["author"] ?? "")
     iBook.author = Chapter(name: author["name"].stringValue, url: author["url"].stringValue)
@@ -114,7 +116,6 @@ func convertDocToBook(_ docData: [String: Any]) -> Book {
     
     //let sortedKeys = Array(dictionary.keys).sorted(by: <)
     for key in 0..<dictionary.count {
-        print(key)
         iBook.listChapter.append(dictionary["\(key)"] ?? Chapter())
     }
     
