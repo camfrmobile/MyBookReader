@@ -39,7 +39,7 @@ class BookCollectionTableViewCell: UITableViewCell {
         bookCollectionView.delegate = self
         bookCollectionView.dataSource = self
         
-        bookCollectionView.bounces = false
+        //bookCollectionView.bounces = false
         
         bookCollectionView.register(UINib(nibName: "BookCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "BookCollectionViewCell")
     }

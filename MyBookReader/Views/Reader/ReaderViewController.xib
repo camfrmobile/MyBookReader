@@ -115,7 +115,7 @@
                         <constraint firstAttribute="height" constant="40" id="yz9-R8-gsp"/>
                     </constraints>
                 </view>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LH2-mu-FjE">
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LH2-mu-FjE">
                     <rect key="frame" x="20" y="806" width="350" height="4"/>
                     <color key="progressTintColor" systemColor="systemGrayColor"/>
                     <color key="trackTintColor" systemColor="systemGray6Color"/>

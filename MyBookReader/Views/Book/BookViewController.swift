@@ -152,6 +152,10 @@ class BookViewController: UIViewController {
     }
     
     @IBAction func actionAfterRead(_ sender: UIButton) {
+        // Gửi thông báo
+        NotificationCenter.default.post(name: Notification.Name("ReadAfter"), object: nil, userInfo:["iBook": iBook])
+        
+        dismiss(animated: true)
     }
     
     @IBAction func actionNowRead(_ sender: UIButton) {

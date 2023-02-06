@@ -75,6 +75,11 @@ class ReaderViewController: UIViewController {
         formatView.layer.cornerRadius = 5
         
         hiddenNextButton()
+        
+        contentTextView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapTextView))
+        contentTextView.addGestureRecognizer(tapGesture)
+
     }
     
     func setupText() {
@@ -133,7 +138,13 @@ class ReaderViewController: UIViewController {
     }
     
     func nextChapter() {
+        
         updateProgress()
+        
+        if iBook.chapterIndex >= (iBook.totalChapter - 1) {
+            iBook.status = "READ_DONE"
+            saveBookToDatabase(docId: iBook.id, data: ["status": iBook.status])
+        }
         // get next chap
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
             nextChapterButton.setTitle("- THE END -", for: .normal)
@@ -160,12 +171,17 @@ class ReaderViewController: UIViewController {
     func updateProgress() {
         let progress = Float(iBook.chapterIndex) / Float(iBook.listChapter.count)
         progressView.progress = progress // Tiến độ công việc chạy từ 0 - 1
-        print(progress)
     }
     
     // MARK: IBAction
     @objc func onTapBack() {
         routeToMain()
+    }
+    
+    @objc func onTapTextView() {
+        if !formatView.isHidden {
+            onTapFormatText()
+        }
     }
     
     @objc func onTapFormatText() {

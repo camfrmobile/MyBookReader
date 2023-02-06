@@ -41,6 +41,8 @@ class HomeViewController: UIViewController {
         
         // lắng nghe notification
         NotificationCenter.default.addObserver(self, selector: #selector(onDeleteBook(notification:)), name: Notification.Name("DeleteBook"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(onReadAfterBook(notification:)), name: Notification.Name("ReadAfter"), object: nil)
     }
     
     func setupTableView() {
@@ -70,7 +72,7 @@ class HomeViewController: UIViewController {
         loadScheduleBooks(identification)
         
         // new user
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.setupNew()
         }
     }
@@ -203,6 +205,20 @@ class HomeViewController: UIViewController {
         deleteBook(iBook)
     }
     
+    @objc func onReadAfterBook(notification: Foundation.Notification) {
+        
+        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
+        
+        iBook.status = "READ_AFTER"
+        saveBookToDatabase(iBook)
+        
+        reloadTableAfterRemove(iBook)
+        
+        scheduleBooks.insert(iBook, at: 0)
+        
+        homeTableView.reloadData()
+    }
+    
     func deleteBook(_ iBook: Book) {
 
         AlertHelper.confirmOrCancel(message: "Xoá \(iBook.title)?", viewController: self) {
@@ -219,6 +235,7 @@ class HomeViewController: UIViewController {
                             print("Error delete: \(err)")
                         } else {
                             self.reloadTableAfterRemove(iBook)
+                            self.homeTableView.reloadData()
                             print("DELETE successfully")
                         }
                         
@@ -248,7 +265,6 @@ class HomeViewController: UIViewController {
                 scheduleBooks.remove(at: index)
             }
         }
-        homeTableView.reloadData()
     }
     
 }
@@ -311,8 +327,21 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
-        case 0,1,2:
-            return 300 // new book
+        case 0: // new book
+            if readingBooks.count > 0 {
+                return 300
+            }
+            return 0
+        case 1:// done book
+            if doneBooks.count > 0 {
+                return 300
+            }
+            return 0
+        case 2:// after book
+            if scheduleBooks.count > 0 {
+                return 300
+            }
+            return 0
         default:
             return UITableView.automaticDimension
         }
