@@ -395,10 +395,24 @@ extension HomeViewController: UITableViewDataSource {
         viewHeader.backgroundColor = .white
 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: viewHeader.bounds.width, height: viewHeader.bounds.height))
-        label.text = headers[section]
+        
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 32)
-        
+
+        switch section {
+        case 0: // reading book
+            label.text = headers[section]
+        case 1: // done book
+            if doneBooks.count > 0 {
+                label.text = headers[section]
+            }
+        case 2: // schedule book
+            if scheduleBooks.count > 0 {
+                label.text = headers[section]
+            }
+        default:
+            label.text = headers[section]
+        }
         viewHeader.addSubview(label)
         return viewHeader
     }
