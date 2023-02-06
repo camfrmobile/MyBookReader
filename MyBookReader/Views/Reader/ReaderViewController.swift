@@ -26,7 +26,7 @@ class ReaderViewController: UIViewController {
     var content: String = ""
     var fontName: String = "Arial"
     var lastChapter: Chapter?
-    var lastPosition: CGFloat = 10
+    var lastPosition: CGFloat = 1
     var numberLoad: Int = 0
     var tempPos: CGFloat = 0
     var timerClock: Timer?
@@ -78,9 +78,9 @@ class ReaderViewController: UIViewController {
         
         hiddenNextButton()
         
-        contentTextView.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapTextView))
-        contentTextView.addGestureRecognizer(tapGesture)
+//        contentTextView.isUserInteractionEnabled = true
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapTextView))
+//        contentTextView.addGestureRecognizer(tapGesture)
 
     }
     
@@ -90,18 +90,19 @@ class ReaderViewController: UIViewController {
     
     func saveFontSize() {
         saveBookToFirebase(docId: iBook.id, data: ["fontSize": iBook.fontSize])
+        iBook.chapterOffSet = 0
     }
     
     func savePositon() {
         // luu vi tri dang doc vao database
-        timerClock = Timer.scheduledTimer(withTimeInterval: 5, repeats: true)  {[weak self]_ in
+        timerClock = Timer.scheduledTimer(withTimeInterval: 3, repeats: true)  {[weak self]_ in
             guard let self = self else { return }
             
             let inteval = self.iBook.chapterOffSet - self.tempPos
-            if inteval > 200 || inteval < -200 {
+            if inteval > 100 || inteval < -100 {
                 self.tempPos = self.iBook.chapterOffSet
                 saveBookToFirebase(docId: self.iBook.id, data: ["chapterOffSet": self.iBook.chapterOffSet, "chapterIndex": self.iBook.chapterIndex])
-                print("OFF", self.iBook.chapterOffSet)
+                print("POS", self.iBook.chapterOffSet)
             }
         }
     }
@@ -154,7 +155,7 @@ class ReaderViewController: UIViewController {
         
         // load vi tri doc lan truoc
         if numberLoad == 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 self.contentTextView.contentOffset = .init(x: 0, y: self.iBook.chapterOffSet)
             }
         }
@@ -203,11 +204,11 @@ class ReaderViewController: UIViewController {
         routeToMain()
     }
     
-    @objc func onTapTextView() {
-        if !formatView.isHidden {
-            onTapFormatText()
-        }
-    }
+//    @objc func onTapTextView() {
+//        if !formatView.isHidden {
+//            onTapFormatText()
+//        }
+//    }
     
     @objc func onTapFormatText() {
         formatView.isHidden = !formatView.isHidden
