@@ -32,7 +32,7 @@ class ReaderViewController: UIViewController {
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ooooo", iBook.fontSize)
+        
         setupUser()
         
         setupUI()

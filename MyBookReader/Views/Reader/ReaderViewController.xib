@@ -96,11 +96,11 @@
                     <rect key="frame" x="0.0" y="770" width="390" height="40"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QO2-6u-GI8">
-                            <rect key="frame" x="20" y="0.0" width="350" height="34"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="34"/>
                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="Đọc tiếp">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="titleColor" systemColor="systemGrayColor"/>
                             </state>
                             <connections>
                                 <action selector="actionNextChapter:" destination="-1" eventType="touchUpInside" id="8hM-xH-29j"/>
@@ -110,8 +110,8 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="QO2-6u-GI8" firstAttribute="top" secondItem="jPK-Xl-txy" secondAttribute="top" id="BBI-bC-ELu"/>
-                        <constraint firstItem="QO2-6u-GI8" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" constant="20" id="DaR-gZ-TAw"/>
-                        <constraint firstAttribute="trailing" secondItem="QO2-6u-GI8" secondAttribute="trailing" constant="20" id="KKN-c2-GSe"/>
+                        <constraint firstItem="QO2-6u-GI8" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" id="DaR-gZ-TAw"/>
+                        <constraint firstAttribute="trailing" secondItem="QO2-6u-GI8" secondAttribute="trailing" id="KKN-c2-GSe"/>
                         <constraint firstAttribute="height" constant="40" id="yz9-R8-gsp"/>
                     </constraints>
                 </view>

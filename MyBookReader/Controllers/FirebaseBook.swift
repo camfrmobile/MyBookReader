@@ -100,16 +100,25 @@ func convertDocToBook(_ docData: [String: Any]) -> Book {
     iBook.category = Chapter(name: category["name"].stringValue, url: category["url"].stringValue)
     
     let data = JSON(docData["listChapter"] ?? "")
-    for (_, value) in data {
+    var dictionary: [String: Chapter] = [:]
+
+    for (key, value) in data {
+//        print(key)
         let name: String = value["name"].stringValue
         let url: String = value["url"].stringValue
         //print(key, name, url)
         
         let chapter = Chapter(name: name, url: url)
-
-        iBook.listChapter.append(chapter)
+        dictionary[key] = chapter
     }
     
+    //let sortedKeys = Array(dictionary.keys).sorted(by: <)
+    for key in 0..<dictionary.count {
+        print(key)
+        iBook.listChapter.append(dictionary["\(key)"] ?? Chapter())
+    }
+    
+
     return iBook
 }
 

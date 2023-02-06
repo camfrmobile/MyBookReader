@@ -392,7 +392,6 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let viewHeader = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 50))
-        viewHeader.backgroundColor = .white
 
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: viewHeader.bounds.width, height: viewHeader.bounds.height))
         
@@ -401,16 +400,20 @@ extension HomeViewController: UITableViewDataSource {
 
         switch section {
         case 0: // reading book
+            viewHeader.backgroundColor = .white
             label.text = headers[section]
         case 1: // done book
             if doneBooks.count > 0 {
+                viewHeader.backgroundColor = .white
                 label.text = headers[section]
             }
         case 2: // schedule book
             if scheduleBooks.count > 0 {
+                viewHeader.backgroundColor = .white
                 label.text = headers[section]
             }
         default:
+            viewHeader.backgroundColor = .white
             label.text = headers[section]
         }
         viewHeader.addSubview(label)

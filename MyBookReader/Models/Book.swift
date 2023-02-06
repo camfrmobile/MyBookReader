@@ -9,16 +9,16 @@ import Foundation
 import SwiftyJSON
 
 class Book {
-    var id: String
-    var title: String           // ten sach
-    var author: Chapter         // tac gia
-    var category: Chapter       // the loai
-    var totalChapter: Int       // so chuong
-    var view: Int               // luot xem
-    var desc: String            // description
-    var imageUrl : String       // url image
-    var url: String             // url book detail
-    var listChapter: [Chapter]  // Muc luc sach
+    var id: String = ""
+    var title: String = ""              // ten sach
+    var author: Chapter = Chapter()     // tac gia
+    var category: Chapter = Chapter()   // the loai
+    var totalChapter: Int = 0           // so chuong
+    var view: Int = 0                   // luot xem
+    var desc: String = ""               // description
+    var imageUrl : String = ""          // url image
+    var url: String = ""                // url book detail
+    var listChapter: [Chapter] = []     // Muc luc sach
     var chapterIndex = 0
     var rating: Double = 0
     var status: String = ""
@@ -26,16 +26,6 @@ class Book {
     var fontSize: CGFloat = 20
     
     init() {
-        self.id = ""
-        self.title = ""
-        self.author = Chapter()
-        self.category = Chapter()
-        self.totalChapter = 0
-        self.view = 0
-        self.desc = ""
-        self.imageUrl = ""
-        self.url = ""
-        self.listChapter = []
     }
     
     init(id: String, title: String, author: Chapter, category: Chapter, totalChapter: Int, view: Int, desc: String, imageUrl: String, url: String, listChapter: [Chapter]) {
@@ -54,21 +44,14 @@ class Book {
 }
 
 class Chapter {
-    var name: String           // ten chuong
-    var url: String             // url chuong
+    var name: String = ""           // ten chuong
+    var url: String = ""             // url chuong
     
     init() {
-        self.name = ""
-        self.url = ""
     }
     
     init(name: String, url: String) {
         self.name = name
         self.url = url
-    }
-    
-    init?(json: JSON) {
-        self.name = json["name"].stringValue
-        self.url = json["url"].stringValue
     }
 }
