@@ -8,8 +8,6 @@
 import UIKit
 import Alamofire
 import SwiftSoup
-import FirebaseAuth
-import FirebaseFirestore
 
 class HomeViewController: UIViewController {
 
@@ -40,6 +38,9 @@ class HomeViewController: UIViewController {
     func setupUI() {
         accountButton.clipsToBounds = true
         accountButton.layer.cornerRadius = accountButton.bounds.width / 2
+        
+        // lắng nghe notification
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeleteBook(notification:)), name: Notification.Name("DeleteBook"), object: nil)
     }
     
     func setupTableView() {
@@ -60,11 +61,18 @@ class HomeViewController: UIViewController {
     }
     
     func loadBookFromDatabase() {
+        readingBooks.removeAll()
+        doneBooks.removeAll()
+        scheduleBooks.removeAll()
         
         loadReadingBooks(identification)
         loadDoneBooks(identification)
         loadScheduleBooks(identification)
         
+        // new user
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.setupNew()
+        }
     }
     
     func loadReadingBooks(_ identification: String) {
@@ -72,7 +80,7 @@ class HomeViewController: UIViewController {
         fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
             if let document = document, document.exists {
                 // start
-                document.reference.collection("books").whereField("status", isEqualTo: "").order(by: "updatedAt", descending: true)
+                document.reference.collection("books").whereField("status", isEqualTo: "READING").order(by: "updatedAt", descending: true)
                     .getDocuments() {[weak self] (querySnapshot, err) in
                         
                         guard let self = self else { return }
@@ -154,10 +162,6 @@ class HomeViewController: UIViewController {
                                 
                                 self.scheduleBooks.append(iBook)
                             }
-                            // new user
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                self.setupNew()
-                            }
                             
                             self.homeTableView.reloadData()
                         }
@@ -170,14 +174,6 @@ class HomeViewController: UIViewController {
         //end
     }
 
-
-
-
-    // MARK: IBAction
-    @IBAction func accountButtonAction(_ sender: UIButton) {
-        switchToTabAccount()
-    }
-    
     
     // MARK: Switch
     func switchToTabHome() {
@@ -191,6 +187,68 @@ class HomeViewController: UIViewController {
     }
     func switchToTabAccount() {
         tabBarController?.selectedIndex = 3
+    }
+    
+
+
+    // MARK: IBAction
+    @IBAction func accountButtonAction(_ sender: UIButton) {
+        switchToTabAccount()
+    }
+    
+    @objc func onDeleteBook(notification: Foundation.Notification) {
+
+        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
+        
+        deleteBook(iBook)
+    }
+    
+    func deleteBook(_ iBook: Book) {
+
+        AlertHelper.confirmOrCancel(message: "Xoá \(iBook.title)?", viewController: self) {
+            
+            // start fs
+            fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+                if let document = document, document.exists {
+                    // start
+                    document.reference.collection("books").document(iBook.id).delete() {[weak self] err in
+                        
+                        guard let self = self else { return }
+                        
+                        if let err = err {
+                            print("Error delete: \(err)")
+                        } else {
+                            self.reloadTableAfterRemove(iBook)
+                            print("DELETE successfully")
+                        }
+                        
+                    }
+                    // end
+                } else {
+                    print("Document does not exist", 4)
+                }
+            }
+            //end fs
+        }
+    }
+
+    func reloadTableAfterRemove(_ iBook: Book) {
+        for (index, item) in readingBooks.enumerated() {
+            if item.id == iBook.id {
+                readingBooks.remove(at: index)
+            }
+        }
+        for (index, item) in doneBooks.enumerated() {
+            if item.id == iBook.id {
+                doneBooks.remove(at: index)
+            }
+        }
+        for (index, item) in scheduleBooks.enumerated() {
+            if item.id == iBook.id {
+                scheduleBooks.remove(at: index)
+            }
+        }
+        homeTableView.reloadData()
     }
     
 }
@@ -224,7 +282,7 @@ extension HomeViewController: UITableViewDelegate {
             }
             
             // go to book
-            self.routeToBookInfo(iBook)
+            self.routeToReaderNavigation(iBook)
         }
         
         switch indexPath.section {
@@ -261,7 +319,6 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
         var iBook: Book = Book()
         switch indexPath.section {
         case 0: // reading book
@@ -271,9 +328,9 @@ extension HomeViewController: UITableViewDelegate {
         case 2: // schedule book
             iBook = scheduleBooks[indexPath.row]
         default:
-            print(indexPath)
+            print("indexPath", indexPath)
         }
-        routeToBookInfo(iBook)
+        routeToReaderNavigation(iBook)
     }
 }
 
@@ -309,28 +366,21 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 // MARK: Route
-extension HomeViewController: RouteApp {
+extension HomeViewController: RouteBook {
     
-    func routeToBookInfo(_ iBook: Book) {
-        let bookVC = BookViewController()
-        bookVC.iBook = iBook
-        bookVC.modalPresentationStyle = .overFullScreen
-        
-        present(bookVC, animated: false)
+    func routeToReaderNavigation(_ iBook: Book) {
+        let readerVC = ReaderViewController()
+        readerVC.iBook = iBook
+        let navigation = UINavigationController(rootViewController: readerVC)
+
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+
+        keyWindow?.rootViewController = navigation
     }
     
-//    func routeToBookNavigation(_ iBook: iBook) {
-//        let bookVC = BookViewController()
-//        bookVC.iBook = iBook
-//        let navigation = UINavigationController(rootViewController: bookVC)
-//        
-//        let keyWindow = UIApplication.shared.connectedScenes
-//            .filter({$0.activationState == .foregroundActive})
-//            .compactMap({$0 as? UIWindowScene})
-//            .first?.windows
-//            .filter({$0.isKeyWindow}).first
-//        
-//        keyWindow?.rootViewController = navigation
-//    }
-    
 }
+

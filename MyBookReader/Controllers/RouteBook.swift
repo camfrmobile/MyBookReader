@@ -1,14 +1,14 @@
 //
-//  RouteApp.swift
+//  RouteBook.swift
 //  MyBookReader
 //
-//  Created by Trần Văn Cam on 04/02/2023.
+//  Created by Trần Văn Cam on 06/02/2023.
 //
 
 import Foundation
 import UIKit
 
-protocol RouteApp {
+protocol RouteBook {
     
     func routeToMain()
     
@@ -19,7 +19,7 @@ protocol RouteApp {
     func routeToReaderNavigation(_ iBook: Book)
 }
 
-extension RouteApp {
+extension RouteBook {
     func routeToMain() {
         
     }

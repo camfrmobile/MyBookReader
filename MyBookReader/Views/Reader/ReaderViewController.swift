@@ -8,8 +8,6 @@
 import UIKit
 import Alamofire
 import SwiftSoup
-import FirebaseAuth
-import FirebaseFirestore
 
 class ReaderViewController: UIViewController {
     
@@ -46,7 +44,7 @@ class ReaderViewController: UIViewController {
         
         loadContentChapter()
         
-        saveBookToDatabase()
+        saveBookToDatabase(iBook)
     }
     
     func setupUser() {
@@ -87,6 +85,11 @@ class ReaderViewController: UIViewController {
     }
     
     func setupChapter() {
+        
+        if iBook.chapterIndex == 0 {
+            iBook.status = "READING"
+        }
+        
         if iBook.chapterIndex >= iBook.listChapter.count {
             return // khong ton tai chapter index
         }
@@ -160,28 +163,6 @@ class ReaderViewController: UIViewController {
         print(progress)
     }
     
-    func saveBookToDatabase() {
-
-        let book = formatBookToDoc(iBook)
-        
-        fsdb.collection("users").document(identification).getDocument { (document, error) in
-            if let document = document, document.exists {
-                // start
-                document.reference.collection("books").document(self.iBook.id).setData(book) { err in
-                    if let err = err {
-                        print("ERROR writing document: \(err)")
-                    } else {
-                        print("OK Document successfully written!")
-                    }
-                }
-                // end
-            } else {
-                print("ERROR Document does not exist")
-            }
-        }
-        //end
-    }
-    
     // MARK: IBAction
     @objc func onTapBack() {
         routeToMain()
@@ -218,7 +199,7 @@ class ReaderViewController: UIViewController {
     }
 }
 
-extension ReaderViewController: RouteApp {
+extension ReaderViewController: RouteBook {
     
     func routeToMain() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

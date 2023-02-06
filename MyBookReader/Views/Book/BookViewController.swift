@@ -162,7 +162,7 @@ class BookViewController: UIViewController {
     
 }
 
-extension BookViewController: RouteApp {
+extension BookViewController: RouteBook {
     func routeToMain() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homePageVC = storyboard.instantiateViewController(withIdentifier: "MainTabbarController")

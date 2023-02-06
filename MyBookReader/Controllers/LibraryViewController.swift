@@ -223,7 +223,7 @@ extension LibraryViewController: UITableViewDataSource {
 }
 
 // MARK: Route
-extension LibraryViewController: RouteApp {
+extension LibraryViewController: RouteBook {
     
     func routeToBookInfo(_ iBook: Book) {
         let bookVC = BookViewController()

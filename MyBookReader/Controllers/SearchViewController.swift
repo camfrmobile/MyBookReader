@@ -8,8 +8,6 @@
 import UIKit
 import Alamofire
 import SwiftSoup
-import FirebaseAuth
-import FirebaseFirestore
 
 class SearchViewController: UIViewController {
 
@@ -267,7 +265,7 @@ extension SearchViewController: UITableViewDataSource {
 }
 
 // MARK: Route
-extension SearchViewController: RouteApp {
+extension SearchViewController: RouteBook {
     
     func routeToBookInfo(_ iBook: Book) {
         let bookVC = BookViewController()
