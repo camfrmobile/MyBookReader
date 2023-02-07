@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		179E81DCA61182BE5EE7B17C /* Pods_MyBookReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4044DA90AA96A037C2A21BC9 /* Pods_MyBookReader.framework */; };
+		345AAB0F29922943008CFD58 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AAB0D29922943008CFD58 /* LoginViewController.swift */; };
+		345AAB1029922943008CFD58 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 345AAB0E29922943008CFD58 /* LoginViewController.xib */; };
+		345AAB132992294F008CFD58 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AAB112992294F008CFD58 /* RegisterViewController.swift */; };
+		345AAB142992294F008CFD58 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 345AAB122992294F008CFD58 /* RegisterViewController.xib */; };
+		345AAB172992296A008CFD58 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345AAB152992296A008CFD58 /* AccountViewController.swift */; };
+		345AAB182992296A008CFD58 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 345AAB162992296A008CFD58 /* AccountViewController.xib */; };
 		348E57F3298C80BE00EE0858 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348E57F1298C80BE00EE0858 /* BookCollectionViewCell.swift */; };
 		348E57F4298C80BE00EE0858 /* BookCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 348E57F2298C80BE00EE0858 /* BookCollectionViewCell.xib */; };
 		348E57F7298C80DD00EE0858 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348E57F5298C80DD00EE0858 /* BookTableViewCell.swift */; };
@@ -46,7 +52,7 @@
 		34DFE99B298979FB003EF567 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE982298979FB003EF567 /* Menu.swift */; };
 		34DFE99D298982CD003EF567 /* ApiNameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DFE99C298982CD003EF567 /* ApiNameManager.swift */; };
 		34F8F429298A7534008F38D2 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F428298A7534008F38D2 /* Book.swift */; };
-		34F8F441298AA0A4008F38D2 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F440298AA0A4008F38D2 /* AccountViewController.swift */; };
+		34F8F441298AA0A4008F38D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F440298AA0A4008F38D2 /* ProfileViewController.swift */; };
 		34F8F443298AA0B1008F38D2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F442298AA0B1008F38D2 /* SearchViewController.swift */; };
 		34F8F445298AA0BD008F38D2 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F444298AA0BD008F38D2 /* LibraryViewController.swift */; };
 		34F8F447298AA0CA008F38D2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F8F446298AA0CA008F38D2 /* HomeViewController.swift */; };
@@ -55,6 +61,12 @@
 
 /* Begin PBXFileReference section */
 		000CBC2DC85C2D05E09875B0 /* Pods-MyBookReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyBookReader.release.xcconfig"; path = "Target Support Files/Pods-MyBookReader/Pods-MyBookReader.release.xcconfig"; sourceTree = "<group>"; };
+		345AAB0D29922943008CFD58 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		345AAB0E29922943008CFD58 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		345AAB112992294F008CFD58 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		345AAB122992294F008CFD58 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		345AAB152992296A008CFD58 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		345AAB162992296A008CFD58 /* AccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		348E57F1298C80BE00EE0858 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		348E57F2298C80BE00EE0858 /* BookCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BookCollectionViewCell.xib; sourceTree = "<group>"; };
 		348E57F5298C80DD00EE0858 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
@@ -95,7 +107,7 @@
 		34DFE982298979FB003EF567 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		34DFE99C298982CD003EF567 /* ApiNameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiNameManager.swift; sourceTree = "<group>"; };
 		34F8F428298A7534008F38D2 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
-		34F8F440298AA0A4008F38D2 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		34F8F440298AA0A4008F38D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		34F8F442298AA0B1008F38D2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		34F8F444298AA0BD008F38D2 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		34F8F446298AA0CA008F38D2 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +128,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		345AAB0C29922921008CFD58 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				345AAB0D29922943008CFD58 /* LoginViewController.swift */,
+				345AAB0E29922943008CFD58 /* LoginViewController.xib */,
+				345AAB112992294F008CFD58 /* RegisterViewController.swift */,
+				345AAB122992294F008CFD58 /* RegisterViewController.xib */,
+				345AAB152992296A008CFD58 /* AccountViewController.swift */,
+				345AAB162992296A008CFD58 /* AccountViewController.xib */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		348E57F0298C806B00EE0858 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +168,7 @@
 		348E580A298E641C00EE0858 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				345AAB0C29922921008CFD58 /* Account */,
 				348E57F0298C806B00EE0858 /* Cells */,
 				348E5805298E60CD00EE0858 /* Book */,
 				34B3974A298F5B320089CDCF /* Reader */,
@@ -258,7 +284,7 @@
 				34F8F446298AA0CA008F38D2 /* HomeViewController.swift */,
 				34F8F444298AA0BD008F38D2 /* LibraryViewController.swift */,
 				34F8F442298AA0B1008F38D2 /* SearchViewController.swift */,
-				34F8F440298AA0A4008F38D2 /* AccountViewController.swift */,
+				34F8F440298AA0A4008F38D2 /* ProfileViewController.swift */,
 				34B3975529909B2B0089CDCF /* RouteBook.swift */,
 				34B3975329909B040089CDCF /* FirebaseBook.swift */,
 			);
@@ -344,14 +370,17 @@
 			files = (
 				34DFE95E29893AA8003EF567 /* LaunchScreen.storyboard in Resources */,
 				348E580E298E9EBC00EE0858 /* SearchTableViewCell.xib in Resources */,
+				345AAB1029922943008CFD58 /* LoginViewController.xib in Resources */,
 				348E57F4298C80BE00EE0858 /* BookCollectionViewCell.xib in Resources */,
 				34DFE95B29893AA8003EF567 /* Assets.xcassets in Resources */,
 				348E5814298ECCF400EE0858 /* BookViewController.xib in Resources */,
 				34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */,
 				34DFE95929893AA6003EF567 /* Main.storyboard in Resources */,
 				34B397502990008E0089CDCF /* GoogleService-Info.plist in Resources */,
+				345AAB182992296A008CFD58 /* AccountViewController.xib in Resources */,
 				348E5800298E19F300EE0858 /* BookCollectionTableViewCell.xib in Resources */,
 				348E57F8298C80DD00EE0858 /* BookTableViewCell.xib in Resources */,
+				345AAB142992294F008CFD58 /* RegisterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +440,7 @@
 				348E57F7298C80DD00EE0858 /* BookTableViewCell.swift in Sources */,
 				348E5813298ECCF400EE0858 /* BookViewController.swift in Sources */,
 				34DFE988298979FB003EF567 /* UITextField+Extension.swift in Sources */,
-				34F8F441298AA0A4008F38D2 /* AccountViewController.swift in Sources */,
+				34F8F441298AA0A4008F38D2 /* ProfileViewController.swift in Sources */,
 				34DFE999298979FB003EF567 /* Issue.swift in Sources */,
 				34B3975429909B040089CDCF /* FirebaseBook.swift in Sources */,
 				348E57FF298E19F300EE0858 /* BookCollectionTableViewCell.swift in Sources */,
@@ -420,6 +449,7 @@
 				34DFE98A298979FB003EF567 /* SafeDispatch.swift in Sources */,
 				34DFE984298979FB003EF567 /* UIColor+Extensions.swift in Sources */,
 				34DFE987298979FB003EF567 /* UITextView+Extension.swift in Sources */,
+				345AAB132992294F008CFD58 /* RegisterViewController.swift in Sources */,
 				34F8F429298A7534008F38D2 /* Book.swift in Sources */,
 				34F8F447298AA0CA008F38D2 /* HomeViewController.swift in Sources */,
 				34DFE95229893AA6003EF567 /* AppDelegate.swift in Sources */,
@@ -429,11 +459,13 @@
 				34DFE986298979FB003EF567 /* Notification+Extension.swift in Sources */,
 				34DFE983298979FB003EF567 /* UIImageView+Extension.swift in Sources */,
 				34DFE98C298979FB003EF567 /* TPKeyboardAvoidingSwift.swift in Sources */,
+				345AAB172992296A008CFD58 /* AccountViewController.swift in Sources */,
 				34DFE989298979FB003EF567 /* AlertHelper.swift in Sources */,
 				34DFE998298979FB003EF567 /* ResultAccount.swift in Sources */,
 				34DFE98B298979FB003EF567 /* SlideMenuController.swift in Sources */,
 				34DFE99D298982CD003EF567 /* ApiNameManager.swift in Sources */,
 				34DFE95429893AA6003EF567 /* SceneDelegate.swift in Sources */,
+				345AAB0F29922943008CFD58 /* LoginViewController.swift in Sources */,
 				348E5802298E3CDC00EE0858 /* ApiManager+RegisterAPI.swift in Sources */,
 				34DFE997298979FB003EF567 /* Type.swift in Sources */,
 				348E580D298E9EBC00EE0858 /* SearchTableViewCell.swift in Sources */,

@@ -17,6 +17,10 @@ protocol RouteBook {
     func routeToBookNavigation(_ iBook: Book)
     
     func routeToReaderNavigation(_ iBook: Book)
+    
+    func routeToLoginNavigation()
+    
+    func routeToAccountNavigation()
 }
 
 extension RouteBook {
@@ -33,6 +37,14 @@ extension RouteBook {
     }
     
     func routeToReaderNavigation(_ iBook: Book) {
+        
+    }
+    
+    func routeToLoginNavigation() {
+        
+    }
+    
+    func routeToAccountNavigation() {
         
     }
 }

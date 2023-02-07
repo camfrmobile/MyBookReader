@@ -45,7 +45,15 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onReadAfterBook(notification:)), name: Notification.Name("ReadAfter"), object: nil)
 
 //        NotificationCenter.default.addObserver(self, selector: #selector(onReadBook(notification:)), name: Notification.Name("ReadBook"), object: nil)
-
+        
+        if authUser != nil {
+            if let name = authUser?.displayName {
+                helloLabel.text = "Hi, \(name)"
+            }
+            accountButton.tintColor = .blue
+        } else {
+            helloLabel.text = "Xin chào!"
+        }
     }
     
     func setupTableView() {

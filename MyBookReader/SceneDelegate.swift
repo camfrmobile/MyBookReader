@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         /// Check login
         if Auth.auth().currentUser != nil {
-            
+            setUserID()
         }
     }
     

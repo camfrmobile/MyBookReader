@@ -31,14 +31,15 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pj-EY-b6W">
-                                                <rect key="frame" x="323" y="6.6666666666666643" width="50" height="47"/>
+                                                <rect key="frame" x="323" y="6" width="50" height="48.666666666666671"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Iu1-3x-y3P"/>
                                                     <constraint firstAttribute="width" constant="50" id="QCG-Wx-dUi"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" backgroundImage="person.crop.rectangle.fill" catalog="system"/>
+                                                <state key="normal" backgroundImage="person.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="accountButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ueE-tH-K3g"/>
                                                 </connections>
@@ -247,7 +248,7 @@
         <!--Cá nhân-->
         <scene sceneID="d0T-Mg-uLN">
             <objects>
-                <viewController id="grd-9C-H3V" customClass="AccountViewController" customModule="MyBookReader" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="grd-9C-H3V" customClass="ProfileViewController" customModule="MyBookReader" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eG3-0Q-dxm">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -261,9 +262,11 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zoT-4S-M9b">
                                                 <rect key="frame" x="76.666666666666686" y="0.0" width="200" height="200"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person.crop.rectangle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="R1v-I6-Z5J">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person.crop.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="R1v-I6-Z5J">
                                                         <rect key="frame" x="0.0" y="1.6666666666666572" width="200" height="197"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="tintColor" systemColor="labelColor"/>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VI2-qF-cpo">
                                                         <rect key="frame" x="160" y="166" width="40" height="32.666666666666686"/>
@@ -276,6 +279,9 @@
                                                         <state key="normal">
                                                             <imageReference key="backgroundImage" image="camera.fill" catalog="system" symbolScale="default"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="actionChosePhoto:" destination="grd-9C-H3V" eventType="touchUpInside" id="e4l-bi-huk"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -304,10 +310,13 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6K2-oa-VL1">
-                                        <rect key="frame" x="20" y="340" width="353" height="184.33333333333337"/>
+                                        <rect key="frame" x="20" y="340" width="353" height="179"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpF-3y-ZGf">
-                                                <rect key="frame" x="0.0" y="0.0" width="353" height="48"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="353" height="46.333333333333336"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="jpF-3y-ZGf" secondAttribute="height" multiplier="312:41" id="cSw-Lu-8Fm"/>
+                                                </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" backgroundImage="my_account"/>
                                                 <connections>
@@ -315,7 +324,10 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOC-Pk-Frb">
-                                                <rect key="frame" x="0.0" y="68" width="353" height="48.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="66.333333333333314" width="353" height="46.333333333333343"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="pOC-Pk-Frb" secondAttribute="height" multiplier="312:41" id="uuV-FB-CA4"/>
+                                                </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" backgroundImage="app_info"/>
                                                 <connections>
@@ -323,7 +335,10 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbW-e7-jWC">
-                                                <rect key="frame" x="0.0" y="136.33333333333337" width="353" height="48"/>
+                                                <rect key="frame" x="0.0" y="132.66666666666663" width="353" height="46.333333333333343"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="mbW-e7-jWC" secondAttribute="height" multiplier="312:41" id="QF3-PE-sNs"/>
+                                                </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" backgroundImage="log_out"/>
                                                 <connections>
@@ -331,9 +346,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="6K2-oa-VL1" secondAttribute="height" multiplier="312:163" id="r9y-Mq-70B"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -396,9 +408,13 @@
         <image name="log_out" width="312" height="40.333332061767578"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="my_account" width="312" height="40.333332061767578"/>
-        <image name="person.crop.rectangle.fill" catalog="system" width="128" height="93"/>
+        <image name="person.circle" catalog="system" width="128" height="123"/>
+        <image name="person.crop.circle" catalog="system" width="128" height="123"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="text.book.closed.fill" catalog="system" width="115" height="128"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
