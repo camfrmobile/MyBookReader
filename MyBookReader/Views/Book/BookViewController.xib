@@ -31,36 +31,39 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="knl-9u-bEh" userLabel="ContentView">
                     <rect key="frame" x="0.0" y="47" width="390" height="763"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mAs-hi-M3d">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mAs-hi-M3d">
                             <rect key="frame" x="30" y="330" width="330" height="100"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ten sach" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSb-Kg-FUN">
-                                    <rect key="frame" x="0.0" y="0.0" width="330" height="25.333333333333332"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="k8f-B5-Exa"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="20"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thong tin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhM-ah-XgO">
-                                    <rect key="frame" x="0.0" y="37.333333333333314" width="330" height="25.333333333333329"/>
+                                    <rect key="frame" x="0.0" y="61.999999999999993" width="330" height="15.666666666666664"/>
                                     <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="14"/>
                                     <color key="textColor" red="0.50980395079999996" green="0.50980395079999996" blue="0.50980395079999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Con-LQ-tdG">
-                                    <rect key="frame" x="0.0" y="74.666666666666686" width="330" height="25.333333333333329"/>
+                                    <rect key="frame" x="0.0" y="89.666666666666686" width="330" height="10.333333333333329"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M5v-3j-nRV">
-                                            <rect key="frame" x="75" y="0.0" width="180" height="25.333333333333332"/>
+                                            <rect key="frame" x="75" y="0.0" width="180" height="10.333333333333334"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.5 / 5.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MM8-WY-0mE">
-                                                    <rect key="frame" x="125" y="4.3333333333333144" width="55" height="17"/>
+                                                    <rect key="frame" x="125" y="-3.3333333333333712" width="55" height="17"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iaD-vP-VRf" customClass="CosmosView" customModule="Cosmos">
-                                                    <rect key="frame" x="0.0" y="4" width="125" height="20"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iaD-vP-VRf" customClass="CosmosView" customModule="Cosmos">
+                                                    <rect key="frame" x="0.0" y="-4.6666666666666856" width="125" height="20"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="125" id="Nnz-ZM-6m4"/>
@@ -194,6 +197,11 @@
             <point key="canvasLocation" x="73.84615384615384" y="-12.085308056872037"/>
         </view>
     </objects>
+    <designables>
+        <designable name="iaD-vP-VRf">
+            <size key="intrinsicContentSize" width="120" height="20"/>
+        </designable>
+    </designables>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="ic_read_after" width="24" height="30"/>

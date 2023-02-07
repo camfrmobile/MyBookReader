@@ -70,10 +70,7 @@ class HomeViewController: UIViewController {
     
     func setupNew() {
         if readingBooks.count == 0 && doneBooks.count == 0 && scheduleBooks.count == 0 {
-            let iBook = Book()
-            readingBooks.insert(iBook, at: 0)
-            
-            homeTableView.reloadData()
+            switchToTabLibrary()
         }
     }
     
@@ -87,7 +84,7 @@ class HomeViewController: UIViewController {
         loadScheduleBooks(identification)
         
         // new user
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.setupNew()
         }
     }
