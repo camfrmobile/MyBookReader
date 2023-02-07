@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 import FirebaseAuth
 
 class ProfileViewController: UIViewController {
@@ -16,6 +17,15 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     
     // MARK: Variables
+    let libraryPicker: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+        picker.modalPresentationStyle = .popover
+        return picker
+    } ()
+    
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -29,21 +39,58 @@ class ProfileViewController: UIViewController {
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.width / 2
         
+        libraryPicker.delegate = self
+    }
+    
+    func setupStart() {
         if Auth.auth().currentUser != nil {
             if let name = Auth.auth().currentUser?.displayName {
                 nameLabel.text = name
             }
         }
+        loadPhotoFromFirebase(avatarImageView)
     }
     
-    func setupStart() {
-        if Auth.auth().currentUser == nil {
-            
+    func imageFromLibrary() {
+        func choosePhoto() {
+            DispatchQueue.main.async {[weak self] in
+                guard let `self` = self else {
+                    return
+                }
+                self.present(self.libraryPicker, animated: true)
+            }
         }
-        
-        
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) {[weak self] status in
+            guard let `self` = self else {
+                return
+            }
+             
+            print(status.rawValue)
+            if status == PHAuthorizationStatus.authorized {
+                choosePhoto()
+            } else if status == PHAuthorizationStatus.limited {
+                choosePhoto()
+            } else {
+                print("App không có quyền truy cập thư viện ảnh.")
+                
+                DispatchQueue.main.async {
+                    self.setting()
+                }
+            }
+        }
     }
-
+    // mở setting của điện thoại
+    func setting() {
+        let message = "App cần quyền truy cập camera và thư viện ảnh"
+        AlertHelper.confirmOrCancel(message: message, viewController: self) {
+            guard let settingUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            if UIApplication.shared.canOpenURL(settingUrl) {
+                UIApplication.shared.open(settingUrl)
+            }
+        }
+    }
     // MARK: IBAction
     @IBAction func myAccountAction(_ sender: Any) {
         // check login
@@ -57,13 +104,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func actionChosePhoto(_ sender: UIButton) {
-        // check login
-        if Auth.auth().currentUser == nil {
-            AlertHelper.confirmOrCancel(message: "Bạn chưa đăng nhập.\nVui lòng đăng nhập hoặc tạo tài khoản.", viewController: self) {
-                self.routeToLoginNavigation()
-            }
-            return
-        }
+        imageFromLibrary()
         // chon hinh anh
     }
     
@@ -125,3 +166,44 @@ extension ProfileViewController: RouteBook {
     
 }
 
+
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // xu ly sau khi chup anh
+        if let selectedImage = info[.originalImage] as? UIImage {
+            
+            saveImageToFirebase(selectedImage)
+        }
+        dismiss(animated: true)
+    }
+    
+    func saveImageToFirebase(_ image: UIImage) {
+
+        guard let imageData = image.pngData() else { return }
+        
+        avatarImageView.image = UIImage(systemName: "icloud.and.arrow.up")
+
+        // Create a reference to the file you want to upload
+        let riversRef = storageRef.child("images/\(identification).jpg")
+
+        // Upload the file to the path "images/rivers.jpg"
+        let uploadTask = riversRef.putData(imageData, metadata: nil) {[weak self] (metadata, error) in
+          guard let metadata = metadata else {
+            // Uh-oh, an error occurred!
+            return
+          }
+          // Metadata contains file metadata such as size, content-type.
+          let size = metadata.size
+          // You can also access to download URL after upload.
+          riversRef.downloadURL {[weak self] (url, error) in
+            guard let downloadURL = url, let self = self else {
+              // Uh-oh, an error occurred!
+              return
+            }
+            self.avatarImageView.setImage(urlString: downloadURL.absoluteString)
+          }
+        }
+    }
+    
+}

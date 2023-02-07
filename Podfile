@@ -15,5 +15,6 @@ target 'MyBookReader' do
   
 	pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
+  pod 'FirebaseStorage'
   
 end

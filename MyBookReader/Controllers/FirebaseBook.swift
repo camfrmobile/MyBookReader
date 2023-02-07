@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import SwiftyJSON
+import FirebaseStorage
 
 var identification: String = UUID().uuidString
 
@@ -19,6 +20,8 @@ var device: [String: Any] = [
 ]
 
 let fsdb = Firestore.firestore()
+let storageRef = Storage.storage().reference()
+
 
 func setupUser() {
     
@@ -52,6 +55,21 @@ func setupUser() {
     }
 }
 
+func loadPhotoFromFirebase(_ imageView: UIImageView) {
+    // Create a reference to the file you want to download
+    let starsRef = storageRef.child("images/\(identification).jpg")
+
+    // Fetch the download URL
+    starsRef.downloadURL {url, error in
+      if let error = error {
+          print(error.localizedDescription)
+          imageView.image = UIImage(systemName: "person.circle")
+      } else {
+          guard let url = url else { return }
+          imageView.setImage(urlString: url.absoluteString)
+      }
+    }
+}
 
 func convertBookToDoc(_ iBook: Book) -> [String: Any] {
     
@@ -208,4 +226,29 @@ func saveSearchToFirebase(_ histories: [String]) {
         }
     }
     //end
+}
+
+func uploadPhotoToFirebase() {
+    // Data in memory
+    let data = Data()
+
+    // Create a reference to the file you want to upload
+    let riversRef = storageRef.child("images/rivers.jpg")
+
+    // Upload the file to the path "images/rivers.jpg"
+    let uploadTask = riversRef.putData(data, metadata: nil) { (metadata, error) in
+      guard let metadata = metadata else {
+        // Uh-oh, an error occurred!
+        return
+      }
+      // Metadata contains file metadata such as size, content-type.
+      let size = metadata.size
+      // You can also access to download URL after upload.
+      riversRef.downloadURL { (url, error) in
+        guard let downloadURL = url else {
+          // Uh-oh, an error occurred!
+          return
+        }
+      }
+    }
 }

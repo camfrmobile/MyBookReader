@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>App cần truy cập micro</string>
+	<key>NSCameraUsageDescription</key>
+	<string>App cần truy cập camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App cần truy cập hình ảnh</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

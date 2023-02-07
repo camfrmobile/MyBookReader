@@ -31,26 +31,37 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pj-EY-b6W">
-                                                <rect key="frame" x="323" y="6" width="50" height="48.666666666666671"/>
+                                                <rect key="frame" x="323" y="5" width="50" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Iu1-3x-y3P"/>
                                                     <constraint firstAttribute="width" constant="50" id="QCG-Wx-dUi"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                <color key="tintColor" systemColor="systemGray2Color"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" backgroundImage="person.circle" catalog="system"/>
                                                 <connections>
                                                     <action selector="accountButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ueE-tH-K3g"/>
                                                 </connections>
                                             </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HSw-qN-zGM">
+                                                <rect key="frame" x="323" y="6" width="50" height="48.666666666666671"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" systemColor="systemGray2Color"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="8Yl-Tp-D3l"/>
+                                                    <constraint firstAttribute="width" constant="50" id="uXk-gW-cPI"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="HSw-qN-zGM" firstAttribute="centerY" secondItem="FDH-Qo-cVN" secondAttribute="centerY" id="6C8-QE-qcA"/>
                                             <constraint firstItem="a7P-cT-u7z" firstAttribute="leading" secondItem="FDH-Qo-cVN" secondAttribute="leading" constant="20" id="HNf-jX-Kgw"/>
                                             <constraint firstItem="7pj-EY-b6W" firstAttribute="centerY" secondItem="FDH-Qo-cVN" secondAttribute="centerY" id="Pxd-cg-zUk"/>
                                             <constraint firstAttribute="height" constant="60" id="S3K-JS-C5I"/>
+                                            <constraint firstAttribute="trailing" secondItem="HSw-qN-zGM" secondAttribute="trailing" constant="20" id="aPA-Yo-8SX"/>
                                             <constraint firstItem="a7P-cT-u7z" firstAttribute="centerY" secondItem="FDH-Qo-cVN" secondAttribute="centerY" id="aoA-Du-q8N"/>
+                                            <constraint firstItem="HSw-qN-zGM" firstAttribute="leading" secondItem="a7P-cT-u7z" secondAttribute="trailing" id="qmC-t9-tdP"/>
                                             <constraint firstItem="7pj-EY-b6W" firstAttribute="leading" secondItem="a7P-cT-u7z" secondAttribute="trailing" id="uJz-M0-856"/>
                                             <constraint firstAttribute="trailing" secondItem="7pj-EY-b6W" secondAttribute="trailing" constant="20" id="vla-Yb-o59"/>
                                         </constraints>
@@ -86,11 +97,12 @@
                         <outlet property="accountButton" destination="7pj-EY-b6W" id="Zv8-i5-I0y"/>
                         <outlet property="helloLabel" destination="a7P-cT-u7z" id="GjB-mj-f6g"/>
                         <outlet property="homeTableView" destination="Mh0-Gu-5bf" id="IvZ-9Y-BXY"/>
+                        <outlet property="imageView" destination="HSw-qN-zGM" id="KHW-Vy-mIj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1040" y="-34.123222748815166"/>
+            <point key="canvasLocation" x="1038.9312977099237" y="-34.507042253521128"/>
         </scene>
         <!--Thư viện-->
         <scene sceneID="nQk-to-rnv">

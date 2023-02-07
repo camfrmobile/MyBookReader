@@ -16,6 +16,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var homeTableView: UITableView!
     @IBOutlet weak var accountButton: UIButton!
     @IBOutlet weak var helloLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
     
     // MARK: Variables
     var headers = ["Đang đọc", "Đọc xong", "Đọc sau"]
@@ -33,12 +34,14 @@ class HomeViewController: UIViewController {
         
         setupTableView()
         
+        loadPhotoFromFirebase(imageView)
+        
         loadBookFromFirebase()
     }
     
     func setupUI() {
-        accountButton.clipsToBounds = true
-        accountButton.layer.cornerRadius = accountButton.bounds.width / 2
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = imageView.bounds.width / 2
         
         // lắng nghe notification
         NotificationCenter.default.addObserver(self, selector: #selector(onDeleteBook(notification:)), name: Notification.Name("DeleteBook"), object: nil)
@@ -51,7 +54,7 @@ class HomeViewController: UIViewController {
             if let name = Auth.auth().currentUser?.displayName {
                 helloLabel.text = "Hi, \(name)"
             }
-            accountButton.tintColor = .gray
+            imageView.tintColor = .gray
         } else {
             helloLabel.text = "Xin chào!"
         }
