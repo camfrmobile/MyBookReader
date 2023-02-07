@@ -14,9 +14,10 @@ let authUser = Auth.auth().currentUser
 
 var identification: String = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
 
-let device: [String: Any] = [
+var device: [String: Any] = [
     "name": UIDevice.current.name,
-    "system": UIDevice.current.systemName
+    "system": UIDevice.current.systemName,
+    "searchs": []
 ]
 
 let fsdb = Firestore.firestore()
@@ -26,14 +27,27 @@ func setupUser() {
         identification = authUser.uid
     }
     
-    fsdb.collection("users").document(identification).setData(device) { err in
-        if let err = err {
-            print("Error0: \(err)")
+    // get user
+    fsdb.collection("users").document(identification).getDocument { (document, error) in
+        if let document = document, document.exists {
+            let docData = document.data()
+            
+            guard let docData = docData else { return }
+            
+            device["searchs"] = docData["searchs"] as? [String] ?? []
+            
         } else {
-            print("USER add successfully")
+            print("USER not exist")
+            // add user
+            fsdb.collection("users").document(identification).setData(device) { err in
+                if let err = err {
+                    print("Error0: \(err)")
+                } else {
+                    print("USER add successfully")
+                }
+            }
         }
     }
-    
 }
 
 
@@ -62,14 +76,16 @@ func convertBookToDoc(_ iBook: Book) -> [String: Any] {
         ],
         "totalChapter": iBook.totalChapter,
         "view": iBook.view,
-        "desc": "",//book.desc,
+        "desc": iBook.desc,
         "imageUrl": iBook.imageUrl,
         "url": iBook.url,
         "listChapter": listChapter,
+        "rating": iBook.rating,
         "status": iBook.status,
         "isFavorite": iBook.isFavorite,
         "updatedAt": updatedAt,
         "fontSize": iBook.fontSize,
+        "chapterIndex": iBook.chapterIndex,
         "chapterOffSet": iBook.chapterOffSet
     ]
     
@@ -177,4 +193,17 @@ func saveUserToFirebase(data: [String: Any]) {
             print("UPDATE value successfully")
         }
     }
+}
+
+
+func saveSearchToFirebase(_ histories: [String]) {
+    
+    fsdb.collection("users").document(identification).updateData(["searchs" : histories]) { err in
+        if let err = err {
+            print("ERROR update \(err)")
+        } else {
+            print("UPDATE value successfully")
+        }
+    }
+    //end
 }

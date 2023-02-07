@@ -19,11 +19,11 @@ class Book {
     var imageUrl : String = ""          // url image
     var url: String = ""                // url book detail
     var listChapter: [Chapter] = []     // Muc luc sach
-    var chapterIndex = 0
     var rating: Double = 0
     var status: String = ""
     var isFavorite: Bool = false
     var fontSize: CGFloat = 20
+    var chapterIndex = 0
     var chapterOffSet: CGFloat = 0
     
     init() {

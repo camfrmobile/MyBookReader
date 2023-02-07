@@ -35,6 +35,7 @@ class SearchViewController: UIViewController {
         
         setupUI()
         setupTextField()
+        setupHistory()
         setupTabelView()
         setupStart()
     }
@@ -56,7 +57,6 @@ class SearchViewController: UIViewController {
         searchTextField.layer.cornerRadius = 10
         
         self.loadingView.isHidden = true
-        
     }
     
     func setupTabelView() {
@@ -73,6 +73,18 @@ class SearchViewController: UIViewController {
     
     func setupStart() {
         //searchTextField.becomeFirstResponder()
+    }
+    
+    func setupHistory() {
+        histories = device["searchs"] as? [String] ?? []
+    }
+    
+    func saveHistory(_ keyword: String) {
+        histories.insert(keyword, at: 0)
+        if histories.count > 12 {
+            histories.removeLast()
+        }
+        saveSearchToFirebase(histories)
     }
 
     // MARK: Search Book
@@ -139,14 +151,10 @@ class SearchViewController: UIViewController {
         searchBook(keyword)
         
         // save history
-        histories.append(keyword)
-        if histories.count > 10 {
-            histories.remove(at: 0)
-        }
+        saveHistory(keyword)
         
         loadingView.isHidden = true // end loading
     }
-
 }
 
 // MARK: Extension Textfield
@@ -160,7 +168,11 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         // Hàm này được họi khi nội dung cửa textField có sự thay đổi
-        
+        let keyword = searchTextField.text ?? ""
+        if keyword.isEmpty {
+            searchBooks.removeAll()
+            searchTableView.reloadData()
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -194,7 +206,7 @@ extension SearchViewController: UITableViewDelegate {
         case 0: // search history
             
             let bookCell = searchTableView.dequeueReusableCell(withIdentifier: "SearchTableViewCell", for: indexPath) as! SearchTableViewCell
-            bookCell.titleLabel.text = histories[indexPath.row]
+            bookCell.titleLabel.text =  histories[indexPath.row]
             return bookCell
             
         case 1: // search result

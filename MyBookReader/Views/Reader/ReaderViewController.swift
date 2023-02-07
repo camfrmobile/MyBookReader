@@ -27,9 +27,12 @@ class ReaderViewController: UIViewController {
     var fontName: String = "Arial"
     var lastChapter: Chapter?
     var lastPosition: CGFloat = 1
+    var lastHeight: CGFloat = 0
     var numberLoad: Int = 0
     var tempPos: CGFloat = 0
+    var isLoading = false
     var timerClock: Timer?
+    var listPositon: [Int: CGFloat] = [:]
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -89,7 +92,9 @@ class ReaderViewController: UIViewController {
     }
     
     func saveFontSize() {
-        saveBookToFirebase(docId: iBook.id, data: ["fontSize": iBook.fontSize])
+        saveBookToFirebase(docId: iBook.id, data: [
+            "fontSize": iBook.fontSize
+        ])
         iBook.chapterOffSet = 0
     }
     
@@ -101,10 +106,35 @@ class ReaderViewController: UIViewController {
             let inteval = self.iBook.chapterOffSet - self.tempPos
             if inteval > 100 || inteval < -100 {
                 self.tempPos = self.iBook.chapterOffSet
-                saveBookToFirebase(docId: self.iBook.id, data: ["chapterOffSet": self.iBook.chapterOffSet, "chapterIndex": self.iBook.chapterIndex])
+                
+                self.iBook.desc = "\(self.iBook.chapterIndex * 100 / self.iBook.totalChapter)%"
+                
+                saveBookToFirebase(docId: self.iBook.id, data: [
+                    "chapterOffSet": self.iBook.chapterOffSet,
+                    "chapterIndex": self.iBook.chapterIndex,
+                    "desc": self.iBook.desc
+                ])
+                
                 print("POS", self.iBook.chapterOffSet)
+//                print("HEIGHT", self.contentTextView.contentSize.height, self.contentTextView.bounds.height)
             }
         }
+    }
+    
+    func readDone() {
+        timerClock?.invalidate()
+        nextChapterButton.setTitle("- THE END -", for: .normal)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        iBook.desc = formatter.string(from: Date())
+        
+        iBook.status = "READ_DONE"
+        
+        saveBookToFirebase(docId: iBook.id, data: [
+            "desc": self.iBook.desc,
+            "status": iBook.status
+        ])
     }
     
     func setupChapter() {
@@ -116,14 +146,16 @@ class ReaderViewController: UIViewController {
             return // khong ton tai chapter index
         }
         lastChapter = iBook.listChapter[iBook.chapterIndex]
+
+        self.iBook.desc = "\(self.iBook.chapterIndex * 100 / self.iBook.totalChapter)%"
     }
     
     func loadContentChapter() {
-        guard let thisChapter = lastChapter else { return }
+        guard let lastChapter = lastChapter else { return }
         
-        navigationItem.title = thisChapter.name
+        navigationItem.title = lastChapter.name
         
-        AF.request(thisChapter.url).responseString {[weak self] response in
+        AF.request(lastChapter.url).responseString {[weak self] response in
             //debugPrint("Response: \(response)")
             
             guard let self = self else { return }
@@ -153,27 +185,29 @@ class ReaderViewController: UIViewController {
         content.append("\n\n")
         contentTextView.text = content
         
-        // load vi tri doc lan truoc
+        // load vi tri doc lan truoc khi moi mo sach
         if numberLoad == 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 self.contentTextView.contentOffset = .init(x: 0, y: self.iBook.chapterOffSet)
             }
         }
+        listPositon[iBook.chapterIndex] = contentTextView.contentSize.height
+//        for item in listPositon {
+//            print("LSIT", item.key, item.value)
+//        }
+//        print("----------")
+        isLoading = false
     }
     
     func nextChapter() {
         updateProgress()
         
-        if iBook.chapterIndex >= (iBook.totalChapter - 1) {
-            iBook.status = "READ_DONE"
-            saveBookToFirebase(docId: iBook.id, data: ["status": iBook.status])
-        }
-        // get next chap
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
-            nextChapterButton.setTitle("- THE END -", for: .normal)
+            readDone()
             return
         }
         
+        // get next chap
         iBook.chapterIndex += 1
         iBook.chapterOffSet = 0
         
@@ -270,21 +304,26 @@ extension ReaderViewController: UITextViewDelegate {
         if scrollView.contentOffset.y > 1 {
             iBook.chapterOffSet = scrollView.contentOffset.y - lastPosition
         }
+        
         // phat hien scroll to bottom -> load next chap
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 100) {
             showNextButton()
         } else {
             hiddenNextButton()
         }
-        if scrollView.contentOffset.y < lastPosition {
+        
+        // load nex chap content
+        if isLoading || scrollView.contentOffset.y < lastPosition {
             return
         }
-
         if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)
-            {
-                lastPosition = scrollView.contentOffset.y
-                nextChapter()
-            }
+        {
+            isLoading = true
+            lastHeight = scrollView.contentSize.height
+            lastPosition = scrollView.contentOffset.y
+            print(lastHeight, lastPosition)
+            nextChapter()
+        }
     }
     
     func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
