@@ -10,9 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import SwiftyJSON
 
-let authUser = Auth.auth().currentUser
-
-var identification: String = ""
+var identification: String = UUID().uuidString
 
 var device: [String: Any] = [
     "name": UIDevice.current.name,
@@ -22,21 +20,12 @@ var device: [String: Any] = [
 
 let fsdb = Firestore.firestore()
 
-func setDeviceID() {
-    identification = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
-}
-func setUserID() {
-    identification = authUser?.uid ?? UUID().uuidString
-}
-
 func setupUser() {
-    if authUser != nil {
-        if let authUser = authUser {
-            identification = authUser.uid
-            print(authUser.displayName ?? "")
-        }
+    
+    if let user = Auth.auth().currentUser {
+        identification = user.uid
     } else {
-        setDeviceID()
+        identification = UIDevice.current.identifierForVendor?.uuidString ?? identification
     }
     print("ID", identification)
     

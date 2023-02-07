@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftSoup
+import FirebaseAuth
 
 class ReaderViewController: UIViewController {
     
@@ -54,9 +55,9 @@ class ReaderViewController: UIViewController {
     }
     
     func setupUser() {
-        guard let authUser = authUser else { return }
+        guard let user = Auth.auth().currentUser else { return }
         
-        identification = authUser.uid
+        identification = user.uid
     }
     
     func setupUI() {

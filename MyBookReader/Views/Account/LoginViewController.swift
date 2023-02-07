@@ -85,8 +85,6 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            setUserID()
-            
             self.routeToMain()
         }
     }

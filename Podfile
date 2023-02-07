@@ -8,7 +8,6 @@ target 'MyBookReader' do
   # Pods for MyBookReader
 
 	pod 'Alamofire'
-  pod 'ObjectMapper'
 	pod 'SwiftSoup'
 	pod 'SwiftyJSON', '~> 4.0'
 	pod 'Kingfisher', '~> 7.0'

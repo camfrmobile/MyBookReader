@@ -55,10 +55,10 @@ class AccountViewController: UIViewController {
     }
     
     func setupAccount() {
-        if authUser != nil {
-            if let authUser = authUser {
-                emailTextField.text = authUser.email
-                nameTextField.text = authUser.displayName
+        if Auth.auth().currentUser != nil {
+            if let user = Auth.auth().currentUser {
+                emailTextField.text = user.email
+                nameTextField.text = user.displayName
             }
         }
     }
@@ -106,11 +106,11 @@ class AccountViewController: UIViewController {
         let password = passTextField.text ?? ""
         let repass = rePassTextField.text ?? ""
         
-        if let authUser = authUser {
-            if !email.isEmpty && email != authUser.email {
+        if let user = Auth.auth().currentUser {
+            if !email.isEmpty && email != user.email {
                 changeUserEmail(email: email)
             }
-            if !name.isEmpty && name != authUser.displayName {
+            if !name.isEmpty && name != user.displayName {
                 changeUserName(name: name)
             }
             if password.count >= 6 && password == repass {

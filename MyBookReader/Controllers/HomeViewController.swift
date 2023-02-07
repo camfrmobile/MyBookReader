@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftSoup
+import FirebaseAuth
 
 class HomeViewController: UIViewController {
 
@@ -46,11 +47,11 @@ class HomeViewController: UIViewController {
 
 //        NotificationCenter.default.addObserver(self, selector: #selector(onReadBook(notification:)), name: Notification.Name("ReadBook"), object: nil)
         
-        if authUser != nil {
-            if let name = authUser?.displayName {
+        if Auth.auth().currentUser != nil {
+            if let name = Auth.auth().currentUser?.displayName {
                 helloLabel.text = "Hi, \(name)"
             }
-            accountButton.tintColor = .blue
+            accountButton.tintColor = .gray
         } else {
             helloLabel.text = "Xin chào!"
         }

@@ -29,15 +29,15 @@ class ProfileViewController: UIViewController {
         avatarImageView.clipsToBounds = true
         avatarImageView.layer.cornerRadius = avatarImageView.bounds.width / 2
         
-        if authUser != nil {
-            if let name = authUser?.displayName {
+        if Auth.auth().currentUser != nil {
+            if let name = Auth.auth().currentUser?.displayName {
                 nameLabel.text = name
             }
         }
     }
     
     func setupStart() {
-        if authUser == nil {
+        if Auth.auth().currentUser == nil {
             
         }
         
@@ -47,7 +47,7 @@ class ProfileViewController: UIViewController {
     // MARK: IBAction
     @IBAction func myAccountAction(_ sender: Any) {
         // check login
-        if authUser == nil {
+        if Auth.auth().currentUser == nil {
             AlertHelper.confirmOrCancel(message: "Bạn chưa đăng nhập.\nVui lòng đăng nhập hoặc tạo tài khoản.", viewController: self) {
                 self.routeToLoginNavigation()
             }
@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func actionChosePhoto(_ sender: UIButton) {
         // check login
-        if authUser == nil {
+        if Auth.auth().currentUser == nil {
             AlertHelper.confirmOrCancel(message: "Bạn chưa đăng nhập.\nVui lòng đăng nhập hoặc tạo tài khoản.", viewController: self) {
                 self.routeToLoginNavigation()
             }
@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func appInfoAction(_ sender: UIButton) {
-        AlertHelper.sorry(message: "Ứng dụng tổng hợp và sửa lỗi chính tả các tác phẩm sách, truyện hiện có trên mạng Internet. Chúng tôi không sở hữu hay chịu trách nhiệm bất kỳ thông tin nào trên web này. Nếu làm ảnh hưởng đến cá nhân hay tổ chức nào, khi được yêu cầu, chúng tôi sẽ xem xét và gỡ bỏ ngay lập tức.\n\nBản quyền sách, truyện thuộc về Tác giả & Nhà xuất bản. Ứng dụng khuyến khích các bạn nếu có khả năng hãy mua sách, truyện để ủng hộ Tác giả và Nhà xuất bản.\n\nNhà phát triển: Trần Văn Cam", viewController: self)
+        AlertHelper.sorry(message: "Ứng dụng tổng hợp và sửa lỗi chính tả các tác phẩm sách, truyện hiện có trên mạng Internet. Chúng tôi không sở hữu hay chịu trách nhiệm bất kỳ thông tin nào trên web này. Nếu làm ảnh hưởng đến cá nhân hay tổ chức nào, khi được yêu cầu, chúng tôi sẽ xem xét và gỡ bỏ ngay lập tức.\n\nBản quyền sách, truyện thuộc về Tác giả & Nhà xuất bản. Ứng dụng khuyến khích các bạn nếu có khả năng hãy mua sách, truyện để ủng hộ Tác giả và Nhà xuất bản.\n\nNhà phát triển: TVCam", viewController: self)
     }
     
     @IBAction func logOutAction(_ sender: UIButton) {
@@ -76,8 +76,6 @@ class ProfileViewController: UIViewController {
             try Auth.auth().signOut()
 //            GIDSignIn.sharedInstance().signOut()
 //            GIDSignIn.sharedInstance().disconnect()
-            setDeviceID()
-            print(identification)
 
             routeToLoginNavigation()
         } catch let error {

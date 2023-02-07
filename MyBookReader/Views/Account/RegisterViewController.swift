@@ -98,8 +98,6 @@ class RegisterViewController: UIViewController {
             }
             self.sendEmailVerify()
             
-            setUserID()
-            
             self.changeUserInfo(name: name)
             
             AlertHelper.sorry(message: "Kiểm tra hộp thư của bạn và xác thực email", viewController: self)
