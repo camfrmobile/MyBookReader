@@ -16,7 +16,7 @@ var identification: String = UUID().uuidString
 var device: [String: Any] = [
     "name": UIDevice.current.name,
     "system": UIDevice.current.systemName,
-    "searchs": []
+    "searchs": ["sách", "truyện"]
 ]
 
 let fsdb = Firestore.firestore()

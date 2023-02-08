@@ -27,7 +27,7 @@ class SearchViewController: UIViewController {
     } ()
     
     var searchBooks = [Book]()
-    var histories: [String] = ["sách", "truyện"]
+    var histories: [String] = []
     
     // MARK: Setup
     override func viewDidLoad() {
