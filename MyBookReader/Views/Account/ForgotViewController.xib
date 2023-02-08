@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForgotViewController" customModule="MyBookReader" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="zhb-TC-1lS" id="SNW-2k-uwZ"/>
+                <outlet property="emailTextField" destination="Yzz-cH-9VT" id="HAu-Cx-e9q"/>
+                <outlet property="forgotButton" destination="LhM-UW-kog" id="t1T-T5-5Jp"/>
+                <outlet property="loadingView" destination="lR6-W7-Z4J" id="lNk-U2-QZd"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhb-TC-1lS">
+                    <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quên mật khẩu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBL-Af-0NM">
+                            <rect key="frame" x="79.333333333333329" y="100" width="231.33333333333337" height="36"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="32"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yzz-cH-9VT">
+                            <rect key="frame" x="30" y="286" width="330" height="34"/>
+                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LhM-UW-kog">
+                            <rect key="frame" x="50" y="516" width="290" height="47"/>
+                            <color key="backgroundColor" systemColor="linkColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="290" id="Wtx-mM-Egd"/>
+                                <constraint firstAttribute="height" constant="47" id="x0G-y3-XkE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="15"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Đặt lại mật khẩu"/>
+                            <connections>
+                                <action selector="actionForgot:" destination="-1" eventType="touchUpInside" id="OtH-uf-SeH"/>
+                            </connections>
+                        </button>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lR6-W7-Z4J">
+                            <rect key="frame" x="95" y="331.66666666666669" width="200" height="100"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="KuS-EI-f6P">
+                                    <rect key="frame" x="20" y="31.666666666666671" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </activityIndicatorView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Đang tải..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39h-PC-x8y">
+                                    <rect key="frame" x="77" y="40" width="123" height="20.333333333333329"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="Rft-2n-EGl"/>
+                                <constraint firstAttribute="width" constant="200" id="bGc-qJ-1Is"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="LhM-UW-kog" firstAttribute="centerX" secondItem="zhb-TC-1lS" secondAttribute="centerX" id="092-9M-dmC"/>
+                        <constraint firstAttribute="trailing" secondItem="Yzz-cH-9VT" secondAttribute="trailing" constant="30" id="3Yh-1r-XA4"/>
+                        <constraint firstItem="Yzz-cH-9VT" firstAttribute="top" secondItem="wBL-Af-0NM" secondAttribute="bottom" constant="150" id="6JE-Ii-l5s"/>
+                        <constraint firstItem="lR6-W7-Z4J" firstAttribute="centerX" secondItem="zhb-TC-1lS" secondAttribute="centerX" id="Ato-Ws-WxQ"/>
+                        <constraint firstItem="lR6-W7-Z4J" firstAttribute="centerY" secondItem="zhb-TC-1lS" secondAttribute="centerY" id="HYf-kZ-Qmu"/>
+                        <constraint firstItem="wBL-Af-0NM" firstAttribute="top" secondItem="zhb-TC-1lS" secondAttribute="top" constant="100" id="ISc-7V-ixP"/>
+                        <constraint firstAttribute="bottom" secondItem="LhM-UW-kog" secondAttribute="bottom" constant="200" id="gkO-Ni-1pJ"/>
+                        <constraint firstItem="wBL-Af-0NM" firstAttribute="centerX" secondItem="zhb-TC-1lS" secondAttribute="centerX" id="kv8-qz-pef"/>
+                        <constraint firstItem="Yzz-cH-9VT" firstAttribute="leading" secondItem="zhb-TC-1lS" secondAttribute="leading" constant="30" id="yf0-EY-F0s"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="zhb-TC-1lS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7hd-FU-if6"/>
+                <constraint firstItem="zhb-TC-1lS" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="EgK-4C-M4y"/>
+                <constraint firstItem="zhb-TC-1lS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="JaU-dt-X5Q"/>
+                <constraint firstItem="zhb-TC-1lS" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="r6t-ie-tCm"/>
+            </constraints>
+            <point key="canvasLocation" x="74" y="-12"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

@@ -151,7 +151,7 @@ extension ProfileViewController: RouteBook {
     
     func routeToAccountNavigation() {
         let viewController = AccountViewController()
-        
+
         let navigation = UINavigationController(rootViewController: viewController)
 
         let keyWindow = UIApplication.shared.connectedScenes
@@ -159,9 +159,9 @@ extension ProfileViewController: RouteBook {
             .compactMap({$0 as? UIWindowScene})
             .first?.windows
             .filter({$0.isKeyWindow}).first
-
+        print("33333")
         keyWindow?.rootViewController = navigation
-        keyWindow?.makeKeyAndVisible()
+        //keyWindow?.makeKeyAndVisible()
     }
     
 }

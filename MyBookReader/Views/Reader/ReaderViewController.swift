@@ -32,8 +32,10 @@ class ReaderViewController: UIViewController {
     var numberLoad: Int = 0
     var tempPos: CGFloat = 0
     var isLoading = false
-    var timerClock: Timer?
     var listPositon: [Int: CGFloat] = [:]
+    
+    var timerClock: Timer?
+    var timerLoad: Timer?
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -197,7 +199,14 @@ class ReaderViewController: UIViewController {
 //            print("LSIT", item.key, item.value)
 //        }
 //        print("----------")
+        
         isLoading = false
+        
+        hiddenNextButton()
+        
+        if contentTextView.contentSize.height <= contentTextView.bounds.height {
+            nextChapter()
+        }
     }
     
     func nextChapter() {
@@ -208,6 +217,30 @@ class ReaderViewController: UIViewController {
             return
         }
         
+        // loading view
+        var numDot = 0
+        timerLoad?.invalidate()
+        timerLoad = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true, block: {[weak self] time in
+            
+            guard let self = self else { return }
+            numDot += 1
+            if numDot > 3 {
+                numDot = 0
+            }
+            var text = ""
+            switch numDot {
+            case 1:
+                text = "⊙"
+            case 2:
+                text = "⊙ ⊙"
+            case 3:
+                text = "⊙ ⊙ ⊙"
+            default:
+                text = ""
+            }
+            self.nextChapterButton.setTitle(text, for: .normal)
+        })
+        
         // get next chap
         iBook.chapterIndex += 1
         iBook.chapterOffSet = 0
@@ -215,7 +248,7 @@ class ReaderViewController: UIViewController {
         lastChapter = iBook.listChapter[iBook.chapterIndex]
 
         loadContentChapter()
-        hiddenNextButton()
+        
         updateProgress()
         
         numberLoad += 1
@@ -223,10 +256,12 @@ class ReaderViewController: UIViewController {
     
     func showNextButton() {
         nextChapterButton.isHidden = false
+        self.nextChapterButton.setTitle("↓ ↓ ↓", for: .normal)
     }
     
     func hiddenNextButton() {
         nextChapterButton.isHidden = true
+        timerLoad?.invalidate()
     }
     
     func updateProgress() {

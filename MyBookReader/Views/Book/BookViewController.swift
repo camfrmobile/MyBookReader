@@ -17,11 +17,12 @@ class BookViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var starCosmosView: CosmosView!
-    @IBOutlet weak var descTextView: UITextView!
+    @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var starLabel: UILabel!
     @IBOutlet weak var afterReadButton: UIButton!
     @IBOutlet weak var nowReadButton: UIButton!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var contentHeightConstraint: NSLayoutConstraint!
     
     // MARK: Variables
     var iBook: Book = Book()
@@ -44,9 +45,9 @@ class BookViewController: UIViewController {
         nowReadButton.layer.borderWidth = 1
         nowReadButton.layer.borderColor = UIColor.black.cgColor
         
-        descTextView.isEditable = false
-        descTextView.textContainerInset = UIEdgeInsets.zero
-        descTextView.textContainer.lineFragmentPadding = 30
+//        descTextView.isEditable = false
+//        descTextView.textContainerInset = UIEdgeInsets.zero
+//        descTextView.textContainer.lineFragmentPadding = 30
         
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(onTapBack))
         
@@ -66,7 +67,7 @@ class BookViewController: UIViewController {
 
         titleLabel.text = iBook.title
         infoLabel.text = iBook.desc
-        descTextView.text = "Đang tải..."
+        descLabel.text = "Đang tải..."
         
         starCosmosView.rating = iBook.rating
         starLabel.text = "\(iBook.rating) / 5.0"
@@ -139,7 +140,7 @@ class BookViewController: UIViewController {
     
     func reFillDataBook() {
         infoLabel.text = iBook.author.name
-        descTextView.text = "Thể loại: \(iBook.category.name)\nSố chương: \(iBook.totalChapter)\n\(iBook.desc)\n"
+        descLabel.text = "Thể loại: \(iBook.category.name)\nSố chương: \(iBook.totalChapter)\n\(iBook.desc)\n"
     }
     
     // MARK: IBAction

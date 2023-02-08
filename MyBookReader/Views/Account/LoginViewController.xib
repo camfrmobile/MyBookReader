@@ -11,7 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="MyBookReader" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="JMM-z6-mBb" id="MNt-bk-12m"/>
                 <outlet property="emailTextField" destination="n6e-3G-GNc" id="15O-XT-xwC"/>
+                <outlet property="loadingView" destination="zo7-ct-8Ug" id="Uhg-bY-Lt1"/>
                 <outlet property="loginButton" destination="ZWG-Jx-ay6" id="S28-s5-aIe"/>
                 <outlet property="passTextField" destination="08i-V7-B3l" id="aX1-ah-Eh2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -44,7 +46,7 @@
                                     <rect key="frame" x="0.0" y="66" width="350" height="46"/>
                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
                             </subviews>
                             <constraints>
@@ -107,13 +109,43 @@
                                 <constraint firstAttribute="height" constant="36" id="diH-gc-uUc"/>
                             </constraints>
                         </view>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zo7-ct-8Ug">
+                            <rect key="frame" x="95" y="331.66666666666669" width="200" height="100"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="i9j-Qx-NJP">
+                                    <rect key="frame" x="20" y="31.333333333333314" width="37" height="37"/>
+                                </activityIndicatorView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đang tải..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9FN-fj-hPS">
+                                    <rect key="frame" x="77" y="39.666666666666629" width="123" height="20.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="1dS-Xs-BSk"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="3JI-J8-rUc"/>
+                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="601-kn-RKE"/>
+                                <constraint firstItem="9FN-fj-hPS" firstAttribute="leading" secondItem="i9j-Qx-NJP" secondAttribute="trailing" constant="20" id="LIy-xF-okM"/>
+                                <constraint firstAttribute="height" constant="100" id="Mvw-Uf-e6n"/>
+                                <constraint firstAttribute="width" constant="200" id="dE6-wU-sKK"/>
+                                <constraint firstItem="9FN-fj-hPS" firstAttribute="centerY" secondItem="zo7-ct-8Ug" secondAttribute="centerY" id="fvt-Wr-HDF"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="pNg-ck-Hd3"/>
+                                <constraint firstItem="i9j-Qx-NJP" firstAttribute="centerY" secondItem="zo7-ct-8Ug" secondAttribute="centerY" id="sxb-YR-US1"/>
+                                <constraint firstItem="i9j-Qx-NJP" firstAttribute="leading" secondItem="zo7-ct-8Ug" secondAttribute="leading" constant="20" id="zNK-IW-7Va"/>
+                                <constraint firstAttribute="trailing" secondItem="9FN-fj-hPS" secondAttribute="trailing" id="zS1-HL-JJj"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="zo7-ct-8Ug" firstAttribute="centerX" secondItem="JMM-z6-mBb" secondAttribute="centerX" id="9lp-Xd-0YF"/>
                         <constraint firstItem="xP0-mf-Hqh" firstAttribute="top" secondItem="ZWG-Jx-ay6" secondAttribute="bottom" constant="10" id="AjQ-Od-ND6"/>
                         <constraint firstItem="xP0-mf-Hqh" firstAttribute="leading" secondItem="JMM-z6-mBb" secondAttribute="leading" constant="50" id="HUt-2U-kxx"/>
                         <constraint firstAttribute="trailing" secondItem="ewr-pp-5LT" secondAttribute="trailing" constant="20" id="Jkq-fX-qj7"/>
                         <constraint firstItem="ewr-pp-5LT" firstAttribute="top" secondItem="mCa-28-3zZ" secondAttribute="bottom" constant="8" id="Pn4-Ec-gKz"/>
+                        <constraint firstItem="zo7-ct-8Ug" firstAttribute="centerY" secondItem="JMM-z6-mBb" secondAttribute="centerY" id="Qt4-zO-cq3"/>
                         <constraint firstItem="6QI-5A-aZa" firstAttribute="centerX" secondItem="JMM-z6-mBb" secondAttribute="centerX" id="W1F-2p-eFK"/>
                         <constraint firstAttribute="trailing" secondItem="mCa-28-3zZ" secondAttribute="trailing" constant="20" id="agI-MS-Edf"/>
                         <constraint firstItem="ZWG-Jx-ay6" firstAttribute="centerX" secondItem="JMM-z6-mBb" secondAttribute="centerX" id="iEE-1l-Fhv"/>

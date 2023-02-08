@@ -52,13 +52,13 @@
                                     <rect key="frame" x="0.0" y="132" width="350" height="46"/>
                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P52-KK-Wml">
                                     <rect key="frame" x="0.0" y="198" width="350" height="46"/>
                                     <color key="backgroundColor" systemColor="systemGray5Color"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
                             </subviews>
                             <constraints>

@@ -33,6 +33,9 @@ class BookTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        // bo focus cell
+        self.selectionStyle = .none
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

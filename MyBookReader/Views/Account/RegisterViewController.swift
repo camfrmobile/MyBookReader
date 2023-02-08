@@ -16,9 +16,17 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var containerView: UIView!
     
     // MARK: Variables
-
+    
+    let switchViewPassButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .gray
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        return button
+    } ()
     
     
     // MARK: Setup
@@ -29,20 +37,36 @@ class RegisterViewController: UIViewController {
     }
     
     func setupUI() {
-        let suffixName: UIImage = UIImage(systemName: "person") ?? UIImage()
-        nameTextField.addPaddingRightIcon(suffixName, padding: 40)
-        
-            let suffixEmail: UIImage = UIImage(systemName: "envelope") ?? UIImage()
-            emailTextField.addPaddingRightIcon(suffixEmail, padding: 40)
-            
-        let suffixPass: UIImage = UIImage(systemName: "eye.slash") ?? UIImage()
-        passTextField.addPaddingRightIcon(suffixPass, padding: 40)
-        
+        loadingView.isHidden = true
         registerButton.layer.cornerRadius = 20
         nameTextField.delegate = self
         emailTextField.delegate = self
         passTextField.delegate = self
         nameTextField.becomeFirstResponder()
+        
+        let suffixName: UIImage = UIImage(systemName: "person") ?? UIImage()
+        nameTextField.addPaddingRightIcon(suffixName, padding: 40)
+        
+        let suffixEmail: UIImage = UIImage(systemName: "envelope") ?? UIImage()
+        emailTextField.addPaddingRightIcon(suffixEmail, padding: 40)
+            
+        //let suffixPass: UIImage = UIImage(systemName: "eye.slash") ?? UIImage()
+        //passTextField.addPaddingRightIcon(suffixPass, padding: 40)
+        let switchView: UIView = {
+            let uiview = UIView()
+            uiview.frame = CGRect(x: 0, y: 0, width: passTextField.bounds.height, height: passTextField.bounds.height)
+            uiview.addSubview(switchViewPassButton)
+            switchViewPassButton.frame = CGRect(x: 5, y: 2, width: 40, height: 40)
+            return uiview
+        } ()
+        switchViewPassButton.addTarget(self, action: #selector(switchViewPass), for: .touchDown)
+        passTextField.rightView = switchView
+        passTextField.rightViewMode = .always
+        
+        // tap view end edit keyboard
+        containerView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapView))
+        containerView.addGestureRecognizer(tapGesture)
     }
     
     func changeUserInfo(name: String) {
@@ -66,16 +90,49 @@ class RegisterViewController: UIViewController {
             print("Email verify send")
         })
     }
-
+    
+    // MARK: IBAction
+    
+    @objc func onTapView() {
+        view.endEditing(true)
+    }
+    
+    @objc func switchViewPass() {
+        passTextField.isSecureTextEntry = !passTextField.isSecureTextEntry
+        if passTextField.isSecureTextEntry {
+            switchViewPassButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        } else {
+            switchViewPassButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
+    }
+    
     @IBAction func actionRegister(_ sender: UIButton) {
-        let name = nameTextField.text ?? ""
-        let email = emailTextField.text ?? ""
+        var name = nameTextField.text ?? ""
+        var email = emailTextField.text ?? ""
         let password = passTextField.text ?? ""
         
-        if email.isEmpty || password.count < 6 {
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        //password = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // validate
+        if name.count < 3 {
+            AlertHelper.sorry(message: "Tên tài khoản ít nhất 3 ký tự", viewController: self)
+            nameTextField.becomeFirstResponder()
+            return
+        }
+        if !isValidEmail(email: email) {
+            AlertHelper.sorry(message: "Vui lòng nhập đúng email", viewController: self)
+            emailTextField.becomeFirstResponder()
+            return
+        }
+        if password.count < 6 {
+            AlertHelper.sorry(message: "Mật khẩu ít nhất 6 ký tự", viewController: self)
+            passTextField.becomeFirstResponder()
             return
         }
         
+        loadingView.isHidden = false
         registerButton.isEnabled = false
         registerButton.setTitle("Đang đăng nhập...", for: .normal)
         
@@ -83,12 +140,13 @@ class RegisterViewController: UIViewController {
             
             guard let self = self else { return }
             
+            self.loadingView.isHidden = true
             self.registerButton.isEnabled = true
             self.registerButton.setTitle("Đăng Ký", for: .normal)
             
             guard error == nil else {
                 
-                let alert = UIAlertController(title: "Có lỗi rồi", message: error?.localizedDescription, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Lỗi đăng ký", message: error?.localizedDescription, preferredStyle: .alert)
                 let actionOK = UIAlertAction(title: "OK", style: .default)
                 alert.addAction(actionOK)
                 

@@ -15,9 +15,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var loadingView: UIView!
     
     // MARK: Variables
-
+    
+    let switchViewPassButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .gray
+        button.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        return button
+    } ()
     
     
     // MARK: Setup
@@ -28,11 +36,23 @@ class LoginViewController: UIViewController {
     }
     
     func setupUI() {
+        //navigationItem.title = "Đăng nhập"
         let suffixEmail: UIImage = UIImage(systemName: "envelope") ?? UIImage()
         emailTextField.addPaddingRightIcon(suffixEmail, padding: 40)
         
-        let suffixPass: UIImage = UIImage(systemName: "eye.slash") ?? UIImage()
-        passTextField.addPaddingRightIcon(suffixPass, padding: 40)
+        //let suffixPass: UIImage = UIImage(systemName: "eye.slash") ?? UIImage()
+        //passTextField.addPaddingRightIcon(suffixPass, padding: 40)
+
+        let switchView: UIView = {
+            let uiview = UIView()
+            uiview.frame = CGRect(x: 0, y: 0, width: passTextField.bounds.height, height: passTextField.bounds.height)
+            uiview.addSubview(switchViewPassButton)
+            switchViewPassButton.frame = CGRect(x: 5, y: 2, width: 40, height: 40)
+            return uiview
+        } ()
+        switchViewPassButton.addTarget(self, action: #selector(switchViewPass), for: .touchDown)
+        passTextField.rightView = switchView
+        passTextField.rightViewMode = .always
         
         loginButton.layer.cornerRadius = 20
         emailTextField.delegate = self
@@ -42,6 +62,10 @@ class LoginViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.black
         // left button
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(onTapBack))
+        
+        containerView.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapView))
+        containerView.addGestureRecognizer(tapGesture)
     }
 
     func showMessage(_ title: String, _ message: String) {
@@ -59,19 +83,43 @@ class LoginViewController: UIViewController {
         routeToMain()
     }
     
+    @objc func onTapView() {
+        view.endEditing(true)
+    }
+    
+    @objc func switchViewPass() {
+        passTextField.isSecureTextEntry = !passTextField.isSecureTextEntry
+        if passTextField.isSecureTextEntry {
+            switchViewPassButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+        } else {
+            switchViewPassButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        }
+    }
+    
     @IBAction func actionLoginButton(_ sender: UIButton) {
         let email = emailTextField.text ?? ""
         let password = passTextField.text ?? ""
         
-        if email.isEmpty || password.count < 6 {
+        if !isValidEmail(email: email) {
+            AlertHelper.sorry(message: "Vui lòng nhập đúng email", viewController: self)
+            emailTextField.becomeFirstResponder()
+            return
+        }
+        if password.count < 6 {
+            AlertHelper.sorry(message: "Mật khẩu ít nhất 6 ký tự", viewController: self)
+            passTextField.becomeFirstResponder()
             return
         }
         
+        loadingView.isHidden = false
         loginButton.isEnabled = false
         loginButton.setTitle("Đang đăng nhập...", for: .normal)
         
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+        Auth.auth().signIn(withEmail: email, password: password) {[weak self] authResult, error in
             
+            guard let self = self else { return }
+            
+            self.loadingView.isHidden = true
             self.loginButton.isEnabled = true
             self.loginButton.setTitle("Đăng Nhập", for: .normal)
             
@@ -92,27 +140,16 @@ class LoginViewController: UIViewController {
     @IBAction func actionForgotButton(_ sender: UIButton) {
         
         let email = emailTextField.text ?? ""
-        if email.isEmpty || !email.contains("@") {
-            showMessage("Quên mật khẩu", "Vui lòng nhập email")
-            emailTextField.becomeFirstResponder()
-            return
-        }
         
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let error = error {
-                self.showMessage("Quên mật khẩu", error.localizedDescription)
-                return
-            }
-            self.showMessage("Quên mật khẩu", "Kiểm tra email để đặt lại mật khẩu truy cập")
-            
-            self.navigationController?.popToRootViewController(animated: true)
-        }
+        let VC = ForgotViewController()
+        VC.email = email
+        navigationController?.pushViewController(VC, animated: true)
     }
     
     @IBAction func actionRegisterButton(_ sender: UIButton) {
-        let register = RegisterViewController()
-        register.title = "Đăng ký"
-        navigationController?.pushViewController(register, animated: true)
+        let VC = RegisterViewController()
+        //register.title = "Đăng ký"
+        navigationController?.pushViewController(VC, animated: true)
     }
 }
 
