@@ -33,13 +33,35 @@ class AccountViewController: UIViewController {
         return button
     } ()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.style = .large
+        return activity
+    } ()
+    let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Đang tải..."
+        return label
+    } ()
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    } ()
+    
+    let group = DispatchGroup()
     
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()
+        setupLoadingView()
         setupAccount()
+        hideLoadingView()
     }
     
     func setupUI() {
@@ -91,6 +113,27 @@ class AccountViewController: UIViewController {
         containerView.addGestureRecognizer(tapGesture)
     }
     
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityIndicator)
+        loadingView.addSubview(loadingLabel)
+        
+        loadingView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        
+        loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        loadingLabel.leadingAnchor.constraint(equalTo: activityIndicator.trailingAnchor, constant: 10).isActive = true
+        
+        activityIndicator.startAnimating()
+    }
+    func hideLoadingView() {
+        loadingView.removeFromSuperview()
+    }
+    
     func setupAccount() {
         if Auth.auth().currentUser != nil {
             if let user = Auth.auth().currentUser {
@@ -101,6 +144,7 @@ class AccountViewController: UIViewController {
     }
     
     func changeUserName(name: String) {
+        self.group.enter()
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = name
         changeRequest?.commitChanges { error in
@@ -108,26 +152,31 @@ class AccountViewController: UIViewController {
                 AlertHelper.sorry(message: error.localizedDescription, viewController: self)
                 return
             }
+            self.group.leave()
             print("EDIT name ok")
         }
     }
     
     func changeUserEmail(email: String) {
+        self.group.enter()
         Auth.auth().currentUser?.updateEmail(to: email) { error in
             if let error = error {
                 AlertHelper.sorry(message: error.localizedDescription, viewController: self)
                 return
             }
+            self.group.leave()
             print("EDIT email ok")
         }
     }
     
     func changePass(newPass: String) {
+        self.group.enter()
         Auth.auth().currentUser?.updatePassword(to: newPass) { error in
             if let error = error {
                 AlertHelper.sorry(message: error.localizedDescription, viewController: self)
                 return
             }
+            self.group.leave()
             print("EDIT pass ok")
         }
     }
@@ -160,12 +209,48 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func actionUpdate(_ sender: UIButton) {
-        let name = nameTextField.text ?? ""
-        let email = emailTextField.text ?? ""
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet", viewController: self)
+            return
+        }
+        
+        var name = nameTextField.text ?? ""
+        var email = emailTextField.text ?? ""
         let password = passTextField.text ?? ""
         let repass = rePassTextField.text ?? ""
         
+        name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        //password = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // validate
+        if name.count < 3 {
+            AlertHelper.sorry(message: "Tên tài khoản ít nhất 3 ký tự", viewController: self)
+            nameTextField.becomeFirstResponder()
+            return
+        }
+        if !isValidEmail(email: email) {
+            AlertHelper.sorry(message: "Vui lòng nhập đúng email", viewController: self)
+            emailTextField.becomeFirstResponder()
+            return
+        }
+        if password.count < 6 {
+            AlertHelper.sorry(message: "Mật khẩu ít nhất 6 ký tự", viewController: self)
+            passTextField.becomeFirstResponder()
+            return
+        }
+        if password != repass {
+            AlertHelper.sorry(message: "Mật khẩu không khớp", viewController: self)
+            rePassTextField.becomeFirstResponder()
+            return
+        }
+        
         if let user = Auth.auth().currentUser {
+            
+            setupLoadingView()
+            
             if !email.isEmpty && email != user.email {
                 changeUserEmail(email: email)
             }
@@ -174,6 +259,12 @@ class AccountViewController: UIViewController {
             }
             if password.count >= 6 && password == repass {
                 changePass(newPass: password)
+            }
+            
+            group.notify(queue: .main) {
+                self.hideLoadingView()
+                AlertHelper.sorry(message: "", viewController: self)
+                print("Cả 3 task đã hoàn thành")
             }
         }
     }

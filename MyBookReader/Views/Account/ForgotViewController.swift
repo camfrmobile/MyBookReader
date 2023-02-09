@@ -44,6 +44,12 @@ class ForgotViewController: UIViewController {
     
     @IBAction func actionForgot(_ sender: UIButton) {
         
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet", viewController: self)
+            return
+        }
+        
         let email = emailTextField.text ?? ""
         
         if !isValidEmail(email: email) {

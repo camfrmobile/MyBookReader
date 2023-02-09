@@ -41,6 +41,8 @@ class HomeViewController: UIViewController {
     
     let refreshControl = UIRefreshControl()
     
+    let group = DispatchGroup()
+    
     var headers = ["Đang đọc", "Đọc xong", "Đọc sau"]
     var readingBooks = [Book]()
     var doneBooks = [Book]()
@@ -129,11 +131,15 @@ class HomeViewController: UIViewController {
         doneBooks.removeAll()
         scheduleBooks.removeAll()
         
+        setupLoadingView()
+        
         loadReadingBooks(identification)
         loadDoneBooks(identification)
         loadScheduleBooks(identification)
         
-        hideLoadingView()
+        group.notify(queue: .main) {
+            self.hideLoadingView()
+        }
         // new user
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.setupNew()
@@ -142,7 +148,12 @@ class HomeViewController: UIViewController {
     
     func loadReadingBooks(_ identification: String) {
         
+        self.group.enter()
+        
         fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            
+            guard let self = self else { return }
+            
             if let document = document, document.exists {
                 // start
                 document.reference.collection("books").whereField("status", isEqualTo: "READING").order(by: "updatedAt", descending: true)
@@ -168,6 +179,8 @@ class HomeViewController: UIViewController {
             } else {
                 print("ERROR1 Document does not exist")
             }
+            
+            self.group.leave()
         }
         //end
     }
@@ -175,7 +188,12 @@ class HomeViewController: UIViewController {
     
     func loadDoneBooks(_ identification: String) {
         
+        self.group.enter()
+        
         fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            
+            guard let self = self else { return }
+            
             if let document = document, document.exists {
                 // start
                 document.reference.collection("books").whereField("status", isEqualTo: "READ_DONE").order(by: "updatedAt", descending: true)
@@ -201,6 +219,8 @@ class HomeViewController: UIViewController {
             } else {
                 print("ERROR2 Document does not exist")
             }
+            
+            self.group.leave()
         }
         //end
     }
@@ -208,7 +228,12 @@ class HomeViewController: UIViewController {
     
     func loadScheduleBooks(_ identification: String) {
         
+        self.group.enter()
+        
         fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            
+            guard let self = self else { return }
+            
             if let document = document, document.exists {
                 // start
                 document.reference.collection("books").whereField("status", isEqualTo: "READ_AFTER").order(by: "updatedAt", descending: true)
@@ -235,6 +260,8 @@ class HomeViewController: UIViewController {
             } else {
                 print("ERROR3 Document does not exist")
             }
+            
+            self.group.leave()
         }
         //end
     }
@@ -246,6 +273,9 @@ class HomeViewController: UIViewController {
             
             // start fs
             fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+                
+                guard let self = self else { return }
+                
                 if let document = document, document.exists {
                     // start
                     document.reference.collection("books").document(iBook.id).delete() {[weak self] err in

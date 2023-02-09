@@ -97,6 +97,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func actionLoginButton(_ sender: UIButton) {
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet", viewController: self)
+            return
+        }
+        
         let email = emailTextField.text ?? ""
         let password = passTextField.text ?? ""
         

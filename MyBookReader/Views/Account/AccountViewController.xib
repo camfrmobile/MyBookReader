@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccountViewController" customModule="MyBookReader" customModuleProvider="target">
             <connections>
+                <outlet property="containerView" destination="hLp-PP-nxg" id="qcf-yg-W0F"/>
                 <outlet property="emailTextField" destination="6iw-6S-pqb" id="W5Y-WY-vEy"/>
                 <outlet property="nameTextField" destination="WO4-5s-FGJ" id="r1n-oc-Yvz"/>
                 <outlet property="passTextField" destination="E0D-gU-jAO" id="v98-Vg-Zih"/>

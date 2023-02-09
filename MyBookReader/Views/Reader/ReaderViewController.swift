@@ -357,8 +357,10 @@ extension ReaderViewController: UITextViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         // lay vi tri dang doc
-        if scrollView.contentOffset.y > 1 {
-            iBook.chapterOffSet = scrollView.contentOffset.y - lastPosition
+        if scrollView.contentOffset.y <= lastHeight {
+            iBook.chapterOffSet = 0
+        } else {
+            iBook.chapterOffSet = scrollView.contentOffset.y - (lastHeight - scrollView.frame.size.height)
         }
         
         // load nex chap content
@@ -371,6 +373,7 @@ extension ReaderViewController: UITextViewDelegate {
             isLoading = true
             lastHeight = scrollView.contentSize.height
             lastPosition = scrollView.contentOffset.y
+            //lastPosition = scrollView.contentSize.height
             nextChapter()
         }
     }

@@ -28,6 +28,7 @@ class RegisterViewController: UIViewController {
         return button
     } ()
     
+    let group = DispatchGroup()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -70,23 +71,34 @@ class RegisterViewController: UIViewController {
     }
     
     func changeUserInfo(name: String) {
+        
+        self.group.enter()
+        
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = name
         changeRequest?.commitChanges { error in
-          // Xử lý lỗi.
-            guard let error = error else {
+            
+            if let error = error {
+                
+                print("ERROR", error.localizedDescription)
                 return
             }
-            print("ERROR", error.localizedDescription)
+            
+            self.group.leave()
         }
     }
     
     func sendEmailVerify() {
+        
+        self.group.enter()
+        
         Auth.auth().currentUser?.sendEmailVerification(completion: { error in
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
+            self.group.leave()
+            
             print("Email verify send")
         })
     }
@@ -107,6 +119,13 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func actionRegister(_ sender: UIButton) {
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet", viewController: self)
+            return
+        }
+        
         var name = nameTextField.text ?? ""
         var email = emailTextField.text ?? ""
         let password = passTextField.text ?? ""
@@ -158,9 +177,12 @@ class RegisterViewController: UIViewController {
             
             self.changeUserInfo(name: name)
             
-            AlertHelper.sorry(message: "Kiểm tra hộp thư của bạn và xác thực email", viewController: self)
-            
-            self.routeToMain()
+            self.group.notify(queue: .main) {
+                
+                AlertHelper.sorry(message: "Kiểm tra hộp thư của bạn và xác thực email", viewController: self)
+                
+                self.routeToMain()
+            }
         }
     }
     

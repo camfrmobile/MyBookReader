@@ -104,8 +104,13 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func actionChosePhoto(_ sender: UIButton) {
-        imageFromLibrary()
-        // chon hinh anh
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet", viewController: self)
+            return
+        }
+        
+        imageFromLibrary() // chon hinh anh
     }
     
     @IBAction func appInfoAction(_ sender: UIButton) {
