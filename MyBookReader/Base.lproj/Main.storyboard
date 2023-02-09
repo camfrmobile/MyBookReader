@@ -128,32 +128,6 @@
                                     <constraint firstItem="vYV-KE-zAs" firstAttribute="leading" secondItem="KfR-fL-CVf" secondAttribute="leading" constant="20" id="zA2-43-QJD"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UDR-Xr-toq">
-                                <rect key="frame" x="96.666666666666686" y="364" width="200" height="100"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="KRt-Q6-hVm">
-                                        <rect key="frame" x="20" y="31.666666666666686" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đang tải..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XgS-9N-2Dj">
-                                        <rect key="frame" x="77" y="39.666666666666686" width="123" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="DPy-3x-l3g"/>
-                                    <constraint firstItem="KRt-Q6-hVm" firstAttribute="centerY" secondItem="UDR-Xr-toq" secondAttribute="centerY" id="Iw6-Et-6Lq"/>
-                                    <constraint firstAttribute="width" constant="200" id="LCB-hv-vw1"/>
-                                    <constraint firstItem="XgS-9N-2Dj" firstAttribute="leading" secondItem="KRt-Q6-hVm" secondAttribute="trailing" constant="20" id="NL1-Z2-hG1"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="T6p-aH-AOQ"/>
-                                    <constraint firstItem="KRt-Q6-hVm" firstAttribute="leading" secondItem="UDR-Xr-toq" secondAttribute="leading" constant="20" id="U6x-Tc-u77"/>
-                                    <constraint firstItem="XgS-9N-2Dj" firstAttribute="centerY" secondItem="UDR-Xr-toq" secondAttribute="centerY" id="h0R-bv-7zU"/>
-                                    <constraint firstAttribute="height" constant="100" id="hHx-m2-U2x"/>
-                                    <constraint firstAttribute="trailing" secondItem="XgS-9N-2Dj" secondAttribute="trailing" id="xkD-rO-5oF"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KMR-b2-BpE"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -161,15 +135,12 @@
                             <constraint firstItem="KfR-fL-CVf" firstAttribute="leading" secondItem="KMR-b2-BpE" secondAttribute="leading" id="5ac-pv-NRf"/>
                             <constraint firstItem="KfR-fL-CVf" firstAttribute="top" secondItem="KMR-b2-BpE" secondAttribute="top" id="93i-kh-Xjt"/>
                             <constraint firstItem="KMR-b2-BpE" firstAttribute="trailing" secondItem="KfR-fL-CVf" secondAttribute="trailing" id="oqz-5e-l01"/>
-                            <constraint firstItem="UDR-Xr-toq" firstAttribute="centerY" secondItem="KMR-b2-BpE" secondAttribute="centerY" id="xrw-vF-riF"/>
-                            <constraint firstItem="UDR-Xr-toq" firstAttribute="centerX" secondItem="KMR-b2-BpE" secondAttribute="centerX" id="yPZ-do-XLx"/>
                             <constraint firstItem="KMR-b2-BpE" firstAttribute="bottom" secondItem="KfR-fL-CVf" secondAttribute="bottom" id="zCY-Wi-knJ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Thư viện" image="text.book.closed.fill" catalog="system" selectedImage="text.book.closed.fill" id="LYa-98-yBI"/>
                     <connections>
                         <outlet property="libraryTableView" destination="vYV-KE-zAs" id="cNK-La-Ohh"/>
-                        <outlet property="loadingView" destination="UDR-Xr-toq" id="HgY-33-ITe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k8I-bW-MK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -210,30 +181,6 @@
                                     <constraint firstItem="1JQ-IA-yGK" firstAttribute="top" secondItem="GaA-o0-Nzw" secondAttribute="top" id="kOO-C6-eI0"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZVU-0z-JJ7">
-                                <rect key="frame" x="96.666666666666686" y="364" width="200" height="100"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="iID-Ub-8RE">
-                                        <rect key="frame" x="20" y="31.666666666666686" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Đang tải..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xNk-Fd-GC6">
-                                        <rect key="frame" x="77" y="39.666666666666686" width="123" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="iID-Ub-8RE" firstAttribute="leading" secondItem="ZVU-0z-JJ7" secondAttribute="leading" constant="20" id="CcE-fg-pU2"/>
-                                    <constraint firstItem="iID-Ub-8RE" firstAttribute="centerY" secondItem="ZVU-0z-JJ7" secondAttribute="centerY" id="Lx5-tK-70s"/>
-                                    <constraint firstAttribute="trailing" secondItem="xNk-Fd-GC6" secondAttribute="trailing" id="Uaa-i4-Mdh"/>
-                                    <constraint firstItem="xNk-Fd-GC6" firstAttribute="centerY" secondItem="ZVU-0z-JJ7" secondAttribute="centerY" id="XZf-cr-TPF"/>
-                                    <constraint firstAttribute="width" constant="200" id="nY6-yR-057"/>
-                                    <constraint firstAttribute="height" constant="100" id="ruJ-g3-ecq"/>
-                                    <constraint firstItem="xNk-Fd-GC6" firstAttribute="leading" secondItem="iID-Ub-8RE" secondAttribute="trailing" constant="20" id="zjC-FU-78m"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2Lk-Nu-rOk"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -241,14 +188,11 @@
                             <constraint firstItem="2Lk-Nu-rOk" firstAttribute="bottom" secondItem="GaA-o0-Nzw" secondAttribute="bottom" id="3wM-Gp-jtS"/>
                             <constraint firstItem="GaA-o0-Nzw" firstAttribute="top" secondItem="2Lk-Nu-rOk" secondAttribute="top" id="88Y-fF-sOm"/>
                             <constraint firstItem="2Lk-Nu-rOk" firstAttribute="trailing" secondItem="GaA-o0-Nzw" secondAttribute="trailing" id="Bfc-Qo-mEl"/>
-                            <constraint firstItem="ZVU-0z-JJ7" firstAttribute="centerY" secondItem="2Lk-Nu-rOk" secondAttribute="centerY" id="CE3-8f-5aB"/>
-                            <constraint firstItem="ZVU-0z-JJ7" firstAttribute="centerX" secondItem="2Lk-Nu-rOk" secondAttribute="centerX" id="k7N-xT-n86"/>
                             <constraint firstItem="GaA-o0-Nzw" firstAttribute="leading" secondItem="2Lk-Nu-rOk" secondAttribute="leading" id="wbf-yv-Omf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Tìm kiếm" image="magnifyingglass" catalog="system" selectedImage="magnifyingglass" id="lK0-5h-7i0"/>
                     <connections>
-                        <outlet property="loadingView" destination="ZVU-0z-JJ7" id="r1c-OC-ITW"/>
                         <outlet property="searchTableView" destination="aZq-xD-Fgb" id="0FG-aJ-xdJ"/>
                         <outlet property="searchView" destination="1JQ-IA-yGK" id="EM7-VP-JaW"/>
                     </connections>

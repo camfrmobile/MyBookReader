@@ -19,6 +19,28 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     // MARK: Variables
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.style = .large
+        return activity
+    } ()
+    let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Đang tải..."
+        return label
+    } ()
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    } ()
+    
+    let refreshControl = UIRefreshControl()
+    
     var headers = ["Đang đọc", "Đọc xong", "Đọc sau"]
     var readingBooks = [Book]()
     var doneBooks = [Book]()
@@ -33,6 +55,8 @@ class HomeViewController: UIViewController {
         setupUI()
         
         setupTableView()
+        
+        setupLoadingView()
         
         loadPhotoFromFirebase(imageView)
         
@@ -66,6 +90,32 @@ class HomeViewController: UIViewController {
         homeTableView.separatorStyle = .none
         homeTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "BookTableViewCell")
         homeTableView.register(UINib(nibName: "BookCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "BookCollectionTableViewCell")
+        
+        // kéo table để làm mới
+        refreshControl.attributedTitle = NSAttributedString(string: "Kéo để làm mới")
+        refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
+        homeTableView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityIndicator)
+        loadingView.addSubview(loadingLabel)
+        
+        loadingView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        
+        loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        loadingLabel.leadingAnchor.constraint(equalTo: activityIndicator.trailingAnchor, constant: 10).isActive = true
+        
+        activityIndicator.startAnimating()
+    }
+    func hideLoadingView() {
+        loadingView.removeFromSuperview()
     }
     
     func setupNew() {
@@ -83,6 +133,7 @@ class HomeViewController: UIViewController {
         loadDoneBooks(identification)
         loadScheduleBooks(identification)
         
+        hideLoadingView()
         // new user
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.setupNew()
@@ -189,55 +240,6 @@ class HomeViewController: UIViewController {
     }
 
     
-    // MARK: Switch
-    func switchToTabHome() {
-        tabBarController?.selectedIndex = 0
-    }
-    func switchToTabLibrary() {
-        tabBarController?.selectedIndex = 1
-    }
-    func switchToTabSearch() {
-        tabBarController?.selectedIndex = 2
-    }
-    func switchToTabAccount() {
-        tabBarController?.selectedIndex = 3
-    }
-    
-
-
-    // MARK: IBAction
-    @IBAction func accountButtonAction(_ sender: UIButton) {
-        switchToTabAccount()
-    }
-    
-    @objc func onDeleteBook(notification: Foundation.Notification) {
-
-        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
-        
-        deleteBook(iBook)
-    }
-    
-    @objc func onReadAfterBook(notification: Foundation.Notification) {
-        
-        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
-        
-        iBook.status = "READ_AFTER"
-        saveBookToFirebase(iBook)
-        
-        reloadTableAfterRemove(iBook)
-        
-        scheduleBooks.insert(iBook, at: 0)
-        
-        homeTableView.reloadData()
-    }
-
-//    @objc func onReadBook(notification: Foundation.Notification) {
-//
-//        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
-//
-//        routeToReaderNavigation(iBook)
-//    }
-    
     func deleteBook(_ iBook: Book) {
 
         AlertHelper.confirmOrCancel(message: "Xoá \(iBook.title)?", viewController: self) {
@@ -284,6 +286,58 @@ class HomeViewController: UIViewController {
                 scheduleBooks.remove(at: index)
             }
         }
+    }
+    
+    // MARK: Switch
+    func switchToTabHome() {
+        tabBarController?.selectedIndex = 0
+    }
+    func switchToTabLibrary() {
+        tabBarController?.selectedIndex = 1
+    }
+    func switchToTabSearch() {
+        tabBarController?.selectedIndex = 2
+    }
+    func switchToTabAccount() {
+        tabBarController?.selectedIndex = 3
+    }
+    
+
+
+    // MARK: IBAction
+    @IBAction func accountButtonAction(_ sender: UIButton) {
+        switchToTabAccount()
+    }
+    
+    @objc func onDeleteBook(notification: Foundation.Notification) {
+
+        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
+        
+        deleteBook(iBook)
+    }
+    
+    @objc func onReadAfterBook(notification: Foundation.Notification) {
+        
+        let iBook: Book = notification.userInfo?["iBook"] as? Book ?? Book()
+        
+        iBook.status = "READ_AFTER"
+        saveBookToFirebase(iBook)
+        
+        reloadTableAfterRemove(iBook)
+        
+        scheduleBooks.insert(iBook, at: 0)
+        
+        homeTableView.reloadData()
+    }
+
+    @objc func refreshData(_ sender: AnyObject) {
+       // Code to refresh table view
+        loadBookFromFirebase()
+        endRefresh()
+    }
+    
+    func endRefresh() {
+        refreshControl.endRefreshing()
     }
     
 }

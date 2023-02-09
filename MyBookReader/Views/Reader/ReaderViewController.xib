@@ -13,7 +13,6 @@
             <connections>
                 <outlet property="contentTextView" destination="T7N-vY-jqf" id="Myh-wx-dNg"/>
                 <outlet property="formatView" destination="SSZ-yw-5Cq" id="cef-92-juU"/>
-                <outlet property="nextChapterButton" destination="QO2-6u-GI8" id="3tq-5c-dDc"/>
                 <outlet property="progressView" destination="LH2-mu-FjE" id="uWW-6h-k2K"/>
                 <outlet property="textLagerButton" destination="lYd-yx-8mD" id="0E6-Mc-3ff"/>
                 <outlet property="textSmallerButton" destination="AZG-qp-BQ4" id="0Cr-4M-36N"/>
@@ -26,10 +25,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6g-zE-j2n" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="47" width="390" height="733"/>
+                    <rect key="frame" x="0.0" y="47" width="390" height="743"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T7N-vY-jqf">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="733"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="743"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
@@ -93,48 +92,33 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPK-Xl-txy">
-                    <rect key="frame" x="0.0" y="780" width="390" height="30"/>
+                    <rect key="frame" x="0.0" y="790" width="390" height="20"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QO2-6u-GI8">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="30"/>
-                            <color key="backgroundColor" systemColor="systemGray6Color"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Đọc tiếp">
-                                <color key="titleColor" systemColor="systemGrayColor"/>
-                            </state>
-                            <connections>
-                                <action selector="actionNextChapter:" destination="-1" eventType="touchUpInside" id="8hM-xH-29j"/>
-                            </connections>
-                        </button>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LH2-mu-FjE">
+                            <rect key="frame" x="0.0" y="16" width="390" height="4"/>
+                            <color key="progressTintColor" systemColor="systemGrayColor"/>
+                            <color key="trackTintColor" systemColor="systemGray6Color"/>
+                        </progressView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="QO2-6u-GI8" firstAttribute="top" secondItem="jPK-Xl-txy" secondAttribute="top" id="BBI-bC-ELu"/>
-                        <constraint firstItem="QO2-6u-GI8" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" id="DaR-gZ-TAw"/>
-                        <constraint firstAttribute="trailing" secondItem="QO2-6u-GI8" secondAttribute="trailing" id="KKN-c2-GSe"/>
-                        <constraint firstAttribute="bottom" secondItem="QO2-6u-GI8" secondAttribute="bottom" id="S7H-RB-z4k"/>
-                        <constraint firstAttribute="height" constant="30" id="yz9-R8-gsp"/>
+                        <constraint firstAttribute="height" constant="20" id="LUv-ZG-W3V"/>
+                        <constraint firstAttribute="trailing" secondItem="LH2-mu-FjE" secondAttribute="trailing" id="aZy-fY-7cR"/>
+                        <constraint firstAttribute="bottom" secondItem="LH2-mu-FjE" secondAttribute="bottom" id="eXN-Ys-mhj"/>
+                        <constraint firstItem="LH2-mu-FjE" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" id="oM2-Kb-Rtr"/>
                     </constraints>
                 </view>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LH2-mu-FjE">
-                    <rect key="frame" x="20" y="806" width="350" height="4"/>
-                    <color key="progressTintColor" systemColor="systemGrayColor"/>
-                    <color key="trackTintColor" systemColor="systemGray6Color"/>
-                </progressView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="jPK-Xl-txy" firstAttribute="top" secondItem="l6g-zE-j2n" secondAttribute="bottom" id="2t2-3A-ktm"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jPK-Xl-txy" secondAttribute="bottom" id="9Nx-Pq-c4O"/>
-                <constraint firstItem="LH2-mu-FjE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="ApP-DH-ClT"/>
                 <constraint firstItem="l6g-zE-j2n" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="J4u-at-3aA"/>
                 <constraint firstItem="l6g-zE-j2n" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Lmx-aq-DTH"/>
-                <constraint firstItem="LH2-mu-FjE" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="fdv-0L-rhI"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="LH2-mu-FjE" secondAttribute="trailing" constant="20" id="jfg-BN-d7N"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jPK-Xl-txy" secondAttribute="trailing" id="k12-7e-fFX"/>
-                <constraint firstItem="jPK-Xl-txy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lDQ-AK-tX1"/>
+                <constraint firstItem="jPK-Xl-txy" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="aJs-Xn-5i3"/>
+                <constraint firstItem="jPK-Xl-txy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f2w-Ss-9r1"/>
+                <constraint firstItem="jPK-Xl-txy" firstAttribute="top" secondItem="l6g-zE-j2n" secondAttribute="bottom" id="kG9-rf-18e"/>
                 <constraint firstItem="l6g-zE-j2n" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="n1p-Qc-UMS"/>
+                <constraint firstItem="jPK-Xl-txy" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="seH-ae-5cL"/>
             </constraints>
             <point key="canvasLocation" x="73.84615384615384" y="-12.085308056872037"/>
         </view>

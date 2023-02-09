@@ -18,10 +18,28 @@ class ReaderViewController: UIViewController {
     @IBOutlet weak var formatView: UIView!
     @IBOutlet weak var textLagerButton: UIButton!
     @IBOutlet weak var textSmallerButton: UIButton!
-    @IBOutlet weak var nextChapterButton: UIButton!
     @IBOutlet weak var progressView: UIProgressView!
     
     // MARK: Variables
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.style = .large
+        return activity
+    } ()
+    let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Đang tải..."
+        return label
+    } ()
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    } ()
     
     var iBook: Book = Book()
     var content: String = ""
@@ -35,7 +53,6 @@ class ReaderViewController: UIViewController {
     var listPositon: [Int: CGFloat] = [:]
     
     var timerClock: Timer?
-    var timerLoad: Timer?
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -44,6 +61,8 @@ class ReaderViewController: UIViewController {
         setupUser()
         
         setupUI()
+        
+        setupLoadingView()
         
         setupText()
         
@@ -82,12 +101,36 @@ class ReaderViewController: UIViewController {
         formatView.isHidden = true
         formatView.layer.cornerRadius = 5
         
-        hiddenNextButton()
-        
 //        contentTextView.isUserInteractionEnabled = true
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onTapTextView))
 //        contentTextView.addGestureRecognizer(tapGesture)
 
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityIndicator)
+        loadingView.addSubview(loadingLabel)
+        
+        loadingView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        
+        loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        loadingLabel.leadingAnchor.constraint(equalTo: activityIndicator.trailingAnchor, constant: 10).isActive = true
+        
+        activityIndicator.startAnimating()
+    }
+    func hideLoadingView() {
+        loadingView.removeFromSuperview()
+    }
+    func showNotifition(_ msg: String) {
+        view.addSubview(loadingView)
+        loadingLabel.text = msg
+        activityIndicator.stopAnimating()
     }
     
     func setupText() {
@@ -126,7 +169,8 @@ class ReaderViewController: UIViewController {
     
     func readDone() {
         timerClock?.invalidate()
-        nextChapterButton.setTitle("- THE END -", for: .normal)
+        
+        showNotifition("- THE END -")
         
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
@@ -154,6 +198,13 @@ class ReaderViewController: UIViewController {
     }
     
     func loadContentChapter() {
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            showNotifition("Không có Internet!")
+            return
+        }
+        
         guard let lastChapter = lastChapter else { return }
         
         navigationItem.title = lastChapter.name
@@ -202,7 +253,7 @@ class ReaderViewController: UIViewController {
         
         isLoading = false
         
-        hiddenNextButton()
+        hideLoadingView()
         
         if contentTextView.contentSize.height <= contentTextView.bounds.height {
             nextChapter()
@@ -210,36 +261,15 @@ class ReaderViewController: UIViewController {
     }
     
     func nextChapter() {
-        updateProgress()
         
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
             readDone()
             return
         }
         
-        // loading view
-        var numDot = 0
-        timerLoad?.invalidate()
-        timerLoad = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true, block: {[weak self] time in
-            
-            guard let self = self else { return }
-            numDot += 1
-            if numDot > 3 {
-                numDot = 0
-            }
-            var text = ""
-            switch numDot {
-            case 1:
-                text = "⊙"
-            case 2:
-                text = "⊙ ⊙"
-            case 3:
-                text = "⊙ ⊙ ⊙"
-            default:
-                text = ""
-            }
-            self.nextChapterButton.setTitle(text, for: .normal)
-        })
+        setupLoadingView()
+        
+        updateProgress()
         
         // get next chap
         iBook.chapterIndex += 1
@@ -252,16 +282,6 @@ class ReaderViewController: UIViewController {
         updateProgress()
         
         numberLoad += 1
-    }
-    
-    func showNextButton() {
-        nextChapterButton.isHidden = false
-        self.nextChapterButton.setTitle("↓ ↓ ↓", for: .normal)
-    }
-    
-    func hiddenNextButton() {
-        nextChapterButton.isHidden = true
-        timerLoad?.invalidate()
     }
     
     func updateProgress() {
@@ -341,23 +361,16 @@ extension ReaderViewController: UITextViewDelegate {
             iBook.chapterOffSet = scrollView.contentOffset.y - lastPosition
         }
         
-        // phat hien scroll to bottom -> load next chap
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 100) {
-            showNextButton()
-        } else {
-            hiddenNextButton()
-        }
-        
         // load nex chap content
         if isLoading || scrollView.contentOffset.y < lastPosition {
             return
         }
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)
-        {
+        
+        // phat hien scroll to bottom -> load next chap
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height - 100) {
             isLoading = true
             lastHeight = scrollView.contentSize.height
             lastPosition = scrollView.contentOffset.y
-            print(lastHeight, lastPosition)
             nextChapter()
         }
     }

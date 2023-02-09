@@ -13,12 +13,32 @@ class LibraryViewController: UIViewController {
     
     // MARK: IBOutlet
     @IBOutlet weak var libraryTableView: UITableView!
-    @IBOutlet weak var loadingView: UIView!
     
     // MARK: Variables
     var headers = ["Sách mới cập nhật", "Sách xem nhiều"]
     var newBooks = [Book]()
     var topBooks = [Book]()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.style = .large
+        return activity
+    } ()
+    let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Đang tải..."
+        return label
+    } ()
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    } ()
+    
+    let refreshControl = UIRefreshControl()
     
     // MARK: Setup
     override func viewDidLoad() {
@@ -26,13 +46,15 @@ class LibraryViewController: UIViewController {
         
         setupUI()
         
+        setupLoadingView()
+        
         setupTableView()
         
         loadDataLibrary()
     }
     
     func setupUI() {
-        loadingView.isHidden = false
+
     }
     
     func setupTableView() {
@@ -41,9 +63,42 @@ class LibraryViewController: UIViewController {
         libraryTableView.separatorStyle = .none
         libraryTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "BookTableViewCell")
         libraryTableView.register(UINib(nibName: "BookCollectionTableViewCell", bundle: nil), forCellReuseIdentifier: "BookCollectionTableViewCell")
+        
+        // kéo table để làm mới
+        refreshControl.attributedTitle = NSAttributedString(string: "Kéo để làm mới")
+        refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
+        libraryTableView.addSubview(refreshControl) // not required when using UITableViewController
+    }
+    
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityIndicator)
+        loadingView.addSubview(loadingLabel)
+        
+        loadingView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        
+        loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        loadingLabel.leadingAnchor.constraint(equalTo: activityIndicator.trailingAnchor, constant: 10).isActive = true
+        
+        activityIndicator.startAnimating()
+    }
+    func hideLoadingView() {
+        loadingView.removeFromSuperview()
     }
     
     func loadDataLibrary() {
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            activityIndicator.stopAnimating()
+            loadingLabel.text = "Không có Internet"
+            return
+        }
         
         AF.request(ApiNameManager.shared.getUrlLibrary()).responseString {[weak self] response in
             //debugPrint("Response: \(response)")
@@ -115,10 +170,22 @@ class LibraryViewController: UIViewController {
             }
             
             // remove loading
-            self.loadingView.isHidden = true
+            self.hideLoadingView()
         }
         // end
     }
+    
+    // MARK: Action
+    @objc func refreshData(_ sender: AnyObject) {
+       // Code to refresh table view
+        loadDataLibrary()
+        endRefresh()
+    }
+    
+    func endRefresh() {
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 // MARK: Extension Table View

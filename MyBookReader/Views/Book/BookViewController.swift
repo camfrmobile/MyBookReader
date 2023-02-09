@@ -32,6 +32,7 @@ class BookViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
+        setupStarCosmos()
         setupBook()
         loadAllInfoBook()
     }
@@ -45,10 +46,6 @@ class BookViewController: UIViewController {
         nowReadButton.layer.borderWidth = 1
         nowReadButton.layer.borderColor = UIColor.black.cgColor
         
-//        descTextView.isEditable = false
-//        descTextView.textContainerInset = UIEdgeInsets.zero
-//        descTextView.textContainer.lineFragmentPadding = 30
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage(systemName: "chevron.left"), style: .done, target: self, action: #selector(onTapBack))
         
         let button = UIButton(type: .custom)
@@ -56,6 +53,27 @@ class BookViewController: UIViewController {
         button.addTarget(self, action: #selector(onTapBack), for: .touchUpInside)
         let leftButtonBar = UIBarButtonItem(customView: button)
         tabBarController?.navigationItem.rightBarButtonItems = [leftButtonBar]
+        
+    }
+    
+    func setupStarCosmos() {
+        
+        starCosmosView.settings.updateOnTouch = false
+
+        starCosmosView.didFinishTouchingCosmos = {[weak self] rating in
+            guard let self = self else { return }
+            
+            let VC = RatingViewController()
+            
+            VC.handleRating = {[weak self] rating in
+                guard let self = self else { return }
+                self.iBook.rating = rating
+                self.starCosmosView.rating = rating
+                self.starLabel.text = "\(rating) / 5.0"
+            }
+            
+            self.present(VC, animated: true)
+        }
         
     }
     

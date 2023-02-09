@@ -14,7 +14,7 @@ class SearchViewController: UIViewController {
     // MARK: IBOutlet
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTableView: UITableView!
-    @IBOutlet weak var loadingView: UIView!
+
     
     // MARK: Variables
     let searchTextField: UITextField = {
@@ -26,6 +26,27 @@ class SearchViewController: UIViewController {
         return textField
     } ()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.style = .large
+        return activity
+    } ()
+    let loadingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Đang tải..."
+        return label
+    } ()
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        return view
+    } ()
+    
+    let refreshControl = UIRefreshControl()
+    
     var searchBooks = [Book]()
     var histories: [String] = []
     
@@ -34,10 +55,10 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        setupTextField()
+        setupLoadingView()
         setupHistory()
         setupTabelView()
-        setupStart()
+        hideLoadingView()
     }
     
     func setupUI() {
@@ -56,7 +77,7 @@ class SearchViewController: UIViewController {
         // radius
         searchTextField.layer.cornerRadius = 10
         
-        self.loadingView.isHidden = true
+        searchTextField.delegate = self
     }
     
     func setupTabelView() {
@@ -65,14 +86,32 @@ class SearchViewController: UIViewController {
         searchTableView.separatorStyle = .none
         searchTableView.register(UINib(nibName: "BookTableViewCell", bundle: nil), forCellReuseIdentifier: "BookTableViewCell")
         searchTableView.register(UINib(nibName: "SearchTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchTableViewCell")
+        
+        // kéo table để làm mới
+        refreshControl.attributedTitle = NSAttributedString(string: "Kéo để làm mới")
+        refreshControl.addTarget(self, action: #selector(self.refreshData(_:)), for: .valueChanged)
+        searchTableView.addSubview(refreshControl) // not required when using UITableViewController
     }
     
-    func setupTextField() {
-        searchTextField.delegate = self
+    func setupLoadingView() {
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityIndicator)
+        loadingView.addSubview(loadingLabel)
+        
+        loadingView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        loadingView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        loadingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loadingView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        activityIndicator.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        
+        loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor).isActive = true
+        loadingLabel.leadingAnchor.constraint(equalTo: activityIndicator.trailingAnchor, constant: 10).isActive = true
+        
+        activityIndicator.startAnimating()
     }
-    
-    func setupStart() {
-        //searchTextField.becomeFirstResponder()
+    func hideLoadingView() {
+        loadingView.removeFromSuperview()
     }
     
     func setupHistory() {
@@ -138,23 +177,42 @@ class SearchViewController: UIViewController {
         // empty data
         searchBooks.removeAll()
         
-        
         let keyword = searchTextField.text
 
         guard let keyword = keyword else { return }
         
+        
         // empty
         if keyword.isEmpty { return }
         
-        loadingView.isHidden = false // start loading
+        // check internet
+        if !isConnectedToNetwork() {
+            AlertHelper.sorry(message: "Không có Internet!", viewController: self)
+            return
+        }
+        
+        
+        setupLoadingView() // start loading
         
         searchBook(keyword)
         
         // save history
         saveHistory(keyword)
         
-        loadingView.isHidden = true // end loading
+        hideLoadingView()// end loading
     }
+    
+    // MARK: Action
+    @objc func refreshData(_ sender: AnyObject) {
+       // Code to refresh table view
+        searchBookAction()
+        endRefresh()
+    }
+    
+    func endRefresh() {
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 // MARK: Extension Textfield

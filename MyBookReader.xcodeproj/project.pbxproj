@@ -28,6 +28,8 @@
 		349D59512993AA290074E3E7 /* ForgotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D594F2993AA290074E3E7 /* ForgotViewController.swift */; };
 		349D59522993AA290074E3E7 /* ForgotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349D59502993AA290074E3E7 /* ForgotViewController.xib */; };
 		349D59542993ADB60074E3E7 /* GlobalFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D59532993ADB60074E3E7 /* GlobalFunction.swift */; };
+		349D59572994A4470074E3E7 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D59552994A4470074E3E7 /* RatingViewController.swift */; };
+		349D59582994A4470074E3E7 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349D59562994A4470074E3E7 /* RatingViewController.xib */; };
 		34B3974D298F5B500089CDCF /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3974B298F5B500089CDCF /* ReaderViewController.swift */; };
 		34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34B3974C298F5B500089CDCF /* ReaderViewController.xib */; };
 		34B397502990008E0089CDCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34B3974F2990008E0089CDCF /* GoogleService-Info.plist */; };
@@ -84,6 +86,8 @@
 		349D594F2993AA290074E3E7 /* ForgotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotViewController.swift; sourceTree = "<group>"; };
 		349D59502993AA290074E3E7 /* ForgotViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgotViewController.xib; sourceTree = "<group>"; };
 		349D59532993ADB60074E3E7 /* GlobalFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunction.swift; sourceTree = "<group>"; };
+		349D59552994A4470074E3E7 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		349D59562994A4470074E3E7 /* RatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
 		34B3974B298F5B500089CDCF /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		34B3974C298F5B500089CDCF /* ReaderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
 		34B3974F2990008E0089CDCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -169,6 +173,8 @@
 			children = (
 				348E5811298ECCF400EE0858 /* BookViewController.swift */,
 				348E5812298ECCF400EE0858 /* BookViewController.xib */,
+				349D59552994A4470074E3E7 /* RatingViewController.swift */,
+				349D59562994A4470074E3E7 /* RatingViewController.xib */,
 			);
 			path = Book;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 				348E580E298E9EBC00EE0858 /* SearchTableViewCell.xib in Resources */,
 				345AAB1029922943008CFD58 /* LoginViewController.xib in Resources */,
 				348E57F4298C80BE00EE0858 /* BookCollectionViewCell.xib in Resources */,
+				349D59582994A4470074E3E7 /* RatingViewController.xib in Resources */,
 				34DFE95B29893AA8003EF567 /* Assets.xcassets in Resources */,
 				348E5814298ECCF400EE0858 /* BookViewController.xib in Resources */,
 				34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */,
@@ -473,6 +480,7 @@
 				34DFE98C298979FB003EF567 /* TPKeyboardAvoidingSwift.swift in Sources */,
 				345AAB172992296A008CFD58 /* AccountViewController.swift in Sources */,
 				34DFE989298979FB003EF567 /* AlertHelper.swift in Sources */,
+				349D59572994A4470074E3E7 /* RatingViewController.swift in Sources */,
 				34DFE998298979FB003EF567 /* ResultAccount.swift in Sources */,
 				34DFE98B298979FB003EF567 /* SlideMenuController.swift in Sources */,
 				34DFE99D298982CD003EF567 /* ApiNameManager.swift in Sources */,
