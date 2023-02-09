@@ -57,7 +57,7 @@ class ReaderViewController: UIViewController {
     // MARK: Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUser()
         
         setupUI()
@@ -357,10 +357,12 @@ extension ReaderViewController: UITextViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         // lay vi tri dang doc
-        if scrollView.contentOffset.y <= lastHeight {
+        if scrollView.contentOffset.y < 1 {
+            
+        } else if scrollView.contentOffset.y < lastHeight {
             iBook.chapterOffSet = 0
         } else {
-            iBook.chapterOffSet = scrollView.contentOffset.y - (lastHeight - scrollView.frame.size.height)
+            iBook.chapterOffSet = scrollView.contentOffset.y - lastHeight
         }
         
         // load nex chap content
