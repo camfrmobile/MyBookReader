@@ -15,9 +15,11 @@ class LibraryViewController: UIViewController {
     @IBOutlet weak var libraryTableView: UITableView!
     
     // MARK: Variables
-    var headers = ["Sách mới cập nhật", "Sách xem nhiều"]
+    var headers = ["Sách mới cập nhật", "Sách xem nhiều", "Danh mục - Thể loại"]
     var newBooks = [Book]()
     var topBooks = [Book]()
+    var categories = listCategories()
+    var cateBooks = [Book]()
     
     let activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
@@ -175,9 +177,68 @@ class LibraryViewController: UIViewController {
         // end
     }
     
+    func loadDataCategory(_ url: String) {
+        
+        cateBooks.removeAll()
+        setupLoadingView()
+        
+        // check internet
+        if !isConnectedToNetwork() {
+            activityIndicator.stopAnimating()
+            loadingLabel.text = "Không có Internet"
+            return
+        }
+        
+        AF.request(url).responseString {[weak self] response in
+            //debugPrint("Response: \(response)")
+            
+            guard let self = self else { return }
+        
+            guard let html = response.value else { return }
+            print("OK")
+            do {
+                let doc: Document = try SwiftSoup.parse(html)
+                
+                // list cate book
+                let listNewiBooks: Elements = try doc.select("#list-posts div.row div.form-group")
+                
+                for item in listNewiBooks {
+                    let title = try item.select("h3 a").text()
+                    let url = try item.select("a").attr("href")
+                    let imageUrl = try item.select("img").attr("data-src")
+                    
+                    // get rating
+                    var rating = Double.random(in: 3...5)
+                    rating = Double(String(format: "%.1f", rating)) ?? 3
+                    
+                    let iBook: Book = Book()
+                    iBook.title = title
+                    iBook.url = url
+                    iBook.imageUrl = imageUrl
+                    iBook.rating = rating
+                    
+                    self.cateBooks.append(iBook)
+                }
+                
+                // reload table view
+                self.libraryTableView.reloadData()
+                
+            } catch Exception.Error(let type, let message) {
+                print("ERROR: ", type, message)
+            } catch {
+                print("error")
+            }
+            
+            // remove loading
+            self.hideLoadingView()
+        }
+        // end
+    }
+    
     // MARK: Action
     @objc func refreshData(_ sender: AnyObject) {
        // Code to refresh table view
+        cateBooks.removeAll()
         loadDataLibrary()
         endRefresh()
     }
@@ -193,10 +254,15 @@ extension LibraryViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return 1 // New book
-        case 1:
-            return topBooks.count // Top book
+        case 0: // New book
+            return 1
+        case 1: // Top book
+            return topBooks.count
+        case 2: // cate
+            if cateBooks.count == 0 {
+                return categories.count
+            }
+            return cateBooks.count
         default:
             return 0
         }
@@ -227,6 +293,17 @@ extension LibraryViewController: UITableViewDelegate {
             
             return bookCell
             
+        case 2: // cate book
+            if cateBooks.count == 0 {
+                let bookCell = UITableViewCell()
+                bookCell.textLabel?.text = categories[indexPath.row].name
+                return bookCell
+            } else {
+                let bookCell = libraryTableView.dequeueReusableCell(withIdentifier: "BookTableViewCell", for: indexPath) as! BookTableViewCell
+                bookCell.iBook = cateBooks[indexPath.row]
+                return bookCell
+            }
+            
         default:
             let bookCell = UITableViewCell()
             return bookCell
@@ -238,6 +315,11 @@ extension LibraryViewController: UITableViewDelegate {
         case 0:
             return 300 // new book
         case 1:
+            return 105 // top book
+        case 2:
+            if cateBooks.count == 0 {
+                return UITableView.automaticDimension
+            }
             return 105 // top book
         default:
             return UITableView.automaticDimension
@@ -251,6 +333,14 @@ extension LibraryViewController: UITableViewDelegate {
             iBook = newBooks[indexPath.row]
         case 1: // top book
             iBook = topBooks[indexPath.row]
+        case 2: // top book
+            if cateBooks.count == 0 {
+                let url = categories[indexPath.row].url
+                headers[indexPath.section] = categories[indexPath.row].name
+                loadDataCategory(url)
+                return
+            }
+            iBook = cateBooks[indexPath.row]
         default:
             print(indexPath)
         }
