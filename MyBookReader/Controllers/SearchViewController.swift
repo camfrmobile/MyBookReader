@@ -14,16 +14,24 @@ class SearchViewController: UIViewController {
     // MARK: IBOutlet
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTableView: UITableView!
-
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var containerView: UIView!
     
     // MARK: Variables
-    let searchTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Tìm kiếm"
-        textField.backgroundColor = .white
-        textField.clipsToBounds = true
-        return textField
+//    let searchTextField: UITextField = {
+//        let textField = UITextField()
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.placeholder = "Tìm kiếm"
+//        textField.backgroundColor = .white
+//        textField.clipsToBounds = true
+//        return textField
+//    } ()
+    
+    let clearAllButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .gray
+        button.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+        return button
     } ()
     
     let activityIndicator: UIActivityIndicatorView = {
@@ -62,22 +70,36 @@ class SearchViewController: UIViewController {
     }
     
     func setupUI() {
-        searchView.addSubview(searchTextField)
+//        searchView.addSubview(searchTextField)
+//
+//        searchTextField.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 20).isActive = true
+//        searchTextField.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -20).isActive = true
+//        searchTextField.centerYAnchor.constraint(equalTo: searchView.centerYAnchor).isActive = true
+//        searchTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        searchTextField.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 20).isActive = true
-        searchTextField.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -20).isActive = true
-        searchTextField.centerYAnchor.constraint(equalTo: searchView.centerYAnchor).isActive = true
-        searchTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         // prefix
-        let prefix = UIImage(systemName: "magnifyingglass")
-        searchTextField.addPaddingLeftIcon(prefix!, padding: 40)
+        let prefix = UIImage(systemName: "magnifyingglass") ?? UIImage()
+        searchTextField.addPaddingLeftIcon(prefix, padding: 40)
+        
         //suffix
-        let suffix = UIImage(systemName: "mic.fill")
-        searchTextField.addPaddingRightIcon(suffix!, padding: 40)
+//        let right = UIImage(systemName: "person") ?? UIImage()
+//        searchTextField.addPaddingRightIcon(right, padding: 40)
+        
+        let clearAllView: UIView = {
+            let uiview = UIView()
+            uiview.frame = CGRect(x: 0, y: 0, width: searchTextField.bounds.height, height: searchTextField.bounds.height)
+            uiview.addSubview(clearAllButton)
+            clearAllButton.frame = CGRect(x: 0, y: 0, width: searchTextField.bounds.height, height: searchTextField.bounds.height)
+            return uiview
+        } ()
+        clearAllButton.addTarget(self, action: #selector(onClearAll), for: .touchDown)
+        searchTextField.rightView = clearAllView
+        searchTextField.rightViewMode = .always
+        
         // radius
         searchTextField.layer.cornerRadius = 10
-        
         searchTextField.delegate = self
+        
     }
     
     func setupTabelView() {
@@ -119,6 +141,8 @@ class SearchViewController: UIViewController {
     }
     
     func saveHistory(_ keyword: String) {
+        histories = histories.filter {$0 != keyword}
+        
         histories.insert(keyword, at: 0)
         if histories.count > 12 {
             histories.removeLast()
@@ -213,6 +237,11 @@ class SearchViewController: UIViewController {
         refreshControl.endRefreshing()
     }
     
+    @objc func onClearAll() {
+        searchTextField.text?.removeAll()
+        searchTextField.becomeFirstResponder()
+    }
+    
 }
 
 // MARK: Extension Textfield
@@ -247,7 +276,7 @@ extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: // search history
-            if searchBooks.count > 0 {
+            if searchBooks.count > 0 || searchTextField.text != "" {
                 return 0
             }
             return histories.count

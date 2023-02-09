@@ -160,9 +160,19 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1JQ-IA-yGK">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tìm kiếm" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ztH-c6-C9V">
+                                                <rect key="frame" x="30" y="11" width="333" height="34"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
                                         <color key="backgroundColor" red="0.97647058959999999" green="0.97647058959999999" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
+                                            <constraint firstItem="ztH-c6-C9V" firstAttribute="leading" secondItem="1JQ-IA-yGK" secondAttribute="leading" constant="30" id="BSd-pG-V63"/>
+                                            <constraint firstItem="ztH-c6-C9V" firstAttribute="centerY" secondItem="1JQ-IA-yGK" secondAttribute="centerY" id="GGm-wU-JuR"/>
                                             <constraint firstAttribute="height" constant="56" id="ISf-wT-58U"/>
+                                            <constraint firstAttribute="trailing" secondItem="ztH-c6-C9V" secondAttribute="trailing" constant="30" id="y4Y-2W-acm"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aZq-xD-Fgb">
@@ -193,7 +203,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Tìm kiếm" image="magnifyingglass" catalog="system" selectedImage="magnifyingglass" id="lK0-5h-7i0"/>
                     <connections>
+                        <outlet property="containerView" destination="GaA-o0-Nzw" id="i1z-C7-XZ6"/>
                         <outlet property="searchTableView" destination="aZq-xD-Fgb" id="0FG-aJ-xdJ"/>
+                        <outlet property="searchTextField" destination="ztH-c6-C9V" id="9do-xS-NDB"/>
                         <outlet property="searchView" destination="1JQ-IA-yGK" id="EM7-VP-JaW"/>
                     </connections>
                 </viewController>
