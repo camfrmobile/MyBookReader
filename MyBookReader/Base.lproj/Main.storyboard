@@ -205,7 +205,7 @@
                     <connections>
                         <outlet property="containerView" destination="GaA-o0-Nzw" id="i1z-C7-XZ6"/>
                         <outlet property="searchTableView" destination="aZq-xD-Fgb" id="0FG-aJ-xdJ"/>
-                        <outlet property="searchTextField" destination="ztH-c6-C9V" id="9do-xS-NDB"/>
+                        <outlet property="searchTextField" destination="ztH-c6-C9V" id="CMB-bg-ryK"/>
                         <outlet property="searchView" destination="1JQ-IA-yGK" id="EM7-VP-JaW"/>
                     </connections>
                 </viewController>

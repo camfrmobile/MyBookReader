@@ -14,8 +14,8 @@ class SearchViewController: UIViewController {
     // MARK: IBOutlet
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTableView: UITableView!
-    @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var searchTextField: UITextField!
     
     // MARK: Variables
 //    let searchTextField: UITextField = {

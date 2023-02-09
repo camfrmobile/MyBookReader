@@ -72,7 +72,7 @@ class ReaderViewController: UIViewController {
         
         saveBookToFirebase(iBook)
         
-        savePositon()
+        followPositon()
     }
     
     func setupUser() {
@@ -144,7 +144,16 @@ class ReaderViewController: UIViewController {
         iBook.chapterOffSet = 0
     }
     
-    func savePositon() {
+    func savePosition() {
+        saveBookToFirebase(docId: self.iBook.id, data: [
+            "chapterOffSet": self.iBook.chapterOffSet,
+            "chapterIndex": self.iBook.chapterIndex,
+            "desc": self.iBook.desc
+        ])
+        print("POS", self.iBook.chapterOffSet)
+    }
+    
+    func followPositon() {
         // luu vi tri dang doc vao database
         timerClock = Timer.scheduledTimer(withTimeInterval: 3, repeats: true)  {[weak self]_ in
             guard let self = self else { return }
@@ -155,14 +164,7 @@ class ReaderViewController: UIViewController {
                 
                 self.iBook.desc = "\(self.iBook.chapterIndex * 100 / self.iBook.totalChapter)%"
                 
-                saveBookToFirebase(docId: self.iBook.id, data: [
-                    "chapterOffSet": self.iBook.chapterOffSet,
-                    "chapterIndex": self.iBook.chapterIndex,
-                    "desc": self.iBook.desc
-                ])
-                
-                print("POS", self.iBook.chapterOffSet)
-//                print("HEIGHT", self.contentTextView.contentSize.height, self.contentTextView.bounds.height)
+                self.savePosition()
             }
         }
     }
@@ -262,14 +264,14 @@ class ReaderViewController: UIViewController {
     
     func nextChapter() {
         
+        updateProgress()
+        
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
             readDone()
             return
         }
         
         setupLoadingView()
-        
-        updateProgress()
         
         // get next chap
         iBook.chapterIndex += 1
@@ -281,6 +283,7 @@ class ReaderViewController: UIViewController {
         
         updateProgress()
         
+        savePosition()
         numberLoad += 1
     }
     
