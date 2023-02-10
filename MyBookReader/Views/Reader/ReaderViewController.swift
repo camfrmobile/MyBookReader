@@ -128,7 +128,7 @@ class ReaderViewController: UIViewController {
         loadingView.removeFromSuperview()
     }
     func showNotifition(_ msg: String) {
-        view.addSubview(loadingView)
+        setupLoadingView()
         loadingLabel.text = msg
         activityIndicator.stopAnimating()
     }
@@ -263,8 +263,6 @@ class ReaderViewController: UIViewController {
     }
     
     func nextChapter() {
-        
-        updateProgress()
         
         if iBook.chapterIndex >= (iBook.listChapter.count - 1) {
             readDone()

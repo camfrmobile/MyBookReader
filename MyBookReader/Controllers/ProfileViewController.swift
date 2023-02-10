@@ -91,16 +91,17 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    
     // MARK: IBAction
     @IBAction func myAccountAction(_ sender: Any) {
         // check login
-        if Auth.auth().currentUser == nil {
-            AlertHelper.confirmOrCancel(message: "Bạn chưa đăng nhập.\nVui lòng đăng nhập hoặc tạo tài khoản.", viewController: self) {
-                self.routeToLoginNavigation()
-            }
-        } else {
-            routeToAccountNavigation()
-        }
+//        if Auth.auth().currentUser == nil {
+//            AlertHelper.confirmOrCancel(message: "Bạn chưa đăng nhập.\nVui lòng đăng nhập hoặc tạo tài khoản.", viewController: self) {
+//                self.routeToLoginNavigation()
+//            }
+//        } else {
+//        }
+        routeToAccountNavigation()
     }
     
     @IBAction func actionChosePhoto(_ sender: UIButton) {
@@ -164,7 +165,7 @@ extension ProfileViewController: RouteBook {
             .compactMap({$0 as? UIWindowScene})
             .first?.windows
             .filter({$0.isKeyWindow}).first
-        print("33333")
+
         keyWindow?.rootViewController = navigation
         //keyWindow?.makeKeyAndVisible()
     }

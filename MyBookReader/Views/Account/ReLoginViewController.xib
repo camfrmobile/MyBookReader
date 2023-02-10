@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReLoginViewController" customModule="MyBookReader" customModuleProvider="target">
+            <connections>
+                <outlet property="loginButton" destination="Ph9-vc-WWM" id="5Vl-pl-oNg"/>
+                <outlet property="passTextField" destination="dNQ-ny-9t3" id="DDf-e6-OUx"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e55-I7-WII">
+                    <rect key="frame" x="0.0" y="47" width="375" height="620"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ph9-vc-WWM">
+                            <rect key="frame" x="42.666666666666657" y="222" width="290" height="47"/>
+                            <color key="backgroundColor" systemColor="linkColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="290" id="8TP-bh-F3L"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="290" id="RJf-Ff-vjN"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="47" id="Zbo-py-qrD"/>
+                                <constraint firstAttribute="height" constant="47" id="gfD-Sy-9iv"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="15"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Đăng Nhập"/>
+                            <connections>
+                                <action selector="actionLogin:" destination="-1" eventType="touchUpInside" id="fXf-GG-rvO"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dNQ-ny-9t3">
+                            <rect key="frame" x="20" y="138" width="335" height="34"/>
+                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Xác nhận mật khẩu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LX-oK-kbD">
+                            <rect key="frame" x="27.666666666666657" y="52" width="320" height="36"/>
+                            <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="32"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Ph9-vc-WWM" firstAttribute="top" secondItem="dNQ-ny-9t3" secondAttribute="bottom" constant="50" id="5O1-nH-7fp"/>
+                        <constraint firstItem="dNQ-ny-9t3" firstAttribute="leading" secondItem="e55-I7-WII" secondAttribute="leading" constant="20" id="9iR-Ay-4XD"/>
+                        <constraint firstItem="dNQ-ny-9t3" firstAttribute="centerY" secondItem="e55-I7-WII" secondAttribute="centerY" multiplier="0.5" id="Av8-2h-dJA"/>
+                        <constraint firstItem="dNQ-ny-9t3" firstAttribute="top" secondItem="4LX-oK-kbD" secondAttribute="bottom" constant="50" id="HNA-We-rTZ"/>
+                        <constraint firstItem="4LX-oK-kbD" firstAttribute="width" secondItem="e55-I7-WII" secondAttribute="width" multiplier="0.853333" id="Owi-W1-NYz"/>
+                        <constraint firstAttribute="trailing" secondItem="dNQ-ny-9t3" secondAttribute="trailing" constant="20" id="Pyj-3O-Dsf"/>
+                        <constraint firstItem="4LX-oK-kbD" firstAttribute="centerX" secondItem="e55-I7-WII" secondAttribute="centerX" id="VgF-23-si2"/>
+                        <constraint firstItem="Ph9-vc-WWM" firstAttribute="centerX" secondItem="e55-I7-WII" secondAttribute="centerX" id="ucX-jR-4yD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="e55-I7-WII" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="C33-tH-iB9"/>
+                <constraint firstItem="e55-I7-WII" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ciA-Ml-u0w"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="e55-I7-WII" secondAttribute="trailing" id="eDD-kY-eZN"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="e55-I7-WII" secondAttribute="bottom" id="j72-I7-Msu"/>
+            </constraints>
+            <point key="canvasLocation" x="55" y="-11"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

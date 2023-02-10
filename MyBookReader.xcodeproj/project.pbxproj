@@ -31,6 +31,8 @@
 		349D59572994A4470074E3E7 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D59552994A4470074E3E7 /* RatingViewController.swift */; };
 		349D59582994A4470074E3E7 /* RatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349D59562994A4470074E3E7 /* RatingViewController.xib */; };
 		349D595A2994E3330074E3E7 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D59592994E3330074E3E7 /* Category.swift */; };
+		349D596129962C740074E3E7 /* ReLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D595F29962C740074E3E7 /* ReLoginViewController.swift */; };
+		349D596229962C740074E3E7 /* ReLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349D596029962C740074E3E7 /* ReLoginViewController.xib */; };
 		34B3974D298F5B500089CDCF /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B3974B298F5B500089CDCF /* ReaderViewController.swift */; };
 		34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34B3974C298F5B500089CDCF /* ReaderViewController.xib */; };
 		34B397502990008E0089CDCF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34B3974F2990008E0089CDCF /* GoogleService-Info.plist */; };
@@ -90,6 +92,8 @@
 		349D59552994A4470074E3E7 /* RatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
 		349D59562994A4470074E3E7 /* RatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingViewController.xib; sourceTree = "<group>"; };
 		349D59592994E3330074E3E7 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		349D595F29962C740074E3E7 /* ReLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReLoginViewController.swift; sourceTree = "<group>"; };
+		349D596029962C740074E3E7 /* ReLoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReLoginViewController.xib; sourceTree = "<group>"; };
 		34B3974B298F5B500089CDCF /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		34B3974C298F5B500089CDCF /* ReaderViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReaderViewController.xib; sourceTree = "<group>"; };
 		34B3974F2990008E0089CDCF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				345AAB162992296A008CFD58 /* AccountViewController.xib */,
 				349D594F2993AA290074E3E7 /* ForgotViewController.swift */,
 				349D59502993AA290074E3E7 /* ForgotViewController.xib */,
+				349D595F29962C740074E3E7 /* ReLoginViewController.swift */,
+				349D596029962C740074E3E7 /* ReLoginViewController.xib */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 				348E5814298ECCF400EE0858 /* BookViewController.xib in Resources */,
 				34B3974E298F5B500089CDCF /* ReaderViewController.xib in Resources */,
 				34DFE95929893AA6003EF567 /* Main.storyboard in Resources */,
+				349D596229962C740074E3E7 /* ReLoginViewController.xib in Resources */,
 				34B397502990008E0089CDCF /* GoogleService-Info.plist in Resources */,
 				345AAB182992296A008CFD58 /* AccountViewController.xib in Resources */,
 				348E5800298E19F300EE0858 /* BookCollectionTableViewCell.xib in Resources */,
@@ -454,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34F8F445298AA0BD008F38D2 /* LibraryViewController.swift in Sources */,
+				349D596129962C740074E3E7 /* ReLoginViewController.swift in Sources */,
 				349D59512993AA290074E3E7 /* ForgotViewController.swift in Sources */,
 				34DFE99B298979FB003EF567 /* Menu.swift in Sources */,
 				34B3975629909B2B0089CDCF /* RouteBook.swift in Sources */,

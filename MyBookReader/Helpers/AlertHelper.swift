@@ -28,4 +28,16 @@ class AlertHelper {
         }
     }
     
+    class func notifition(message: String, viewController: UIViewController?, success: @escaping () -> Void){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "MyBookReader", message: message, preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+                success()
+            }
+            alert.addAction(action)
+            
+            viewController?.present(alert, animated: true, completion: nil)
+        }
+    }
+    
 }

@@ -53,7 +53,8 @@ class BookViewController: UIViewController {
         button.addTarget(self, action: #selector(onTapBack), for: .touchUpInside)
         let leftButtonBar = UIBarButtonItem(customView: button)
         tabBarController?.navigationItem.rightBarButtonItems = [leftButtonBar]
-        
+        nowReadButton.isHidden = true
+        afterReadButton.isHidden = true
     }
     
     func setupStarCosmos() {
@@ -159,6 +160,9 @@ class BookViewController: UIViewController {
     func reFillDataBook() {
         infoLabel.text = iBook.author.name
         descLabel.text = "Thể loại: \(iBook.category.name)\nSố chương: \(iBook.totalChapter)\n\(iBook.desc)\n"
+        
+        self.nowReadButton.isHidden = false
+        self.afterReadButton.isHidden = false
     }
     
     // MARK: IBAction

@@ -92,11 +92,15 @@ class RegisterViewController: UIViewController {
         
         self.group.enter()
         
-        Auth.auth().currentUser?.sendEmailVerification(completion: { error in
+        Auth.auth().currentUser?.sendEmailVerification(completion: {[weak self] error in
+            guard let self = self else { return }
+            
             if let error = error {
                 print(error.localizedDescription)
+                AlertHelper.sorry(message: "Lỗi verify email\n\n\(error.localizedDescription)", viewController: self)
                 return
             }
+            
             self.group.leave()
             
             print("Email verify send")
@@ -153,7 +157,7 @@ class RegisterViewController: UIViewController {
         
         loadingView.isHidden = false
         registerButton.isEnabled = false
-        registerButton.setTitle("Đang đăng nhập...", for: .normal)
+        registerButton.setTitle("Đang đăng ký...", for: .normal)
         
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             
@@ -173,15 +177,17 @@ class RegisterViewController: UIViewController {
                 
                 return
             }
+            
             self.sendEmailVerify()
             
             self.changeUserInfo(name: name)
             
             self.group.notify(queue: .main) {
                 
-                AlertHelper.sorry(message: "Kiểm tra hộp thư của bạn và xác thực email", viewController: self)
+                AlertHelper.notifition(message: "Kiểm tra hộp thư của bạn và xác thực email", viewController: self) {
+                    self.routeToMain()
+                }
                 
-                self.routeToMain()
             }
         }
     }

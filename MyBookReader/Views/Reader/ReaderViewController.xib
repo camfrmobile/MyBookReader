@@ -25,10 +25,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l6g-zE-j2n" userLabel="ContentView">
-                    <rect key="frame" x="0.0" y="47" width="390" height="743"/>
+                    <rect key="frame" x="0.0" y="47" width="390" height="739"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T7N-vY-jqf">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="743"/>
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="739"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="20"/>
@@ -92,17 +92,17 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPK-Xl-txy">
-                    <rect key="frame" x="0.0" y="790" width="390" height="20"/>
+                    <rect key="frame" x="0.0" y="786" width="390" height="24"/>
                     <subviews>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LH2-mu-FjE">
-                            <rect key="frame" x="20" y="16" width="350" height="4"/>
+                            <rect key="frame" x="20" y="20" width="350" height="4"/>
                             <color key="progressTintColor" systemColor="systemGrayColor"/>
                             <color key="trackTintColor" systemColor="systemGray6Color"/>
                         </progressView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="LUv-ZG-W3V"/>
+                        <constraint firstAttribute="height" constant="24" id="LUv-ZG-W3V"/>
                         <constraint firstAttribute="trailing" secondItem="LH2-mu-FjE" secondAttribute="trailing" constant="20" id="aZy-fY-7cR"/>
                         <constraint firstAttribute="bottom" secondItem="LH2-mu-FjE" secondAttribute="bottom" id="eXN-Ys-mhj"/>
                         <constraint firstItem="LH2-mu-FjE" firstAttribute="leading" secondItem="jPK-Xl-txy" secondAttribute="leading" constant="20" id="oM2-Kb-Rtr"/>

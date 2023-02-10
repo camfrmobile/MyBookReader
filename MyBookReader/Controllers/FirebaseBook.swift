@@ -13,15 +13,25 @@ import FirebaseStorage
 
 var identification: String = UUID().uuidString
 
-var device: [String: Any] = [
-    "name": UIDevice.current.name,
-    "system": UIDevice.current.systemName,
-    "searchs": ["sách", "truyện"]
-]
+var device: [String: Any] = getDevice()
 
 let fsdb = Firestore.firestore()
 let storageRef = Storage.storage().reference()
 
+
+func getDevice() -> [String: Any] {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd/MM/yyyy"
+    let createdAt = formatter.string(from: Date())
+    
+    let device: [String: Any] = [
+        "name": UIDevice.current.name,
+        "system": UIDevice.current.systemName,
+        "searchs": ["sách", "truyện"],
+        "createdAt": createdAt
+    ]
+    return device
+}
 
 func setupUser() {
     
@@ -70,6 +80,7 @@ func loadPhotoFromFirebase(_ imageView: UIImageView) {
       }
     }
 }
+
 
 func convertBookToDoc(_ iBook: Book) -> [String: Any] {
     

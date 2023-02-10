@@ -171,14 +171,104 @@ class AccountViewController: UIViewController {
     
     func changePass(newPass: String) {
         self.group.enter()
-        Auth.auth().currentUser?.updatePassword(to: newPass) { error in
+        
+        // Prompt the user to re-provide their sign-in credentials
+        let VC = ReLoginViewController()
+        VC.handleLogin = {[weak self] password in
+            guard let self = self else { return }
+            
+            let user = Auth.auth().currentUser
+            
+            // re auth
+            let credential: AuthCredential = EmailAuthProvider.credential(withEmail: user?.email ?? "", password: password)
+            
+            Auth.auth().currentUser?.reauthenticate(with: credential) {[weak self] result, error in
+                guard let self = self else { return }
+                if let error = error {
+                    AlertHelper.sorry(message: error.localizedDescription, viewController: self)
+                    print("REAUTH", error.localizedDescription)
+                    self.group.leave()
+                    return
+                }
+                Auth.auth().currentUser?.updatePassword(to: newPass) { error in
+                    if let error = error {
+                        AlertHelper.sorry(message: error.localizedDescription, viewController: self)
+                        return
+                    }
+                    self.group.leave()
+                    print("EDIT pass ok")
+                }
+            }
+        }
+        self.present(VC, animated: true)
+    }
+    
+    func deleteAccount() {
+        // delete image
+        self.group.enter()
+        storageRef.child("images/\(identification).jpg").delete(completion: {[weak self] error in
+            guard let self = self else { return }
             if let error = error {
-                AlertHelper.sorry(message: error.localizedDescription, viewController: self)
-                return
+                print("ERROR DELETE", error.localizedDescription)
+            } else {
             }
             self.group.leave()
-            print("EDIT pass ok")
+        })
+        
+        self.group.enter()
+        // delete book
+        fsdb.collection("users").document(identification).getDocument {[weak self] (document, error) in
+            
+            guard let self = self else { return }
+            
+            if let document = document, document.exists {
+                // start
+                document.reference.collection("books").getDocuments() {[weak self] (querySnapshot, err) in
+                    
+                    guard let self = self else { return }
+                    
+                    if let err = err {
+                        print("ERROR: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            document.reference.delete()
+                        }
+                        
+                        // delete firestore
+                        fsdb.collection("users").document(identification).delete(completion: {[weak self] error in
+//                            guard let self = self else { return }
+                            if let error = error {
+                                print("ERROR DELETE", error.localizedDescription)
+                            } else {
+                            }
+                        })
+                        
+                        self.group.leave()
+                    }
+                }
+            } else {
+                print("ERROR Document not exist")
+            }
         }
+        
+        // delete user
+        Auth.auth().currentUser?.delete {[weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print("ERROR DELETE", error.localizedDescription)
+                AlertHelper.sorry(message: "Lỗi xoá tài khoản", viewController: self)
+            } else {
+            }
+        }
+        
+        self.group.notify(queue: .main) {
+            self.hideLoadingView()
+            
+            AlertHelper.notifition(message: "Đã xoá tài khoản", viewController: self) {
+                self.routeToLoginNavigation()
+            }
+        }
+        
     }
 
     // MARK: IBAction
@@ -236,7 +326,7 @@ class AccountViewController: UIViewController {
             emailTextField.becomeFirstResponder()
             return
         }
-        if password.count < 6 {
+        if password != "" && password.count < 6 {
             AlertHelper.sorry(message: "Mật khẩu ít nhất 6 ký tự", viewController: self)
             passTextField.becomeFirstResponder()
             return
@@ -263,12 +353,51 @@ class AccountViewController: UIViewController {
             
             group.notify(queue: .main) {
                 self.hideLoadingView()
-                AlertHelper.sorry(message: "", viewController: self)
+                AlertHelper.sorry(message: "Cập nhật xong", viewController: self)
                 print("Cả 3 task đã hoàn thành")
             }
         }
     }
     
+    
+    @IBAction func actionDeleteAccount(_ sender: UIButton) {
+        
+        AlertHelper.confirmOrCancel(message: "Xoá tài khoản?", viewController: self) {
+            self.setupLoadingView()
+            
+            if Auth.auth().currentUser != nil {
+                
+                // Prompt the user to re-provide their sign-in credentials
+                let VC = ReLoginViewController()
+                VC.handleLogin = {[weak self] password in
+                    guard let self = self else { return }
+                    
+                    let user = Auth.auth().currentUser
+                    
+                    // re auth
+                    let credential: AuthCredential = EmailAuthProvider.credential(withEmail: user?.email ?? "", password: password)
+                    
+                    Auth.auth().currentUser?.reauthenticate(with: credential) {[weak self] result, error in
+                        guard let self = self else { return }
+                        
+                        self.hideLoadingView()
+                        
+                        if let error = error {
+                            AlertHelper.sorry(message: error.localizedDescription, viewController: self)
+                            print("REAUTH", error.localizedDescription)
+                            return
+                        }
+                        self.deleteAccount()
+                    }
+                }
+                self.present(VC, animated: true)
+                
+            } else {
+                self.deleteAccount()
+            }
+            
+        }
+    }
 }
 
 // MARK: Extension Textfield
@@ -298,4 +427,21 @@ extension AccountViewController: RouteBook {
         keyWindow?.rootViewController = homePageVC
         //keyWindow?.makeKeyAndVisible()
     }
+    
+    
+    func routeToLoginNavigation() {
+        let viewController = LoginViewController()
+
+        let navigation = UINavigationController(rootViewController: viewController)
+
+        let keyWindow = UIApplication.shared.connectedScenes
+            .filter({$0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+            .first?.windows
+            .filter({$0.isKeyWindow}).first
+
+        keyWindow?.rootViewController = navigation
+        keyWindow?.makeKeyAndVisible()
+    }
+    
 }
