@@ -35,7 +35,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSZ-yw-5Cq" userLabel="FormatView">
-                            <rect key="frame" x="195" y="0.0" width="195" height="97.666666666666671"/>
+                            <rect key="frame" x="195" y="0.0" width="195" height="146.33333333333334"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Gxs-mM-aeG">
                                     <rect key="frame" x="10" y="10" width="175" height="77.666666666666671"/>
@@ -43,6 +43,9 @@
                                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lYd-yx-8mD">
                                             <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="77.666666666666671"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="lYd-yx-8mD" secondAttribute="height" id="NBH-Ed-K0o"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -69,13 +72,20 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </stackView>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="z9D-NZ-2ka">
+                                    <rect key="frame" x="10" y="105.33333333333334" width="51" height="31"/>
+                                    <connections>
+                                        <action selector="actionSwitch:" destination="-1" eventType="valueChanged" id="5R3-He-Xg9"/>
+                                    </connections>
+                                </switch>
                             </subviews>
                             <color key="backgroundColor" red="0.86642266345998753" green="0.88448335951375578" blue="0.9886411778705636" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="SSZ-yw-5Cq" secondAttribute="height" multiplier="2:1" id="W1W-YF-3eD"/>
+                                <constraint firstAttribute="bottom" secondItem="z9D-NZ-2ka" secondAttribute="bottom" constant="10" id="Vqw-PG-aL1"/>
+                                <constraint firstAttribute="width" secondItem="SSZ-yw-5Cq" secondAttribute="height" multiplier="2:1.5" id="W1W-YF-3eD"/>
                                 <constraint firstAttribute="trailing" secondItem="Gxs-mM-aeG" secondAttribute="trailing" constant="10" id="WMK-HA-Inl"/>
+                                <constraint firstItem="z9D-NZ-2ka" firstAttribute="leading" secondItem="SSZ-yw-5Cq" secondAttribute="leading" constant="10" id="XFH-fK-BYw"/>
                                 <constraint firstItem="Gxs-mM-aeG" firstAttribute="leading" secondItem="SSZ-yw-5Cq" secondAttribute="leading" constant="10" id="ljP-0m-ZUL"/>
-                                <constraint firstAttribute="bottom" secondItem="Gxs-mM-aeG" secondAttribute="bottom" constant="10" id="nC4-EE-SLi"/>
                                 <constraint firstItem="Gxs-mM-aeG" firstAttribute="top" secondItem="SSZ-yw-5Cq" secondAttribute="top" constant="10" id="xHo-bA-gmI"/>
                             </constraints>
                         </view>

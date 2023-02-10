@@ -239,7 +239,6 @@ class SearchViewController: UIViewController {
     
     @objc func onClearAll() {
         searchTextField.text?.removeAll()
-        searchTextField.becomeFirstResponder()
     }
     
 }

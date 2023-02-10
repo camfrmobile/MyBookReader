@@ -334,6 +334,14 @@ class ReaderViewController: UIViewController {
     @IBAction func actionNextChapter(_ sender: UIButton) {
         nextChapter()
     }
+    
+    @IBAction func actionSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            contentTextView.backgroundColor = #colorLiteral(red: 0.9885727763, green: 0.8584238887, blue: 0.791502893, alpha: 1)
+        } else {
+            contentTextView.backgroundColor = .clear
+        }
+    }
 }
 
 extension ReaderViewController: RouteBook {
