@@ -78,9 +78,20 @@
                                         <action selector="actionSwitch:" destination="-1" eventType="valueChanged" id="5R3-He-Xg9"/>
                                     </connections>
                                 </switch>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0a-4E-iMc">
+                                    <rect key="frame" x="69" y="106.33333333333334" width="30" height="30"/>
+                                    <color key="backgroundColor" red="0.97167439231968888" green="0.89257126972301237" blue="0.87944598862104373" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="OoJ-iP-Ndk"/>
+                                        <constraint firstAttribute="height" constant="30" id="ltV-2s-Yy5"/>
+                                    </constraints>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.86642266345998753" green="0.88448335951375578" blue="0.9886411778705636" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <constraints>
+                                <constraint firstItem="l0a-4E-iMc" firstAttribute="leading" secondItem="z9D-NZ-2ka" secondAttribute="trailing" constant="10" id="DfL-Ji-c1s"/>
+                                <constraint firstAttribute="bottom" secondItem="l0a-4E-iMc" secondAttribute="bottom" constant="10" id="NZX-s2-W8q"/>
                                 <constraint firstAttribute="bottom" secondItem="z9D-NZ-2ka" secondAttribute="bottom" constant="10" id="Vqw-PG-aL1"/>
                                 <constraint firstAttribute="width" secondItem="SSZ-yw-5Cq" secondAttribute="height" multiplier="2:1.5" id="W1W-YF-3eD"/>
                                 <constraint firstAttribute="trailing" secondItem="Gxs-mM-aeG" secondAttribute="trailing" constant="10" id="WMK-HA-Inl"/>

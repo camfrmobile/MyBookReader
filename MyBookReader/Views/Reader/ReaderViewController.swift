@@ -337,9 +337,11 @@ class ReaderViewController: UIViewController {
     
     @IBAction func actionSwitch(_ sender: UISwitch) {
         if sender.isOn {
-            contentTextView.backgroundColor = #colorLiteral(red: 0.9885727763, green: 0.8584238887, blue: 0.791502893, alpha: 1)
+            contentTextView.backgroundColor = #colorLiteral(red: 1, green: 0.9025649428, blue: 0.9241666198, alpha: 1)
+            view.backgroundColor = #colorLiteral(red: 1, green: 0.9025649428, blue: 0.9241666198, alpha: 1)
         } else {
             contentTextView.backgroundColor = .clear
+            view.backgroundColor = .systemBackground
         }
     }
 }
